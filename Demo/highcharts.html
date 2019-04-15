@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>highcharts测试</title>
+    <!-- Highcharts 是一个用纯JavaScript编写的一个图表库。 -->
+    <!-- <script src="http://cdn.bootcss.com/jquery/2.1.4/jquery.min.js"></script> -->
+    <!-- <script src="http://code.highcharts.com/highcharts.js"></script> -->
+    <script src="./js&css/jquery-2.1.4.min.js"></script>
+    <script src="./js&css/highcharts.js"></script></head>
+<body>
+<div id="container" style="width: 550px; height: 400px; margin: 0 auto"></div>
+<div id="container1" style="width: 550px; height: 400px; margin: 0 auto"></div>
+<script language="JavaScript">$(document).ready(function() {
+   var title = {
+      text: '城市平均气温'
+   };
+   var subtitle = {
+      text: 'Source: runoob.com'
+   };
+   var xAxis = {
+      categories: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun',
+         'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec']
+   };
+   var yAxis = {
+      title: {
+         text: 'Temperature (\xB0C)'
+      },
+      plotLines: [{
+         value: 0,
+         width: 1,
+         color: '#808080'
+      }]
+   };
+
+   var tooltip = {
+      valueSuffix: '\xB0C'
+   }
+
+   var legend = {
+      layout: 'vertical',
+      align: 'right',
+      verticalAlign: 'middle',
+      borderWidth: 0
+   };
+
+   var series =  [
+      {
+         name: 'Tokyo',
+         data: [7.0, 6.9, 9.5, 14.5, 18.2, 21.5, 25.2,
+            26.5, 23.3, 18.3, 13.9, 9.6]
+      },
+      {
+         name: 'New York',
+         data: [-0.2, 0.8, 5.7, 11.3, 17.0, 22.0, 24.8,
+            24.1, 20.1, 14.1, 8.6, 2.5]
+      },
+      {
+         name: 'London',
+         data: [3.9, 4.2, 5.7, 8.5, 11.9, 15.2, 17.0,
+            16.6, 14.2, 10.3, 6.6, 4.8]
+      }
+   ];
+
+    // 全局配置
+    // Highcharts.setOptions({
+    //     colors: ['#058DC7', '#50B432', '#ED561B', '#DDDF00', '#24CBE5', '#64E572', '#FF9655', '#FFF263', '#6AF9C4'],
+    //     lang: {
+    //         months: ['一月', '二月', '三月', '四月', '五月', '六月',  '七月', '八月', '九月', '十月', '十一月', '十二月'],
+    //         weekdays: ['星期日', '星期一', '星期二', '星期三', '星期四', '星期五', '星期六']
+    //     },
+    //     subtitle: 'test'
+    // });
+
+    var json = {};
+
+    json.title = title;
+    // json.subtitle = subtitle;
+    json.xAxis = xAxis;
+    json.yAxis = yAxis;
+    json.tooltip = tooltip;
+    json.legend = legend;
+    json.series = series;
+    json.credits = {
+        // enabled: true,
+        href: 'https://www.baidu.com',
+        // position: {
+        //     align: 'middle',
+        //     verticalAlign: 'middle',
+        //     x: -10,
+        //     y: -10
+        // },
+        // style: 样式
+        text: 'DHJT'
+    };
+
+    $('#container').highcharts(json);
+
+    $('#container1').highcharts({
+        title: {
+            text: '城市平均气温'
+        },
+        chart: {
+          showAxes: true,
+          backgroundColor: 'skyblue',
+          // inverted: true,
+          zoomType: 'x',
+          reflow: true,
+          plotBackgroundColor: 'red',
+          plotBorderColor: 'blue'
+        },
+        legend: {
+          enabled: true,
+          layout: 'vertical',
+          align: 'right',
+          verticalAlign: 'middle',
+          shadow: true,
+          borderRadius: 10,
+          borderWidth: 0
+        },
+        // legend: {
+        //     layout: 'vertical',
+        //     align: 'left',
+        //     verticalAlign: 'middle',
+        //     borderWidth: 0
+        // },
+        credits: {
+            enabled: true,
+            text: 'DHJT',
+            href: 'http://www.hcharts.cn'
+        },
+        xAxis: {
+            categories: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec']
+        },
+        series: [{
+            data: [29.9, 71.5, 106.4, 129.2, 144.0, 176.0, 135.6, 148.5, 216.4, 194.1, 95.6, 54.4]
+        }]
+    });
+
+});
+</script>
+</body>
+</html>

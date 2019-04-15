@@ -1,4 +1,4 @@
-## Sql Server
+# Sql Server
 - 远程连接时，注意关闭**防火墙**。
 - 备份。
     + 定时自动备份。
@@ -18,10 +18,32 @@
     + long型数据转成非科学计数表示形式：小数位位0；
 #### 导出数据
 
+### Like特殊情况：搜索通配符字符
+上面的搜索可以针对普通的汉字或中文，那如果遇到上述四种通配符要被搜到时应该如何处理呢？首先需注意的是通配符字符可以搜索，并且有两种方法可指定平常用作通配符的字符：
+
+使用 ESCAPE 关键字定义转义符。在模式中，当转义符置于通配符之前时，该通配符就解释为普通字符。例如，要搜索在任意位置包含字符串 5% 的字符串，请使用：
+
+WHERE ColumnA LIKE '%5/%%' ESCAPE '/'
+在上述 LIKE 子句中，前导和结尾百分号 (%) 解释为通配符，而斜杠 (/) 之后的百分号解释为字符%。
+
+在方括号 ([ ]) 中只包含通配符本身。要搜索破折号 (-) 而不是用它指定搜索范围，请将破折号指定为方括号内的第一个字符：
+
+WHERE ColumnA LIKE '9[-]5'
+下表显示了括在方括号内的通配符的用法。
+
+### General
+- `text`类型字段转成varchar：`CAST(item.OCRTEXT as varchar(MAX))`
+``` sql
+-- 将一对多中多个字段值匹配到一个字段值 ——查询
+SELECT (select stuff((select ',''' +cast(item.OCRTEXT as varchar(MAX))+'''' from T_QR_FILE_WSDA_DOC as item where item.OWNER_ID=w.ID group by cast(item.OCRTEXT as varchar(MAX)) for xml  path('')
+        ),1,1,'') as item) as itemTitle from T_QR_FILE_WSDA as w ;
+-- 将一对多中多个字段值匹配到一个字段值   ——更新
+update qrda_gass.dbo.T_QR_FOLDER_WSDA  SET ITEM_TITLES=(select stuff((select ',''' +item.TITLE+'''' from T_QR_FOLDER_ITEM_WSDA as item  where item.OWNER_ID=T_QR_FOLDER_WSDA.ID  group by item.TITLE for xml  path('')),1,1,'') as item);
+```
 
 ### `DBCC`命令
 #### DBCC 性能调节命令
-- DBCC dllname(FREE) ：在内存中卸载指定的扩展过程动态链接库（dll)
+- DBCC dllname(FREE) ：在内存中卸载指定的扩展过程动态链接库（.dll)
 - sp_helpextendedproc 查看加载的扩展PROC 
 - DBCC DROPCLEANBUFFERS ：从缓冲池中删除所有缓冲区
 - DBCC FREEPROCCACHE ：从执行计划缓冲区删除所有缓存的执行计划

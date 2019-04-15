@@ -1,10 +1,24 @@
+# Git使用
+<!-- @DHJT 2018-01-24 -->
+## `Git Flow`
+- Production
+- Develope
+- Feauture
+- Release
+- Hotfix
 
-
+## 基础知识
 - Workspace：工作区
 - Index / Stage：暂存区
 - Repository：仓库区（或本地仓库）
 - Remote：远程仓库
 [liaoxuefeng.com](http://www.liaoxuefeng.com/wiki/0013739516305929606dd18361248578c67b8067c8c017b000)
+
+- [GitHub分支管理 - 多人协作](https://www.linuxidc.com/Linux/2018-10/154583.htm)
+
+## 工具
+- [TortoiseGit](https://tortoisegit.org/)
+
 ## 配置
 Git的设置文件为`.gitconfig`，它可以在用户主目录下（全局配置），也可以在项目目录下（项目配置）。
 ``` sh
@@ -15,6 +29,25 @@ git config -e [--global]
 #设置提交代码时的用户信息
 git config [--global] user.name "[name]"
 git config [--global] user.email "[email address]"
+```
+
+git clone 指定分支,拉代码
+1.git clone 不指定分支
+`git clone  http://10.1.1.11/service/tmall-service.git`
+2.git clone 指定分支
+`git clone -b dev_jk http://10.1.1.11/service/tmall-service.git`
+命令中：多了一个  -b dev-jk,这个dev_jk就是分支，http://10.1.1.11/service/tmall
+-service.git为源码的仓库地址
+--------------------- 
+作者：lightClouds917 
+来源：CSDN 
+原文：https://blog.csdn.net/weixin_39800144/article/details/78205617 
+版权声明：本文为博主原创文章，转载请附上博文链接！
+
+## 同一代码库提交到不同remote库
+``` sh
+git remote set-url origin --push --add git@github.com:TopGuo/ShareT.git
+//git remote set-url origin --push --add '你的远程库地址'
 ```
 
 1. 新建版本库
@@ -38,8 +71,6 @@ HEAD is now at 3628164 append GPL
 版本号没必要写全，前几位就可以了，Git会自动去找
 5.git reflog用来记录你的每一次命令
 6.工作区与暂存区
-
-
 
 7. 撤销修改
 令git checkout -- readme.txt意思就是，把readme.txt文件在工作区的修改全部撤销，这里有两种情况：
@@ -106,6 +137,10 @@ $ git push [remote] --all
 创建+切换分支：git checkout -b <name>
 合并某分支到当前分支：git merge <name>
 删除分支：git branch -d <name>
+显示分支：git branch -a
+- 绿色的表示本地当前分支
+- 红色的表示远程的分支。
+- origin/HEAD -> origin/hydro 指：远程库的当前分支是hydro
 2.解决冲突
 用带参数的git log也可以看到分支的合并情况：
 $ git log --graph --pretty=oneline --abbrev-commit
@@ -165,3 +200,33 @@ git push origin --tags可以推送全部未推送过的本地标签；
 git tag -d <tagname>可以删除一个本地标签；
 git push origin :refs/tags/<tagname>可以删除一个远程标签。
 ```
+
+## GitHub使用
+```ini
+请创建默认的 UNIX 用户帐户。该用户名不需要与 Windows 用户名匹配。
+有关详细信息，请访问: https://aka.ms/wslusers
+请输入新的 UNIX 用户名: 123
+useradd: group '123' does not exist
+adduser："/usr/sbin/useradd -d /home/123 -g 123 -s /bin/bash -u 1000 123"返回错误代码 6，退出。
+创建 UNIX 用户失败，稍后可以通过运行 lxrun.exe /setdefaultuser 来完成此操作
+安装成功!
+环境将立即启动...
+文档在以下网址提供:  https://aka.ms/wsldocs
+```
+
+# or create a new repository on the command line
+echo "# sxy" >> README.md
+git init
+git add README.md
+git commit -m "first commit"
+git remote add origin git@github.com:DHJT/sxy.git
+git push -u origin master
+
+# or push an existing repository from the command line
+git remote add origin git@github.com:DHJT/sxy.git
+git push -u origin master
+```
+给现有的代码项目打上标签
+git tag -a v1.4 -m 'my version 1.4' 
+分享标签 ， 默认情况下，git push 并不会把标签传送到远端服务器上，只有通过显式命令才能分享标签到远端仓库。其命令格式如同推送分支，运行
+`git push origin [tagname]` 即可

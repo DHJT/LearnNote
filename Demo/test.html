@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>公共测试页面</title>
+<link rel="shortcut icon" href="http://gtms04.alicdn.com/tps/i4/TB1_oz6GVXXXXaFXpXXJDFnIXXX-64-64.ico" type="image/x-icon"/>
+</head>
+<style type="text/css">
+.text {
+    width: 245px;
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+}
+
+/* 内容显示n行，结尾以...省略 */
+.text2 {
+    display: -webkit-box;
+    display: -moz-box;
+    white-space: pre-wrap;
+    word-wrap: break-word;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 2; /* 显示行数 */
+}
+.no-select {
+    user-select: none; /* Standard syntax */
+}
+.blur {
+   color: transparent;
+   text-shadow: 0 0 5px rgba(0,0,0,0.5);
+}
+/* 彩色照片显示为黑白照片 */
+img.desaturate {
+    filter: grayscale(100%);
+    -webkit-filter: grayscale(100%);
+    -moz-filter: grayscale(100%);
+    -ms-filter: grayscale(100%);
+    -o-filter: grayscale(100%);
+}
+/* 垂直居中 CSS3 */
+.vc {
+    position: relative;
+    top: 50%;
+    -webkit-transform: translateY(-50%);
+    -o-transform: translateY(-50%);
+    transform: translateY(-50%);
+}
+p:first-child::first-letter {
+  font-family: "papyrus";
+  font-size: 28px;
+  font-weight: bold;
+}
+</style>
+<script type="text/javascript" charset="gbk" src="./strictTest.js"></script>
+<body>
+    <h1>使用 "use strict":</h1>
+    <h3>不允许使用未定义的变量。</h3>
+    <p>浏览器按下 F12 开启调试模式，查看报错信息。</p>
+    <p id="demo"></p>
+    <p class="text">浏览器按下 F12 开启调试模式，查看报错信息。</p>
+    <p class="text2 no-select blur">浏览器按下 F12 开启调试模式，查看报错信息。浏览器按下 F12 开启调试模式，查看报错信息。浏览器按下 F12 开启调试模式，查看报错信息。浏览器按下 F12 开启调试模式，查看报错信息。浏览器按下 F12 开启调试模式，查看报错信息。浏览器按下 F12 开启调试模式，查看报错信息。浏览器按下 F12 开启调试模式，查看报错信息。浏览器按下 F12 开启调试模式，查看报错信息。浏览器按下 F12 开启调试模式，查看报错信息。浏览器按下 F12 开启调试模式，查看报错信息。浏览器按下 F12 开启调试模式，查看报错信息。浏览器按下 F12 开启调试模式，查看报错信息。浏览器按下 F12 开启调试模式，查看报错信息。浏览器按下 F12 开启调试模式，查看报错信息。</p>
+    <img class="desaturate" src="https://wx3.sinaimg.cn/mw1024/61e04755ly1fqbav9d74dj20dw095mxa.jpg">
+    <img class="" src="https://wx3.sinaimg.cn/mw1024/61e04755ly1fqbav9d74dj20dw095mxa.jpg">
+    <div style="">
+        <img class="vc" src="https://wx3.sinaimg.cn/mw1024/61e04755ly1fqbav9d74dj20dw095mxa.jpg">
+        <p class="">浏览器按下 F12 开启调试模式，查看报错信息。浏览器按下 F12 开启调试模式，查看报错信息。浏览器按下 F12 开启调试模式，查看报错信息。浏览器按下 F12 开启调试模式，查看报错信息。浏览器按下 F12 开启调试模式，查看报错信息。浏览器按下 F12 开启调试模式，查看报错信息。浏览器按下 F12 开启调试模式，查看报错信息。浏览器按下 F12 开启调试模式，查看报错信息。浏览器按下 F12 开启调试模式，查看报错信息。浏览器按下 F12 开启调试模式，查看报错信息。浏览器按下 F12 开启调试模式，查看报错信息。浏览器按下 F12 开启调试模式，查看报错信息。浏览器按下 F12 开启调试模式，查看报错信息。浏览器按下 F12 开启调试模式，查看报错信息。</p>
+    </div>
+</body>
+</html>

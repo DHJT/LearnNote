@@ -1,4 +1,47 @@
 # CSS
+
+## color
+```css
+* {
+    color: #0860a0;
+}
+```
+
+## 一些记不住的属性
+``` css
+div {
+    user-select: none; /* 禁止用户选中文本 */
+}
+/* 模糊本文 */
+.blur {
+   color: transparent;
+   text-shadow: 0 0 5px rgba(0,0,0,0.5);
+}
+/* 彩色照片显示为黑白照片 */
+img.desaturate {
+    filter: grayscale(100%);
+    -webkit-filter: grayscale(100%);
+    -moz-filter: grayscale(100%);
+    -ms-filter: grayscale(100%);
+    -o-filter: grayscale(100%);
+}
+```
+### 悬浮提示信息框
+```css
+.treeForDocNotExist:hover::after {
+    /*content: attr(data-title);    取到data-title属性的值*/
+    content: '影像不存在！';
+    color: #ff8000;
+    background-color: skyblue;
+    display: inline-block;
+    padding: 10px 14px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    position: absolute;
+    top: -50px;
+    left: 10px;
+}
+```
 ### CSS设置多余的文本显示省略号
 ``` css
 .text {
@@ -6,6 +49,16 @@
     overflow: hidden;
     white-space: nowrap;
     text-overflow: ellipsis;
+}
+.text2 {
+    display: -webkit-box;
+    display: -moz-box;
+    white-space: pre-wrap;
+    word-wrap: break-word;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 2; /* 显示行数 */
 }
 ```
 

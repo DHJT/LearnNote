@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>testEasyUI</title>
+</head>
+    <!-- <script data-main="resource/main" src="./resource/require.js"></script> -->
+    <script src="./resource/require.js"></script>
+    <script src="./resource/main.js"></script>
+<script>
+(function(){
+    var _9203 = setInterval(parse,10);
+    function parse(){
+        if($.parser && $.fn.slider && !window.renderedFlag){
+            clearInterval(_9203);
+            $.parser.parse();
+            window.renderedFlag = true;
+        }
+    }
+})($);
+require(['easyui', 'message1',], function(easyui, message) {
+    message.showSuccessToast("≤‚ ‘");
+    // $("#test").datagrid({
+    //     title: '≤‚ ‘',
+    //     width: .2
+    // })
+});
+</script>
+
+<body>
+    <div id="test"></div>
+</body>
+</html>

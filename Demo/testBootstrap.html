@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Bootstrap测试</title>
+</head>
+<!-- <script data-main="./js&css/jquery-2.1.4.min.js" type="text/javascript" src="./js&css/require.js"></script> -->
+<!-- <script type="text/javascript" src="./js&css/jquery-2.1.4.min.js"></script> -->
+    <script src="./resource/require.js"></script>
+    <script src="./resource/main.js"></script>
+    <!-- <script data-main="resource/main" src="./resource/require.js"></script> -->
+<body>
+    <div class="navbar navbar-default" role="navigation"><!--role是为了方便屏幕阅读器理解此处内容-->
+         <ul class="nav navbar-nav">
+             <li class="active"><a href="#">HTML</a></li>
+             <li><a href="#">CSS</a></li>
+             <li><a href="#">JavaScript</a></li>
+             <li><a href="#">PHP</a></li>
+         </ul>
+    </div>
+    <h1>测试Require.js这个js插件</h1>
+<div class="container"><!-- 水平居中，两边有margin，最小屏幕时，充满父元素 -->
+    <div class="row">
+        <div class="col-md-2"></div>
+        <div class="col-md-6"></div>
+        <div class="col-md-4"></div>
+    </div>
+</div>
+<div class="dropdown">
+    <button type="button" class="btn dropdown-toggle" id="dropdownMenu1" data-toggle="dropdown">主题
+        <span class="caret"></span>
+    </button>
+    <ul class="dropdown-menu" role="menu" aria-labelledby="dropdownMenu1">
+        <li role="presentation">
+            <a role="menuitem" tabindex="-1" href="#">Java</a>
+        </li>
+        <li role="presentation">
+            <a role="menuitem" tabindex="-1" href="#">数据挖掘</a>
+        </li>
+        <li role="presentation">
+            <a role="menuitem" tabindex="-1" href="#">数据通信/网络</a>
+        </li>
+        <li role="presentation" class="divider"></li>
+        <li role="presentation">
+            <a role="menuitem" tabindex="-1" href="#">分离的链接</a>
+        </li>
+    </ul>
+</div>
+
+<div class="alert alert-success alert-dismissable">
+    <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+    成功！很好地完成了提交。
+</div>
+<div class="alert alert-success">
+    <a href="#" class="alert-link">成功！很好地完成了提交。</a>
+</div>
+<div class="alert alert-info">
+    <a href="#" class="alert-link">信息！请注意这个信息。</a>
+</div>
+<div class="alert alert-warning">
+    <a href="#" class="alert-link">警告！请不要提交。</a>
+</div>
+<div class="alert alert-danger">
+    <a href="#" class="alert-link">错误！请进行一些更改。</a>
+</div>
+
+<p class="text-muted">提示，使用浅灰色（#999）</p>
+<p class="text-primary">主要，使用蓝色（#428bca）</p>
+<p class="text-success">成功，使用浅绿色(#3c763d)</p>
+<p class="text-info">通知信息，使用浅蓝色（#31708f）</p>
+<p class="text-warning">警告，使用黄色（#8a6d3b）</p>
+<p class="text-danger">危险，使用褐色（#a94442）</p>
+<div>请输入<kbd>ctrl+c</kbd>来复制代码，然后使用<kbd>ctrl+v</kbd>来粘贴代码</div>
+
+<ol>
+    <li class="list-unstyled">
+        项目列表
+        <ul class="list-unstyled">
+            <li>带有项目编号</li>
+            <li>带有项目编号</li>
+        </ul>
+    </li>
+</ol>
+<script>
+require(['hd', 'bootstrap', 'message1', 'message', 'md5'], function(hd, bootstrap, message1, md5) {
+    // hd.modal();
+    // message1.showSuccessToast("测试");
+    // alert($.md5('12342'))
+});
+</script>
+</body>
+</html>

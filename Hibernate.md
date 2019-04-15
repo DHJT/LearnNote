@@ -1,22 +1,19 @@
 # Hibernate
+<!-- @author DHJT 2018-12-11 -->
+
 ## 基础
 - `hibernate`的6种查询方式：
     - `HQL`查询
     - 对象化查询`Criteria`
     - 动态查询`DetachedCriteria`
-    - 例子查询
+    - 例子查询——Example查询
+        + [Hibernate查询之Example查询](https://blog.csdn.net/xianymo/article/details/38924541)
     - `sql`查询
     - 命名查询
 - `OneToMany`、`ManyToOne`中含有子表，传递对象到前台页面。
 ``` java
 ArchiveTypeRule archiveTypeRule = getBo().queryByOwnerId(ownerId);
-setJson(JsonUtil.toString(archiveTypeRule,new String[]{"archiveTypeRule"}));
-```
-- 分页注意： 
-``` java
-List<Order> list = new ArrayList<Order>();
-list.add(Order.desc("operaTingDate"));
-Page page = App.getHibernateDao().queryPage(query, list, getLimit(), getPage() - 1);
+setJson(JsonUtil.toString(archiveTypeRule, new String[]{"archiveTypeRule"}));
 ```
 - **Hibernate**的保存方法：
 ``` java
@@ -35,6 +32,12 @@ String hql ="from GeneralArchiveRaletion where fondsId='root'";
 List<GeneralArchiveRaletion> gar = App.getHibernateDao().find(hql);
 String preId = gar.get(0).getId();
 ```
+- [解决Hibernate懒加载的4种方式](https://blog.csdn.net/nwpu_geeker/article/details/79091373)
+
+### 分页
+- `setFirstResult` 是起始数据，`setMaxResults`是查询显示的数据。
+- 如果放在分页程序里边 setFirstResult的值应该是 (当前页面-1)X每页条数，setMaxResults 就是每页的条数了。
+
 ### 注意
 - 属性名的第一个单词小写，大写的话在查询该字段时匹配不上，但可以可以在结果集中获取该值。
 - 模糊查询：`Restrictions.like("actid", borrowId.trim(), MatchMode.ANYWHERE)`
@@ -93,8 +96,23 @@ where MER.days_mercht_id = INST.up_days_mercht_id and INST.days_mercht_id = POS.
 ```
 其中synchronize表示当表的数据发生变化的时候，视图的数据也会发生变化。
 
+### 注解中的对应关系
+两个表 默认都会 维护自己的外键关系
+中间表 使用的联合主键 如果量张表都维护外键关系
+也就是说 都会对中间表进行操作 这时会重复插入相同的外键值
+注意: 所以多对多操作 必须要有一张表 放弃对外键关系的维护
+
+## 注解
+``` java
+@Temporal(TemporalType.XXXX)// 时间格式化
+```
+
 ## hibernate缓存
 hibernate中的二级缓存，二级缓存是属于SessionFactory级别的缓存机制。第一级别的缓存是Session级别的缓存，是属于事务范围的缓存，由Hibernate管理，一般无需进行干预。第二级别的缓存是SessionFactory级别的缓存，是属于进程范围的缓存
+
+#### 一级缓存（内置缓存）
+Hibernate自带的，不可卸载，通常在Hibernate的初始化阶段，Hibernate会把映射元数据和预定义的SQL语句放置到SessionFactory的缓存中。该内置缓存是只读的。
+
 ### 二级缓存
 - [详解Hibernate中的二级缓存](http://blog.csdn.net/luckyzhoustar/article/details/47748179)
 - 适合放入二级缓存中数据
@@ -104,11 +122,23 @@ hibernate中的二级缓存，二级缓存是属于SessionFactory级别的缓存
     + 经常被修改
     + 财务数据，绝对不允许出现并发问题
     + 与其他应用数据共享的数据
-#### 内置缓存
-Hibernate自带的，不可卸载，通常在Hibernate的初始化阶段，Hibernate会把映射元数据和预定义的SQL语句放置到SessionFactory的缓存中。该内置缓存是只读的。
+
 #### 外置缓存中的数据是数据库数据的复制，外置缓存的物理介质可以是内存或者硬盘。
 - EHCache: 可作为进程范围内的缓存,存放数据的物理介质可以是内存或硬盘,对Hibernate的查询缓存提供了支持
 - OpenSymphony`:可作为进程范围内的缓存,存放数据的物理介质可以是内存或硬盘,提供了丰富的缓存数据过期策略,对Hibernate的查询缓存提供了支持
 - SwarmCache:可作为集群范围内的缓存,但不支持Hibernate的查询缓存
 - JBossCache:可作为集群范围内的缓存,支持Hibernate的查询缓存
-### 三级缓存
+
+### 三级缓存(查询缓存,了解)
+三级缓存是基于二级缓存的，手动将查询的列表结果拿去缓存, 
+1 . 在Hibernate的配置文件中
+`hibernate.cache.use_query_cache=true`
+2 . 在查询列表前,声明要缓存
+- 先去map中查找,有就取出
+- 没有就去数据库查询,在放入map;
+
+`query.setCacheable(true).list();`
+极少用原因:
+1.两条query对象必须要有一致的HQL
+2.存的是一个list,当一个成员改变,会导致整个list的改变,效率低
+3.只适用于,不能更改的list集合

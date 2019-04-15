@@ -29,11 +29,14 @@
 ```
 ### 鼠标手势
 cursor:default | wait| move | text | pointer
+
 ### 文件上传
 - 多文件上传`<input type="file" multiple="multiple" accept=".zip" name="uploadFile" />`
 - 文件夹上传
+
 ### 阻止`a`标签的默认跳转
 - `a href="javascript:void(0);" onclick="js_method()"`
+
 ### 获取子/父中的元素
 ``` js
 // 调用子/父中的方法

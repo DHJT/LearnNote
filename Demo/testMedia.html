@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Document</title>
+    <script src="./js&css/jquery-1.11.1.min.js"></script>
+    <script src="./js&css/jquery.media.js"></script>
+</head>
+<script type="text/javascript">
+$(function() {
+    $('.pdf').media({
+        width:     850,
+        height:    450,
+        autoplay:  true,
+        src:       'test.pdf',
+        // attrs:     { attr1:  'attrValue1',  attr2:  'attrValue2' },  // object/embed attrs
+        // params:    { param1: 'paramValue1', param2: 'paramValue2' }, // object params/embed attrs
+        // caption:   false // supress caption text
+    });
+    $('.vedio').media({
+        width:     450,
+        height:    250,
+        autoplay:  true,
+        src:       'test.mp4',
+        // attrs:     { attr1:  'attrValue1',  attr2:  'attrValue2' },  // object/embed attrs
+        // params:    { param1: 'paramValue1', param2: 'paramValue2' }, // object params/embed attrs
+        // caption:   false // supress caption text
+    });
+});
+</script>
+<style type="text/css">
+body {
+    text-align: center;
+    align: center;
+}
+
+</style>
+<body>
+    <div class="pdf"></div>
+    <div class="vedio"></div>
+    <!-- <a class="media" ></a> -->
+</body>
+</html>

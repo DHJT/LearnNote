@@ -1,7 +1,72 @@
-=================================
+# ExtJS
 <!-- [TOC] -->
----
-- 难点： store的刷新
+
+### TreePanel
+- [Extjs tree树的方法和配置项](https://blog.csdn.net/yuan1013922969/article/details/51741336)
+- 树节点合上展开显示不同图标
+``` js
+listeners: {
+    beforeitemexpand: function (node, index, item, eOpts) {
+        node.data.iconCls = 'folder_open';
+    },
+    beforeitemcollapse: function (node, index, item, eOpts) {
+        node.data.iconCls = 'folder_close';
+    }
+}
+.folder_close {
+    background: url("/Image/tree/folder_close.ico") no-repeat center !important;
+}
+.folder_open {
+    background: url("/Image/tree/folder_open.ico") no-repeat center !important;
+}
+```
+``` json
+{ // 树节点的字段信息
+    "allowDrag": true,
+    "allowDrop": true,
+    "checked": null,
+    "children": [],
+    "click": false,
+    "cls": "",
+    "depth": 2,
+    "expandable": true,
+    "expanded": false,
+    "glyph": "",
+    "href": "",
+    "hrefTarget": "",
+    "icon": "",
+    "iconCls": "",
+    "id": "9000001",
+    "index": 0,
+    "isFirst": true,
+    "isLast": false,
+    "leaf": true,
+    "loaded": false,
+    "loading": false,
+    "parentId": "Juannei",
+    "qshowDelay": 0,
+    "qtip": "",
+    "qtitle": "",
+    "root": false,
+    "text": "同意消科所成立临时党支部的批复",
+    "type": "I",
+    "visible": true
+}
+```
+- 回车键触发机制等（keyup、specialKey[...]）
+```js
+listeners : {
+    specialKey : function(field, e) {
+        if (e.getKey() == Ext.EventObject.ENTER) {
+            var queryBtn  = this.up('gridpanel').query("[name='searchButton']");
+            if (queryBtn) {
+                queryBtn[0].click();
+            }
+        }
+    }
+}
+```
+
 - 鼠标悬浮时的提示消息
 ``` js
 //鼠标悬浮时的提示消息。 需要先初始化Ext.tip.QuickTipManager。
@@ -29,9 +94,7 @@ Ext.create('Ext.ux.form.SearchField', {
         onSearchClick: function() {//覆盖默认的`onSearchClick`方法
             grid.getStore().proxy.url = "queryByWord_ArchiveQuery.action";
             grid.getStore().proxy.extraParams = {
-                word : this.getValue(),
-                className : _this.inputPanel.className,
-                modelType : _this.inputPanel.modelType
+                modelType : _this.modelType
             };
             grid.getStore().load();
         },
@@ -47,7 +110,7 @@ store.load({
 select : function(obj) {
             var newValue = obj.getValue();
         }
-//回车键14:18:55监听
+//回车键监听
 listeners : {
         specialkey: function(field, e){ 
             if (e.getKey() == e.ENTER) {
@@ -84,7 +147,6 @@ save : function(store, modelType, archiveTypeLevel) {
                     Ext.Msg.alert('提示', '未检测到任意修改项，请检查配置信息！')
                     return;
                 }
-                console.log(jsonArray)
                 Ext.Ajax.request({
                             method : "post",// 最好不要用get请求
                             url : "saveButton_ButtonCustom.action",
@@ -153,8 +215,6 @@ getGridJsonStore : function(url, fields, id) {
 Ext.Ajax.request({
     url : 'findArchiveById_ArchiveCommAction.action',
     params : {
-        id : queryId,
-        className : inputPanel.className,
         type : grid.archiveTypeLevel
     },
     success : function(response) {
@@ -162,8 +222,6 @@ Ext.Ajax.request({
         formPanel.down('form').getForm().setValues(QR.Util.convertBean(menu, 'map'));
         docPanel.enable();
         docPanel.UpLoadGrid.getStore().proxy.extraParams = {
-            docParentId : queryId,
-            className : inputPanel.className,
             type : grid.archiveTypeLevel
         };
         docPanel.UpLoadGrid.getStore().load();
@@ -174,16 +232,12 @@ Ext.Ajax.request({
 ``` js
 formPanel.down('form').getForm().submit({
     params : {
-        className : "LiTiGent",
-        type : grid.archiveTypeLevel,
-        archiveTypeLevel : inputPanel.archiveTypeLevel,
-        itemParentId : inputPanel.gridPanel.itemParentId
+        type : type
     },
     success : function(form, action) {
         var resultId = action.result.json;
         formPanel.down('form').getForm().findField('map.id').setValue(resultId);
         grid.getStore().reload();
-        QR.Util.showSuccessToast("连续著录成功!");
     },
     failure : function() {
         QR.Util.submitFailure;
@@ -209,7 +263,7 @@ columns : [{
             header: '密码',
             dataIndex: 'password',
             xtype : "hiddenfield",//在列表中不显示，在配置列时也不会出现该项
-            hidden: true,//在列表不显示，但在配置列中可显示该列。
+            hidden: true
         }, {
             header : '借阅状态',
             dataIndex : "status",
@@ -224,20 +278,14 @@ columns : [{
                 var str = Ext.Date.between(dt2, dt, new Date());
                 if (value == '1') {
                     value = '<font color=blue>已归还</font>'
-                } else if (value == '2') {
-                    value = '<font color=greed>已借阅</font>';
-                    if(str) value = '<font color=red>逾期，等待归还</font>';
-                } else if (value == '3') {
-                    value = '<font color=red>催还中</font>';
-                    if(str) value = '<font color=red>逾期，已催还</font>';
                 }
                 return value;
             }
-          }]
+        }]
 ```
 - 右键菜单
 ``` js
-'itemcontextmenu' : function(view, record, item, index, event, eOpts) {//ext.js
+'itemcontextmenu' : function(view, record, item, index, event, eOpts) {
     var rightClick = Ext.create('Ext.menu.Menu', {
         width: 10,
         plain: true,
@@ -247,7 +295,7 @@ columns : [{
             text: '新增',
             scope : this,
             handler : function() {
-                _this.addGAR(treePanel);
+                // to do ...
             }
         }]
     });
@@ -263,7 +311,7 @@ fieldLabel : "档案类型名称",
 store : QR.Store.ArchiveTypeStore,
 listeners : {
     beforerender : function() {
-        this.store.add({ archiveTypeId: '0',name: '空节点',});
+        this.store.add({ archiveTypeId: '0', name: '空节点'});
     }
 },
 ```
@@ -276,7 +324,6 @@ listeners : {
 ``` js
 _this.westPanel.on("itemclick", function(view, record, item, index, event, eOpts) {
     var pid  = record.get("id");
-    _this.pid = pid;
     var fondsOrg = record.get("fondsOrg");
 });
 ```
@@ -290,9 +337,9 @@ _this.getForm().setValues(entityBorrow);
 - 常量（用来根据屏幕分辨率不同做自适应）
     QR.Config.centerHeight
     QR.Config.centerWidth
-- Store加载后再去执行函数：`store.on('load',function(){})` //避免数据还没有加载完就使用store
+- Store加载后再去执行函数：`store.on('load', function() {})` //避免数据还没有加载完就使用store
 - URL查询时，添加传递参数而不重新定义。
-    `this.getStore().getProxy().extraParams['className'] =className;`
+    `this.getStore().getProxy().extraParams['className'] = className;`
 - 获取一组单选框的值<kbd>RadioGroup</kbd>
 ``` js
 var form = _this.down('form').getForm();
@@ -305,15 +352,51 @@ str = store.getAt(index).get('archiveField');
 ```
 - 获取字段的对象，然后设置value
     `_this.getForm().findField("bean.select"+i).select(str);`
-- 分页注意： 
-``` java
-List<Order> list = new ArrayList<Order>();
-list.add(Order.desc("operaTingDate"));
-Page page = App.getHibernateDao().queryPage(query, list, getLimit(), getPage() - 1);
-```
-- **Hibernate**的保存方法：
-``` java
-DetachedCriteria query = DetachedCriteria.forClass(EntityBorrow.class);
-List<EntityBorrow> list = App.getHibernateDao().findByCriteria(query);
+
+### formpanel
+```js
+// 密码输入框
+defaults : {
+    labelAlign : 'right',
+    msgTarget : 'side',
+    xtype : 'textfield',
+    inputType : 'password',
+    allowBlank : false
+},
+// 自定义样式
+var required = '<span style="color:red;font-weight:bold" data-qtip="Required">*</span>';
+items: [{
+        xtype: 'textfield',
+        id: 'nameText',
+        name: 'nameText',
+        fieldLabel: '用户名',
+        allowBlank: false,
+        tooltip: '请输入您的用户名',
+        afterLabelTextTpl: required,
+        blankText: '请输入您的用户名',
+    }]
+
+// 定义函数: 验证再次输入的密码是否一致
+Ext.apply(Ext.form.VTypes, {
+    confirmPwd: function (value, field) {
+     // field 的 confirmPwd 属性
+        if (field.confirmPwd) {
+            var first = field.confirmPwd.first;
+            var second = field.confirmPwd.second;
+
+            this.firstField = Ext.getCmp('loginPassword');
+            this.seconField = Ext.getCmp('rePassword');
+            var firstPwd = this.firstField.getValue();
+            var secondPwd = this.seconField.getValue();
+            if (firstPwd == secondPwd) {
+                return true;
+            } else {
+                return false;
+            }
+        }
+    },
+    confirmPwdText:'两次输入的密码不一致！',
+});
 ```
 
+[1]: https://www.cnblogs.com/wisdo/p/4896207.html 'EXTJS 密码确认与验证'

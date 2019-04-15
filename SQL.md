@@ -1,8 +1,8 @@
 © 2017-04-19 DHJT
 ## 基础知识
 - **SQL**中`group by`语句中，只能查询`group by`后面出现的分组字段.
-``` sql 
-//sqlserver
+``` sql
+-- sqlserver
 select DATEADD(day, KEEP_DAY,GETDATE()),
 DATEDIFF(day, DATEADD(day, KEEP_DAY,GETDATE()),GETDATE()),
 CONVERT(VARCHAR(50),KEEP_DATE,112),
@@ -11,6 +11,26 @@ FROM [qrda_fy].[dbo].[T_QR_ENTITY_BORROW]
 order by STATUS desc
 ```
 - 'split'伪实现：SUBSTRING(STR_05,1,charindex('-',STR_05+'-')-1)
+- SUBSTRING ( expression, start, length )
+    + 如果 start的索引是从1开始，则从表达式的第一个字符开始进行字符串截取，从2开始就从表达式的第二个字符开始截取，以此类推。
+    + 如果start的索引是从小于1（0或负数）开始，则返回长度等于从1开始,截取长度为 length - ((start - 1)的绝对值)， 如果这个差为负数就返回空。
+
+```sql
+-- 获取当前的日期：yyyymmdd hh:MM:ss。
+select GETDATE();
+select CONVERT(nvarchar(12), GETDATE(), 112);
+-- 获取当前年份、月份、日、小时、分钟、秒、当前第几周  YEAR/YY/MM/DD/hh/MI/SECOND/WEEK/WEEKDAY
+select Datename(YEAR, GETDATE());
+```
+
+### Like特殊情况：搜索通配符字符
+使用`ESCAPE`关键字定义转义符。在模式中，当转义符置于通配符之前时，该通配符就解释为普通字符。例如，要搜索在任意位置包含字符串 5% 的字符串，请使用：
+
+`WHERE ColumnA LIKE '%5/%%' ESCAPE '/'`
+在上述 LIKE 子句中，前导和结尾百分号 (%) 解释为通配符，而斜杠 (/) 之后的百分号解释为字符%。
+在方括号 ([ ]) 中只包含通配符本身。要搜索破折号 (-) 而不是用它指定搜索范围，请将破折号指定为方括号内的第一个字符：
+
+`WHERE ColumnA LIKE '9[-]5'`
 
 ### 数据库操作
 ``` sql
@@ -170,13 +190,13 @@ ALTER TABLE TABLENAME MODIFY COLUMN COLUMNNAME VARCHAR(50) BINARY CHARACTER SET 
 - [大数据量查询优化——数据库设计、SQL语句、JAVA编码](http://www.cnblogs.com/zhoubang521/p/5200169.html)
 
 ## 数据库差异
-| 数据库        | 表名长度限制    |  字段名长度限制  |
-| --------   | -----:   | :----: |
-| oracle        | 30      |   30    |
-| mysql        | 64      |   64    |
-| db2        | 128      |   128    |
-| access        | 64      |   64    |
-| sqlserver        | 128      |   128    |
+| 数据库    | 表名长度限制 | 字段名长度限制 |
+| --------  | -----:       | :----:         |
+| oracle    | 30           | 30             |
+| mysql     | 64           | 64             |
+| db2       | 128          | 128            |
+| access    | 64           | 64             |
+| sqlserver | 128          | 128            |
 
 * On Oracle 12.2, you can use built-in constant, ORA_MAX_NAME_LEN, set to 128 bytes (as per 12.2) Prior to Oracle 12.1 max size was 30 bytes.
 - `Oracle`
@@ -188,3 +208,13 @@ ALTER TABLE TABLENAME MODIFY COLUMN COLUMNNAME VARCHAR(50) BINARY CHARACTER SET 
     + `create or replace view`
 - `Sql server`:
     + `if exists`
+```sql
+-- 数据库连接性能查看
+-- -- Sqlserver
+SELECT * FROM
+[Master].[dbo].[SYSPROCESSES] WHERE [DBID] IN (
+    SELECT [DBID]
+    FROM [Master].[dbo].[SYSDATABASES]
+    WHERE NAME='qrda_rd'
+)
+```

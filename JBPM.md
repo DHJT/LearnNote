@@ -1,10 +1,15 @@
 ！# JBPM工作流
+<!-- @author DHJT 2018-11-23 -->
+`Java Business Process Management`（业务流程管理）
+jBPM项目从设计上就没有考虑“回退”、“取回”、“会签”、“委派”等业务场景
+
+## 样例
+- [JBPM工作流][1]
+
 ## 获取流程信息
 ```java
-List<Task> list = App.getJBPM().getTaskService()//
-                    .createTaskQuery()//
-                    .assignee("部门领导")//
-                    .list();
+List<Task> list = App.getJBPM().getTaskService()
+                    .createTaskQuery().assignee("部门领导").list();
 Task task = App.getJBPM().getTaskService().getTask("40053");
 List<HistoryTask> historyTask=App.getJBPM().getHistoryService().createHistoryTaskQuery().list();
 
@@ -14,17 +19,17 @@ ProcessDefinition definition = repositoryService.createProcessDefinitionQuery().
 ProcessDefinitionImpl definitionimpl = (ProcessDefinitionImpl)definition;
 List<? extends Activity> list2 = definitionimpl.getActivities();
 for (Activity activity : list2) {
-  System.out.println(activity.getName());
+    System.out.println(activity.getName());
 }
 ```
 ### 获取ProcessEngine的方法
 ```java
 // 1.使用Configuration获取默认配置
-private static ProcessEngine processEngine = Configuration.getProcessEngine(); 
+private static ProcessEngine processEngine = Configuration.getProcessEngine();
 // 2.自定义配置文件
-private static ProcessEngine processEngine = new Configuration() //  
-                          .setResource("jbpm.cfg.xml")  //自定义配置文件  
-                          .buildProcessEngine(); //创建流程引擎
+private static ProcessEngine processEngine = new Configuration()
+                          .setResource("jbpm.cfg.xml")  // 自定义配置文件
+                          .buildProcessEngine();// 创建流程引擎
 ```
 ### ProcessEngine的常用方法
 - getRepositoryService
@@ -33,20 +38,18 @@ private static ProcessEngine processEngine = new Configuration() //
 
 ```java
 // 通过调用getRepositoryService()资源服务，提供部署流程的一系列方法，来实现流程的部署。
-processEngine.getRepositoryService() //资源服务接口  
-             .createDeployment() //创建部署流程  
-             .addResourceFromClasspath("helloworld/helloworld.jpdl.xml") //加载流程文件  
-             .addResourceFromClasspath("helloworld/helloworld.png") //加载流程图片  
-             .deploy();执行  
+processEngine.getRepositoryService() // 资源服务接口
+             .createDeployment() // 创建部署流程
+             .addResourceFromClasspath("helloworld/helloworld.jpdl.xml") // 加载流程文件
+             .addResourceFromClasspath("helloworld/helloworld.png") // 加载流程图片
+             .deploy();// 执行
 ```
 - getExecutionService
 
        流程执行服务接口。提供启动流程实例、推进、删除等操作
 
-       例如：       
-
-[java] view plain copy
-processEngine.getExecutionService().startProcessInstanceByKey("helloworld");//启动helloworld流程  
+       例如：
+processEngine.getExecutionService().startProcessInstanceByKey("helloworld");//启动helloworld流程
         通过调用getExecutionService执行服务，获取流程启动的方法，除了startProcessInstanceByKey方法之外还有startProcessInstanceById等，可以根据指定条件进行启动。
 
 - getTaskService
@@ -54,18 +57,17 @@ processEngine.getExecutionService().startProcessInstanceByKey("helloworld");//�
     人工任务服务接口。提供对任务的创建、提交、查询、保存、删除等操作。
 
 ```java
-//查询，根据用户id  
-List<Task> taskList = processEngine.getTaskService().findPersonalTasks(userId);  
-//处理，根据任务id  
-processEngine.getTaskService().completeTask(taskId);  
+// 查询，根据用户id
+List<Task> taskList = processEngine.getTaskService().findPersonalTasks(userId);
+//处理，根据任务id
+processEngine.getTaskService().completeTask(taskId);
         使用的是TaskService接口，主要是对任务列表进行操作，此外还有deleteTask进行删除任务等。
 ```
 - HistoryService
 
-       流程历史服务接口。提供对任务的管理操作。提供对流程历史库中历史流程实例、历史活动实例等记录的查询。      
+       流程历史服务接口。提供对任务的管理操作。提供对流程历史库中历史流程实例、历史活动实例等记录的查询。
 
-[java] view plain copy
-List<HistoryTask> historyTask=processEngine.getHistoryService().createHistoryTaskQuery().list();  
+List<HistoryTask> historyTask=processEngine.getHistoryService().createHistoryTaskQuery().list();
         获取历史任务列表。
 
 - ManagementService
@@ -91,19 +93,23 @@ public Map getStatus(String executionId){
     map.put("status", set);
     map.put("all", list1);
     return map;
-  }
-  public void getWorkflowDetil(String str, List<String> all, List<? extends Activity> list, Set<String> set) {
+}
+public void getWorkflowDetil(String str, List<String> all, List<? extends Activity> list, Set<String> set) {
     if ("结束".equals(str)) {
-      all.add(str);
+        all.add(str);
     } else {
-      for (Activity activity : list) {
-        if (str.indexOf(activity.getName()) > -1) {
-          if (!"分支".equals(activity.getName())) {
-            all.add(activity.getName());
-          }
-          getWorkflowDetil(activity.getOutgoingTransitions().get(0).getDestination().getName(), all, list, set);
+        for (Activity activity : list) {
+            if (str.indexOf(activity.getName()) > -1) {
+                if (!"分支".equals(activity.getName())) {
+                    all.add(activity.getName());
+                }
+                getWorkflowDetil(activity.getOutgoingTransitions().get(0).getDestination().getName(), all, list, set);
+            }
         }
-      }
     }
-  }
+}
 ```
+
+[1]: https://www.cnblogs.com/jingpeipei/p/6150409.html 'JBPM工作流'
+[2]: https://download.jboss.org/jbpm/release/6.5.0.Final/jbpm-6.5.0.Final-bin.zip 'jbpm-6.5.0.Final-bin.zip'
+[3]: https://blog.csdn.net/feinifi/article/details/53576505 'Eclipse安装jbpm6插件并测试Hello示例'

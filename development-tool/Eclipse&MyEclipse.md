@@ -1,17 +1,68 @@
 # Eclipse等开发工具
+
 ## Eclipse
+
+### 基础
+- 修改文件的默认打开方式
+    + `Windows`->`Perferens`->`General`->`Editors`->`File Associations`
+    + 选中相应的文件后缀设置默认打开方式
+
+### 如何在eclipse的配置文件里指定jdk路径（即配置启动eclipse的JDK）
+在eclipse的配置文件里指定jdk路径，只需在eclipse的配置文件里增加-vm参数即可。
+打开eclipse目录下的eclipse.ini配置文件，增加-vm配置，需要注意的是该参数要加在-vmargs之前
+
 ### 代码模板
 - 在Preferences”对话框中点击“Java”->“Editor”->“Templates”
 ```ini
 <!-- 变量 -->
 ${cursor}
+
+/**
+ * @author 作者名 <br/>
+ * ${currentDate:date('yyyy-MM-dd HH:mm')}
+ */
 ```
+### Eclipse Class Decompiler
+
+- [Eclipse中将Java项目转换成Web项目的方法][1]
+- [eclipse-jee-galileo 修改类及jsp文件后不用重启tomcat的方法][2]
+- [ClassNotFoundException:org.springframework.web.context.ContextLoaderListener解决办法][3]
+
+### 复制workspace设置方法
+1 使用eclipse新建workspace。
+2 将新建的workspace下的.metadata.plugins内容全部删除。
+3 将需要拷贝的workspace下的.metadata.plugins内容除了org.eclipse.core.resources文件夹的其他文件夹全部拷贝到新workspace的.metadata.plugins目录下。
+4 重启eclipse（可直接在eclipse菜单中点击File->Restart）。
+
+参考资料：
+http://www.iteye.com/problems/77918
+http://chanir.blog.51cto.com/6909185/1220190
 
 ### 插件
+### `alibaba/p3c`
+- [p3c](https://github.com/alibaba/p3c)
+    + eclipse安装：https://p3c.alibaba.com/plugin/eclipse/update
+
+### Subversive - SVN Team Provider
+- [subversive](http://marketplace.eclipse.org/content/subversive-svn-team-provider)
+
+### Basic
+- [Emmet](http://download.emmet.io/eclipse/updates/)
+- [FindBugs](http://findbugs.sourceforge.net/)
+
+### Eclipse Color Theme
+- [](http://marketplace.eclipse.org/content/eclipse-color-theme)
+
+### Maven Integration for Eclipse
+- [](http://marketplace.eclipse.org/content/maven-integration-eclipse-juno-and-newer)
+
+### PyDev
+- [](http://marketplace.eclipse.org/content/pydev-python-ide-eclipse)
 #### JBPM工具插件
 #### [SpringIDE](http://dist.springsource.com/release/TOOLS/update/e4.2)
 #### [StrutsIDE](http://amateras.sourceforge.jp/cgi-bin/fswiki_en/wiki.cgi?page=StrutsIDE)
 #### jshint
+
 #### spket(收费)
 - 破解版使用。
     + 将links文件夹放在Myeclipse的根目录。
@@ -61,3 +112,7 @@ D:/MyEclipse/Common/binary/com.sun.java.jdk.win32.x86_64_1.6.0.013/bin/javaw.exe
 -XX:ReservedCodeCacheSize=512m
 -Dosgi.nls.warnings=ignore
 ```
+
+[1]: https://blog.csdn.net/l4432321/article/details/52049125 'Eclipse中将Java项目转换成Web项目的方法'
+[2]: http://tcrct.iteye.com/blog/736995/ '修改类及jsp文件后不用重启tomcat的方法'
+[3]: https://blog.csdn.net/abc_cba_aaa/article/details/78774918 'ClassNotFoundException:org.springframework.web.context.ContextLoaderListener解决办法'

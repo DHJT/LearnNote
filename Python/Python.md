@@ -1,7 +1,20 @@
 # python
+<!-- @author DHJT 2018-11-30 -->
+
+```sh
+# 查看 python 版本
+python --version
+# 查看 pip 版本
+pip --version
+# 更新 pip
+pip install --upgrade pip
+```
+
 ## python 2 / 3 共存
 - [Win10下python3和python2同时安装并解决pip共存问题](https://www.cnblogs.com/thunderLL/p/6643022.html)
 - [同时装了Python3和Python2，怎么用pip？](https://www.zhihu.com/question/21653286)
+
+- [手把手 | 20行Python代码教你批量将PDF转为Word](https://www.zhihu.com/people/cai-niao-fen-xi-64/activities)
 
 ## 知识点
 - `python`中一切都是对象，严格意义我们不能说值传递还是引用传递，我们应该说传不可变对象和传可变对象。
