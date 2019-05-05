@@ -14,10 +14,15 @@ if exist c:\windows\History\*.* del c:\windows\History\*.*
 - `shutdown –s –t 10 –m \\192.168.33.158 –c “外星人入侵，计算机马上关闭”-f`
 - `whoami /user`
 - `reg delete "HKEY_USERS\<SID>\Software\Scooter Software\Beyond Compare 4" /v CacheId /f`
-- 获取已经使用的端口信息：`netstat -aon`
-- 获取到ip的路由跳转节点：`tracert ip`
 - 获取无线密码信息：`for /f "skip=9 tokens=1,2 delims=:" %i in ('netsh wlan show profiles') do @echo %j | findstr -i -v echo | netsh wlan show profiles %j key=clear`
     + 指定wifi的密码：`Netsh wlan show profile name=”热点名字” key=clear`
+
+``` batch
+# 获取已经使用的端口信息：第一行的本地地址显示端口为80，最右面对应的是PID=4.。
+netstat -ano
+# 获取到ip的路由跳转节点
+tracert ip
+```
 
 分区处理
 diskpart

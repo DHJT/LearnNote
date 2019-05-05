@@ -11,6 +11,9 @@
 在eclipse的配置文件里指定jdk路径，只需在eclipse的配置文件里增加-vm参数即可。
 打开eclipse目录下的eclipse.ini配置文件，增加-vm配置，需要注意的是该参数要加在-vmargs之前
 
+### 如何在Eclipse中彻底修改一个项目名称
+- [如何在Eclipse中彻底修改一个项目名称](https://blog.csdn.net/a18716374124/article/details/79499589)
+
 ### 代码模板
 - 在Preferences”对话框中点击“Java”->“Editor”->“Templates”
 ```ini
@@ -112,6 +115,10 @@ D:/MyEclipse/Common/binary/com.sun.java.jdk.win32.x86_64_1.6.0.013/bin/javaw.exe
 -XX:ReservedCodeCacheSize=512m
 -Dosgi.nls.warnings=ignore
 ```
+
+### 问题解决
+- [eclipse鼠标悬停提示一移开就消失解决办法](https://blog.csdn.net/chen_changying/article/details/80601986)
+    + eclipse4.11实测：`org.eclipse.ui.editors.prefs`、`org.eclipse.wst.html.ui.prefs`;
 
 [1]: https://blog.csdn.net/l4432321/article/details/52049125 'Eclipse中将Java项目转换成Web项目的方法'
 [2]: http://tcrct.iteye.com/blog/736995/ '修改类及jsp文件后不用重启tomcat的方法'

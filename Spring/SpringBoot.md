@@ -88,6 +88,12 @@ mvn spring-boot:help -Ddetail
 mvn spring-boot:run -Drun.arguments="--server.port=8888"
 ```
 
+### 常用的 starter 启动器：
+- 单元测试: spring-boot-starter-web;
+- 数据库持久层框架 JPA：spring-boot-starter-data-jpa；
+- 安全框架：spring-boot-starter-security;
+- Redis 缓存：spring-boot-starter-data-redis；
+
 ### 
 - spring-boot-starter-actuator[2]
     + 一个spring提供的监控模块
