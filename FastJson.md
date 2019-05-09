@@ -33,3 +33,20 @@ PropertyFilter propertyFilter = new PropertyFilter() {
 };
 JSON.toJSONString(user, propertyFilter);
 ```
+
+### 与 SpringMVC 集成
+``` xml
+    <dependency>
+        <groupId>com.alibaba</groupId>
+        <artifactId>fastjson</artifactId>
+        <version>${fastjson.version}</version>
+    </dependency>
+
+    <mvc:annotation-driven>
+        <mvc:message-converters>
+            <bean class="com.alibaba.fastjson.support.spring.FastJsonHttpMessageConverter" />
+        </mvc:message-converters>
+    </mvc:annotation-driven>
+```
+
+[1]: https://github.com/alibaba/fastjson/wiki/在-Spring-中集成-Fastjson '在 Spring 中集成 Fastjson'

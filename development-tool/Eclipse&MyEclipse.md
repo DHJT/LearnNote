@@ -123,3 +123,4 @@ D:/MyEclipse/Common/binary/com.sun.java.jdk.win32.x86_64_1.6.0.013/bin/javaw.exe
 [1]: https://blog.csdn.net/l4432321/article/details/52049125 'Eclipse中将Java项目转换成Web项目的方法'
 [2]: http://tcrct.iteye.com/blog/736995/ '修改类及jsp文件后不用重启tomcat的方法'
 [3]: https://blog.csdn.net/abc_cba_aaa/article/details/78774918 'ClassNotFoundException:org.springframework.web.context.ContextLoaderListener解决办法'
+[4]: https://blog.csdn.net/johnson67/article/details/8574871 'eclipse无法正确显示代码提示，显示No Default Proposals'

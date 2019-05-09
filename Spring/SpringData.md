@@ -17,3 +17,6 @@ Spring Data 包含多个子项目：
 - Mapping - 基于 Grails 的提供对象映射框架，支持不同的数据库
 - Examples - 示例程序、文档和图数据库
 - Guidance - 高级文档
+
+- 
+[1]: https://github.com/spring-projects/spring-data-book '样例'
