@@ -14,6 +14,15 @@ K8S，就是基于容器的集群管理平台，它的全称，是kubernetes。
 
 ## 安装
 
+## 使用
+```sh
+# 运行交互式的容器
+docker run -i -t ubuntu:15.10 /bin/bash
+# 启动容器（后台模式）
+docker run -d ubuntu:15.10 /bin/sh -c "while true; do echo hello world; sleep 1; done"
+
+docker run --name tomcat -p 8080:8080 -v $PWD/test:/usr/local/tomcat/webapps/test -d tomcat
+```
 
 ## 常用命令
 ```sh
@@ -22,6 +31,9 @@ docker images|grep tomcat
 docker ps
 docker ps -a
 docker ps -aq
+# 拉取官方的镜像,标签为3.2
+docker pull  redis:3.2
+docker stop name
 ```
 
 ### 配置镜像加速器

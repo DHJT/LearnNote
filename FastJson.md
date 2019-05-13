@@ -4,7 +4,7 @@
 ## 过滤字段
 1、在对象对应字段前面加`transient`，表示该字段不用序列化，即在生成json的时候就不会包含该字段了。
 比如
-  private transient String name;  
+  private transient String name;
 
 2、在对象响应字段前加注解，这样生成的json也不包含该字段。
 ``` java
@@ -34,6 +34,15 @@ PropertyFilter propertyFilter = new PropertyFilter() {
 JSON.toJSONString(user, propertyFilter);
 ```
 
+
+FastJson SerializerFeatures
+
+WriteNullListAsEmpty  ：List字段如果为null,输出为[],而非null
+WriteNullStringAsEmpty ： 字符类型字段如果为null,输出为"",而非null
+DisableCircularReferenceDetect ：消除对同一对象循环引用的问题，默认为false（如果不配置有可能会进入死循环）
+WriteNullBooleanAsFalse：Boolean字段如果为null,输出为false,而非null
+WriteMapNullValue：是否输出值为null的字段,默认为false。
+
 ### 与 SpringMVC 集成
 ``` xml
     <dependency>
@@ -47,6 +56,35 @@ JSON.toJSONString(user, propertyFilter);
             <bean class="com.alibaba.fastjson.support.spring.FastJsonHttpMessageConverter" />
         </mvc:message-converters>
     </mvc:annotation-driven>
+
+    <mvc:annotation-driven>
+        <mvc:message-converters register-defaults="true">
+            <bean class="com.alibaba.fastjson.support.spring.FastJsonHttpMessageConverter">
+                <property name="supportedMediaTypes">
+                    <list>
+                        <!-- 避免IE出现下载JSON文件的情况 -->
+                        <value>text/html;charset=UTF-8</value>
+                        <value>application/json</value>
+                        <value>application/xml;charset=UTF-8</value>
+                        <value>application/x-www-form-urlencoded;charset=UTF-8</value>
+                    </list>
+                </property>
+                <property name="features">
+                    <list>
+                        <!-- 默认的意思就是不配置这个属性，配置了就不是默认了 -->
+                        <!-- 是否输出值为null的字段 ，默认是false-->
+                        <value>WriteMapNullValue</value>
+                        <value>WriteNullNumberAsZero</value>
+                        <value>WriteNullListAsEmpty</value>
+                        <value>WriteNullStringAsEmpty</value>
+                        <value>WriteNullBooleanAsFalse</value>
+                        <value>WriteDateUseDateFormat</value>
+                    </list>
+                </property>
+            </bean>
+        </mvc:message-converters>
+    </mvc:annotation-driven>
 ```
 
 [1]: https://github.com/alibaba/fastjson/wiki/在-Spring-中集成-Fastjson '在 Spring 中集成 Fastjson'
+[2]: https://blog.csdn.net/zxygww/article/details/46516101 '在springmvc中解决FastJson循环引用的问题'
