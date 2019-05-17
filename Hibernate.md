@@ -46,6 +46,14 @@ MatchMode.ANYWHERE --> 字符串在中间匹配.相当于"like '%value%'"
 MatchMode.START --> 字符串在最前面的位置.相当于"like 'value%'"
 MatchMode.END --> 字符串在最后面的位置.相当于"like '%value'"
 
+### 注解配置
+```java
+// 标记在父类上，用来做公共的基础实体，用于继承
+@MappedSuperclass
+@Column(name = "ARCHIVE_TYPE_CLASS")
+@Transient
+```
+
 ### hibernate映射视图的两种方式
 - 数据库已经建立视图，hibernate只是把视图当作普通的表来映射。
 视图VIEW_MER_INST_POS:

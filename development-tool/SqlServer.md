@@ -59,3 +59,6 @@ update qrda_gass.dbo.T_QR_FOLDER_WSDA  SET ITEM_TITLES=(select stuff((select ','
 - DBCC CURSORSTATS ：显示SQL Server 2000游标的统计信息
 - DBCC MEMORYSTATS ：显示SQL Server 2000内存是如何细分的
 - DBCC SQLMGRSTATS ：显示缓冲区中先读和预读准备的SQL语句
+
+### 问题及解决方案
+- [SQL Server全文搜索](https://www.cnblogs.com/lyhabc/p/3255960.html)

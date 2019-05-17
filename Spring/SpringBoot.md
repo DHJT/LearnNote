@@ -94,6 +94,10 @@ mvn spring-boot:run -Drun.arguments="--server.port=8888"
 - 安全框架：spring-boot-starter-security;
 - Redis 缓存：spring-boot-starter-data-redis；
 
+- spring-boot-starter-actuator
+- spring-boot-autoconfigure
+- spring-boot-starter-parent
+
 ### 
 - spring-boot-starter-actuator[2]
     + 一个spring提供的监控模块
@@ -130,6 +134,72 @@ mvn spring-boot:run -Drun.arguments="--server.port=8888"
   </plugins>
 </build>
 ```
+### 不使用 spring-boot-starter-parent 构建 spring boot 应用
+
+但是在真正的项目开发中，往往模块需要定义自己的 而 maven 的 pom 只允许一个 存在，这种情况下，可以采用下面的定义来避免使用 spring-boot-start-parent。安装如下配置的 pom.xml 可以通过 maven package 生成可以运行的 jar 包，通过`java -jar xxxx.jar`启动运行。
+```xml
+<parent>
+  <groupId>org.springframework.boot</groupId>
+  <artifactId>spring-boot-starter-parent</artifactId>
+  <version>1.4.0.RELEASE</version>
+</parent>
+<dependencies>
+  <dependency>
+    <groupId>org.springframework.boot</groupId>
+    <artifactId>spring-boot-starter-web</artifactId>
+    <version>1.4.0.RELEASE</version>
+  </dependency>
+
+  <!--ImportdependencymanagementfromSpringBoot-->
+  <dependency>
+    <groupId>org.springframework.boot</groupId>
+    <artifactId>spring-boot-dependencies</artifactId>
+    <version>1.4.0.RELEASE</version>
+    <type>pom</type>
+    <scope>import</scope>
+  </dependency>
+</dependencies>
+
+<build>
+  <plugins>
+    <plugin>
+      <groupId>org.springframework.boot</groupId>
+      <artifactId>spring-boot-maven-plugin</artifactId>
+      <version>1.4.0.RELEASE</version>
+      <configuration>
+        <executable>true</executable>
+      </configuration>
+      <executions>
+        <execution>
+          <goals>
+            <goal>repackage</goal>
+          </goals>
+        </execution>
+      </executions>
+    </plugin>
+  </plugins>
+</build>
+```
+
+### 不依赖 Spring 提供的父项目`spring-boot-starter-parent`
+```xml
+<!-- 在pom文件中，使用的SpringBoot提供的父依赖项目。在真实的企业级项目，我们可能会有自己的父项目，不想依赖Spring提供的父项目 -->
+<dependencyManagement>
+    <dependencies>
+        <dependency>
+            <!-- Import dependency management from Spring Boot -->
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-dependencies</artifactId>
+            <version>1.4.3.RELEASE</version>
+            <type>pom</type>
+            <scope>import</scope>
+        </dependency>
+
+    </dependencies>
+</dependencyManagement>
+<!-- 其余配置和SpringBoot快速入门程序一样，启动类和测试步骤均一样。 -->
+```
 
 [1]: https://gitee.com/didispace/SpringBoot-Learning 'SpringBoot-Learning'
-[2]: https://blog.csdn.net/love3765/article/details/79291584 `SpringBoot随笔（一）： spring-boot-starter-actuator 模块详解`
+[2]: https://blog.csdn.net/love3765/article/details/79291584 'SpringBoot随笔（一）： spring-boot-starter-actuator 模块详解'
+[3]: http://docs.spring.io/spring-boot/docs/1.4.3.RELEASE/reference/htmlsingle/#using-boot-maven-without-a-parent 'using-boot-maven-without-a-parent'

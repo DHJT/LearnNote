@@ -28,3 +28,25 @@ centos77.magedu.com
 ### 7下的启用静态IP以及
 
 默认情况下不能使用直接联网，需要配置才可
+
+### Linux CentOS 7电源管理设置（合盖不睡眠）
+
+有时候需要：合上笔记本盖子（显示屏关闭），但是远程在操作此机器，则希望合盖不睡眠（包括网络正常使用）
+```sh
+# gedit /etc/systemd/logind.conf  很多地方看的是system!!到处抄;这里是Centos7.2!在systemd目录!!!
+vim /etc/systemd/logind.conf
+#HandlePowerKey按下电源键后的行为，默认power off
+#HandleSleepKey 按下挂起键后的行为，默认suspend
+#HandleHibernateKey 按下休眠键后的行为，默认hibernate
+#HandleLidSwitch 合上笔记本盖后的行为，默认suspend   （改为lock；即合盖不休眠）在原文件中，还要去掉前面的#
+HandleLidSwitch=lock
+# 运行：生效。
+systemctl restart systemd-logind
+```
+
+### 连接无线
+```sh
+wpa_supplicant -B -i wlp9s0 -c <(wpa_passphrase "Xiaomi_1402" "xm13939761503")
+```
+
+[1]: https://blog.csdn.net/xiaoyu19910321/article/details/78504400 'CentOS 7如何连接无线网络'
