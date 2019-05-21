@@ -1,4 +1,6 @@
-© 2017-04-19 DHJT
+# SQL
+<!-- © 2017-04-19 DHJT -->
+
 ## 基础知识
 - **SQL**中`group by`语句中，只能查询`group by`后面出现的分组字段.
 ``` sql
@@ -22,6 +24,9 @@ select CONVERT(nvarchar(12), GETDATE(), 112);
 -- 获取当前年份、月份、日、小时、分钟、秒、当前第几周  YEAR/YY/MM/DD/hh/MI/SECOND/WEEK/WEEKDAY
 select Datename(YEAR, GETDATE());
 ```
+
+### UNION ALL
+使用时需要字段对应，语句中不能存在 order by 语句
 
 ### Like特殊情况：搜索通配符字符
 使用`ESCAPE`关键字定义转义符。在模式中，当转义符置于通配符之前时，该通配符就解释为普通字符。例如，要搜索在任意位置包含字符串 5% 的字符串，请使用：
