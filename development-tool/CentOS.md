@@ -49,4 +49,13 @@ systemctl restart systemd-logind
 wpa_supplicant -B -i wlp9s0 -c <(wpa_passphrase "Xiaomi_1402" "xm13939761503")
 ```
 
+### 安装 java
+```sh
+vi /etc/profile
+source /etc/profile
+# 添加如下两行并保存
+export JAVA_HOME=/root/jdk1.8.0_211
+export PATH=$PATH:$JAVA_HOME/bin
+```
+
 [1]: https://blog.csdn.net/xiaoyu19910321/article/details/78504400 'CentOS 7如何连接无线网络'
