@@ -13,6 +13,12 @@ yum -y install vim*
 yum -y install yum-utils
 ```
 
+### 添加开机启动服务/脚本
+```sh
+systemctl enable jenkins.service #设置jenkins服务为自启动服务
+systemctl start  jenkins.service #启动jenkins服务
+```
+
 ### centos7修改hostname
 ```sh
 ip addr
@@ -23,6 +29,16 @@ centos77.magedu.com
 [root@centos7 ~]$ cat /etc/hosts                                           # 检查
 127.0.0.1   localhost localhost.localdomain localhost4 localhost4.localdomain4 centos77.magedu.com
 ::1         localhost localhost.localdomain localhost6 localhost6.localdomain6
+```
+
+### 7下防火墙
+```sh
+# 绿色字样标注的“active（running）”，说明防火墙是开启状态 disavtive（dead）的字样，说明防火墙已经关闭
+systemctl status firewalld.service
+# 一旦重启操作系统，防火墙就自动开启了
+systemctl stop firewalld.service
+# 禁止防火墙服务器
+systemctl disable firewalld.service
 ```
 
 ### 7下的启用静态IP以及
@@ -59,3 +75,4 @@ export PATH=$PATH:$JAVA_HOME/bin
 ```
 
 [1]: https://blog.csdn.net/xiaoyu19910321/article/details/78504400 'CentOS 7如何连接无线网络'
+[2]: https://www.cnblogs.com/startcentos/p/6147444.html '【centos7】添加开机启动服务/脚本'

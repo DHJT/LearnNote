@@ -7,6 +7,17 @@
     + `https://docs.spring.io/spring-security/site/docs/current/guides/html5/hellomvc-javaconfig.html`
     + `https://docs.spring.io/spring-security/site/docs/current/reference/htmlsingle/#what-is-acegi-security`
 
+```yaml
+# SpringBoot security关闭验证yml配置
+# 监控关闭
+security:
+  basic:
+    enabled: false
+management:
+  security:
+    enabled: false
+```
+
 ### 
 - CSRF防御:Spring Security默认启用CSRF防御，要求每个POST请求都要都要带上CSRF token参数，如果感觉比较麻烦或者网站安全性要求不高，可以配置禁用：
 - 默认账户为`user`，密码会在控制太打印

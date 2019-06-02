@@ -233,3 +233,4 @@ dependencyManagement适用于父pom文件中管理依赖
 [3]: https://blog.csdn.net/boling_cavalry/article/details/79070744 '实战maven私有仓库三部曲之二：上传到私有仓库'
 [4]: https://blog.csdn.net/ckxuexixuexi/article/details/80824203 'maven jar包没有能正确下载，如何解决（我所知道的）'
 [5]: https://blog.csdn.net/ou_yu_chen/article/details/82999577 'maven本地仓库jar包下载失败/不完全的解决'
+[6]: https://blog.csdn.net/She_lock/article/details/79557022 '使用docker-maven-plugin插件构建和推送Docker映像'

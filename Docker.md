@@ -62,13 +62,21 @@ docker run -i -t ubuntu:15.10 /bin/bash
 docker run -d ubuntu:15.10 /bin/sh -c "while true; do echo hello world; sleep 1; done"
 # 运行tomcat
 docker run --name tomcat -p 8080:8080 -v $PWD/test:/usr/local/tomcat/webapps/test -d tomcat
-docker exec -it tomcat /bin/bash 
+docker exec -it tomcat /bin/bash
 
 docker run --name runoob-nginx-test -p 8081:80 -d nginx
 # 查看容器日志
 docker logs -tf --tail 10 `CONTAINER ID`
 
 docker cp mysolr:/opt/solr/ /usr/local/ # 容器拷贝宿主机
+# mysql
+docker run -p 3306:3306 --name d_dh_mysql5 -v $PWD/conf5:/etc/mysql/conf.d -v $PWD/logs5:/logs -v $PWD/data5:/var/lib/mysql -e MYSQL_ROOT_PASSWORD=123456 -d mysql:5.7.26
+# elasticsearch
+docker network create somenetwork
+docker run -d --name elasticsearch --net somenetwork -p 9200:9200 -p 9300:9300 -e "discovery.type=single-node" elasticsearch:tag
+# rabbitmq
+# PostgreSQL
+docker run --name some-postgres -p 5432:5432 -e POSTGRES_PASSWORD=123456 -d postgres
 ```
 
 ## 常用命令
@@ -83,6 +91,7 @@ docker pull  redis:3.2
 docker stop name
 # 重启之前停掉的 docker 容器或者正在运行的容器 name/CONTAINER ID
 docker restart name/`CONTAINER ID`
+systemctl daemon-reload
 ```
 
 ### 配置镜像加速器
@@ -106,3 +115,4 @@ ps -ef|grep docker
 [2]: https://docs.docker.com/ 'docker-docs'
 [3]: https://hub.docker.com/ 'docker-hub'
 [4]: https://cr.console.aliyun.com/cn-hangzhou/instances/mirrors '阿里云镜像加速'
+[5]: https://www.cnblogs.com/hailun1987/p/7518306.html 'docker端口映射或启动容器时报错Error response from daemon: driver failed programming external connectivity on endpoint quirky_allen'

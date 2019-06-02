@@ -98,7 +98,7 @@ mvn spring-boot:run -Drun.arguments="--server.port=8888"
 - spring-boot-autoconfigure
 - spring-boot-starter-parent
 
-### 
+### actuator
 - spring-boot-starter-actuator[2]
     + 一个spring提供的监控模块
 - spring-boot-devtools实现热部署
