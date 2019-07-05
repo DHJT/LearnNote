@@ -5,17 +5,12 @@
 - `hibernate`的6种查询方式：
     - `HQL`查询
     - 对象化查询`Criteria`
-    - 动态查询`DetachedCriteria`
+    - 离线查询——动态查询`DetachedCriteria`
     - 例子查询——Example查询
         + [Hibernate查询之Example查询](https://blog.csdn.net/xianymo/article/details/38924541)
     - `sql`查询
     - 命名查询
 - `OneToMany`、`ManyToOne`中含有子表，传递对象到前台页面。
-``` java
-ArchiveTypeRule archiveTypeRule = getBo().queryByOwnerId(ownerId);
-setJson(JsonUtil.toString(archiveTypeRule, new String[]{"archiveTypeRule"}));
-```
-- **Hibernate**的保存方法：
 ``` java
 DetachedCriteria query = DetachedCriteria.forClass(EntityBorrow.class);
 List<EntityBorrow> list = App.getHibernateDao().findByCriteria(query);
@@ -30,7 +25,72 @@ String preId = gar.get(0).toString();
 
 String hql ="from GeneralArchiveRaletion where fondsId='root'";
 List<GeneralArchiveRaletion> gar = App.getHibernateDao().find(hql);
-String preId = gar.get(0).getId();
+
+Criteria criteria = session.createCriteria(Emp.class);
+Dept d = new Dept();
+d.setDeptno((byte) 20);
+criteria.add(Restrictions.eq("dept", d));//找到20号部门下的员工
+// 逻辑或
+Disjunction disjunc = Restrictions.disjunction();
+Criterion cri = Restrictions.sqlRestriction("ename like '%S%'  or sal >800");//
+disjunc.add(cri);//自定义sql语句添加 or 条件
+// 逻辑与
+Conjunction conjunc = Restrictions.conjunction();
+cri = Restrictions.sqlRestriction("job like 'M%' and comm is  null");
+conjunc.add(cri);  //自定义sql语句添加 and条件
+
+criteria.add(disjunc); //将 or 条件 添加到criteria
+criteria.add(conjunc); //将 and条件 添加到criteria
+List<Emp> list = criteria.list();
+
+// 离线查询实例
+Session session = App.getHibernateDao().getSessionFactory().openSession();
+Transaction tx = null;
+try {
+    tx = session.beginTransaction();
+    FolderSS folderSS = (FolderSS) Util.convertMap(FolderSS.class, getMap());
+    Disjunction disjunc = Restrictions.disjunction();
+    disjunc.add(Restrictions.ilike("dazl", "Z21·1", MatchMode.ANYWHERE));
+    disjunc.add(Restrictions.ilike("dazl", "Z21·2", MatchMode.ANYWHERE));
+    Criteria criteria = session.createCriteria(FolderSS.class)
+            .add(Example.create(folderSS).enableLike(MatchMode.ANYWHERE)
+                    .excludeProperty("dazl").excludeNone().excludeZeroes()
+                    .setPropertySelector(new PropertySelector() {
+                        private static final long serialVersionUID = 1L;
+                        // 去除空字符串的判断
+                        @Override
+                        public boolean include(Object propertyValue, String propertyName, Type type) {
+                            if (propertyValue == null)
+                                return false;
+                            if (propertyValue instanceof Number)
+                                if (((Number) propertyValue).longValue() == 0)
+                                    return false;
+                            if (propertyValue instanceof String)
+                                if (((String) propertyValue).length() == 0)
+                                    return false;
+                            return true;
+                        }
+                    })
+            )
+            .add(disjunc);
+    List<FolderSS> ajListAll = criteria.list();
+    tx.commit();
+} catch (Exception e) {
+    tx.rollback();
+    e.printStackTrace();
+} finally {
+    session.close();
+}
+Example example = Example.create(cat)
+    .excludeZeroes()       //排除值为0的属性
+    .excludeProperty("color") //排除 color属性
+    .ignoreCase()         //忽略大小写
+    .enableLike();         //启用模糊查询
+// 甚至可以使用examples在关联对象（Mate.class）上放置条件。
+List results = session.createCriteria(Cat.class)
+    .add( Example.create(cat) )
+    .createCriteria("mate")
+    .add( Example.create( cat.getMate() ) ).list();
 ```
 - [解决Hibernate懒加载的4种方式](https://blog.csdn.net/nwpu_geeker/article/details/79091373)
 
@@ -58,49 +118,49 @@ MatchMode.END --> 字符串在最后面的位置.相当于"like '%value'"
 - 数据库已经建立视图，hibernate只是把视图当作普通的表来映射。
 视图VIEW_MER_INST_POS:
 ```sql
-select MER.DAYS_MERCHT_ID MER_ID,  
-       INST.DAYS_MERCHT_ID INST_ID,  
-       POS.POS_ID POS_ID  
-from tbl_days_mercht_attr MER,  
-     tbl_days_mercht_info INST,  
-     tbl_days_mercht_pos_info POS  
-where MER.days_mercht_id = INST.up_days_mercht_id  
-  and INST.days_mercht_id = POS.days_mercht_id   
+select MER.DAYS_MERCHT_ID MER_ID,
+       INST.DAYS_MERCHT_ID INST_ID,
+       POS.POS_ID POS_ID
+from tbl_days_mercht_attr MER,
+     tbl_days_mercht_info INST,
+     tbl_days_mercht_pos_info POS
+where MER.days_mercht_id = INST.up_days_mercht_id
+  and INST.days_mercht_id = POS.days_mercht_id
 ```
  hbm.xml配置：
 ```xml
-<class name="db.po.ViewMerInstPos" table="VIEW_MER_INST_POS">   
-    <composite-id>  
-        <key-property  name="merId" column="MER_ID" type="java.lang.String" length="8"/>  
-        <key-property  name="instId" column="INST_ID" type="java.lang.String" length="8"/>  
-        <key-property  name="posId"  column="POS_ID" type="java.lang.String" length="8"/>  
-    </composite-id>  
-</class>  
+<class name="db.po.ViewMerInstPos" table="VIEW_MER_INST_POS">
+    <composite-id>
+        <key-property  name="merId" column="MER_ID" type="java.lang.String" length="8"/>
+        <key-property  name="instId" column="INST_ID" type="java.lang.String" length="8"/>
+        <key-property  name="posId"  column="POS_ID" type="java.lang.String" length="8"/>
+    </composite-id>
+</class>
 ```
 - 数据库没有视图，用hibernate自己做视图映射：
 hbm配置如下：
 ```xml
-<hibernate-mapping package="huntersxp.db.pojo">  
-<class name="ViewMerInstPos">  
-<meta attribute="sync-DAO">false</meta>  
-<subselect>  
-select  
-MER.DAYS_MERCHT_ID MER_ID,INST.SHOP_NM SHOP_NM,POS.POS_ID POS_ID  
-from tbl_days_mercht_attr MER,  
-tbl_days_mercht_info INST,  
-tbl_days_mercht_pos_info POS  
-where MER.days_mercht_id = INST.up_days_mercht_id and INST.days_mercht_id = POS.days_mercht_id  
-</subselect>  
-<synchronize table="tbl_days_mercht_attr"/>  
-<synchronize table="tbl_days_mercht_info"/>  
-<synchronize table="tbl_days_mercht_pos_info"/>  
-<composite-id>  
-    <key-property name="merId" column="MER_ID" type="java.lang.String" length="8"/>  
-    <key-property name="shopNm" column="SHOP_NM" type="java.lang.String" length="40" />  
-    <key-property name="posId" column="POS_ID" type="java.lang.String" length="40"/>  
-</composite-id>  
-</class>  
-</hibernate-mapping>  
+<hibernate-mapping package="huntersxp.db.pojo">
+<class name="ViewMerInstPos">
+<meta attribute="sync-DAO">false</meta>
+<subselect>
+select
+MER.DAYS_MERCHT_ID MER_ID,INST.SHOP_NM SHOP_NM,POS.POS_ID POS_ID
+from tbl_days_mercht_attr MER,
+tbl_days_mercht_info INST,
+tbl_days_mercht_pos_info POS
+where MER.days_mercht_id = INST.up_days_mercht_id and INST.days_mercht_id = POS.days_mercht_id
+</subselect>
+<synchronize table="tbl_days_mercht_attr"/>
+<synchronize table="tbl_days_mercht_info"/>
+<synchronize table="tbl_days_mercht_pos_info"/>
+<composite-id>
+    <key-property name="merId" column="MER_ID" type="java.lang.String" length="8"/>
+    <key-property name="shopNm" column="SHOP_NM" type="java.lang.String" length="40" />
+    <key-property name="posId" column="POS_ID" type="java.lang.String" length="40"/>
+</composite-id>
+</class>
+</hibernate-mapping>
 ```
 其中synchronize表示当表的数据发生变化的时候，视图的数据也会发生变化。
 
@@ -138,7 +198,7 @@ Hibernate自带的，不可卸载，通常在Hibernate的初始化阶段，Hiber
 - JBossCache:可作为集群范围内的缓存,支持Hibernate的查询缓存
 
 ### 三级缓存(查询缓存,了解)
-三级缓存是基于二级缓存的，手动将查询的列表结果拿去缓存, 
+三级缓存是基于二级缓存的，手动将查询的列表结果拿去缓存,
 1 . 在Hibernate的配置文件中
 `hibernate.cache.use_query_cache=true`
 2 . 在查询列表前,声明要缓存

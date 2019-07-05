@@ -1,6 +1,6 @@
 # ExtJS
 <!-- [TOC] -->
-
+enforceMaxLength: true,
 ### TreePanel
 - [Extjs tree树的方法和配置项](https://blog.csdn.net/yuan1013922969/article/details/51741336)
 - 树节点合上展开显示不同图标
