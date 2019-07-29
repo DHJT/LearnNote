@@ -4,6 +4,9 @@
 ## 安装
 - [Installing MariaDB Windows ZIP Packages][3]
 
+### 配置
+在 `/***/data/***.err` 文件中看到了启动报错信息：
+
 ## 升级
 ```sh
 # 查看版本

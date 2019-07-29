@@ -4,13 +4,9 @@
 logback是log4j团队创建的开源日志组件。与log4j类似，但是比log4j更强大，是log4j的改良版本。主要优势在于：
 
         a) 更快的实现，logback内核重写过，是的性能有了很大的提升，内存占用也更小。
-
         b) logback-classic对slf4j进行了更好的集成
-
         c) 自动重新加载配置文件，当配置文件修改后，logback-classic能自动重新加载配置文件
-
         d) 配置文件能够处理不同的情况，开发人员在不同的环境下（开发，测试，生产）切换的时候，不需要创建多个文件，可以通过<if><else><then>标签来实现
-
         e) 自动压缩已经打出来的日志文件：RollingFileAppender在产生新文件的时候，会自动压缩已经打印出来的日志文件。而且这个压缩的过程是一个异步的过程。
 
 ### logback中的logger、appender、layout
@@ -86,12 +82,6 @@ logback是log4j团队创建的开源日志组件。与log4j类似，但是比log
     <logger name="org.hibernate.engine.QueryParameters" level="DEBUG" />
     <logger name="org.hibernate.engine.query.HQLQueryPlan" level="DEBUG" />
 
-    <!-- 日志输出级别 -->
-    <root level="INFO">
-        <appender-ref ref="STDOUT" />
-        <appender-ref ref="FILE" />
-    </root>
-
     <!--日志异步到数据库 -->
     <appender name="DB" class="ch.qos.logback.classic.db.DBAppender">
         <!--日志异步到数据库 -->
@@ -105,8 +95,67 @@ logback是log4j团队创建的开源日志组件。与log4j类似，但是比log
             </dataSource>
         </connectionSource>
     </appender>
+
+    <!-- 日志输出级别 -->
+    <root level="INFO">
+        <appender-ref ref="STDOUT" />
+        <appender-ref ref="FILE" />
+    </root>
 </configuration>
 ```
 </details>
+
+### 保存到数据库
+```sql
+BEGIN;
+DROP TABLE IF EXISTS logging_event_property;
+DROP TABLE IF EXISTS logging_event_exception;
+DROP TABLE IF EXISTS logging_event;
+COMMIT;
+
+BEGIN;
+CREATE TABLE logging_event
+  (
+    timestmp         BIGINT NOT NULL,
+    formatted_message  TEXT NOT NULL,
+    logger_name       VARCHAR(254) NOT NULL,
+    level_string      VARCHAR(254) NOT NULL,
+    thread_name       VARCHAR(254),
+    reference_flag    SMALLINT,
+    arg0              VARCHAR(254),
+    arg1              VARCHAR(254),
+    arg2              VARCHAR(254),
+    arg3              VARCHAR(254),
+    caller_filename   VARCHAR(254) NOT NULL,
+    caller_class      VARCHAR(254) NOT NULL,
+    caller_method     VARCHAR(254) NOT NULL,
+    caller_line       CHAR(4) NOT NULL,
+    event_id          BIGINT NOT NULL AUTO_INCREMENT PRIMARY KEY
+  );
+COMMIT;
+
+BEGIN;
+CREATE TABLE logging_event_property
+  (
+    event_id       BIGINT NOT NULL,
+    mapped_key        VARCHAR(254) NOT NULL,
+    mapped_value      TEXT,
+    PRIMARY KEY(event_id, mapped_key),
+    FOREIGN KEY (event_id) REFERENCES logging_event(event_id)
+  );
+COMMIT;
+
+BEGIN;
+CREATE TABLE logging_event_exception
+  (
+    event_id         BIGINT NOT NULL,
+    i                SMALLINT NOT NULL,
+    trace_line       VARCHAR(254) NOT NULL,
+    PRIMARY KEY(event_id, i),
+    FOREIGN KEY (event_id) REFERENCES logging_event(event_id)
+  );
+COMMIT;
+```
+
 [1]: https://www.cnblogs.com/EasonJim/p/7800880.html 'Java日志框架-logback的介绍及配置使用方法（纯Java工程）（转）'
 [2]: http://www.logback.cn/ 'logback中文手册'

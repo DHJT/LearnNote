@@ -108,6 +108,13 @@ MatchMode.END --> 字符串在最后面的位置.相当于"like '%value'"
 
 ### 注解配置
 ```java
+@DynamicInsert属性:设置为true,设置为true,表示insert对象的时候,生成动态的insert语句,如果这个字段的值是null就不会加入到insert语句当中.默认false。
+
+比如希望数据库插入日期或时间戳字段时，在对象字段为空的情况下，表字段能自动填写当前的sysdate。
+
+@DynamicUpdate属性:设置为true,设置为true,表示update对象的时候,生成动态的update语句,如果这个字段的值是null就不会被加入到update语句中,默认false。
+
+比如只想更新某个属性，但是却把整个对象的属性都更新了，这并不是我们希望的结果，我们希望的结果是：我更改了哪些字段，只要更新我修改的字段就够了。
 // 标记在父类上，用来做公共的基础实体，用于继承
 @MappedSuperclass
 @Column(name = "ARCHIVE_TYPE_CLASS")

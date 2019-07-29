@@ -88,6 +88,8 @@ docker ps -a
 docker ps -aq
 # 拉取官方的镜像,标签为3.2
 docker pull  redis:3.2
+# 查看容器的详细信息
+docker inspect name/`CONTAINER ID`
 docker stop name
 # 重启之前停掉的 docker 容器或者正在运行的容器 name/CONTAINER ID
 docker restart name/`CONTAINER ID`

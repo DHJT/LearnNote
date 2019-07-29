@@ -1,6 +1,19 @@
 # ExtJS
 <!-- [TOC] -->
 enforceMaxLength: true,
+this.getSelectionModel().getLastSelected().get("id");
+ExtJs grid单选，多选
+一、
+selType : 'checkboxmodel',
+singleSelect : true, // 单选
+multiSelect : true, // 多选
+singleSelects:['edit'] :表示只有选择一行记录时edit才可点击，其他情况被禁用，edit表示按钮的id
+multiSelects:['delete'] : 表示当选择一条或多条记录时delete才可点击。delete为按钮id
+
+二、
+selModel : Ext.create('Ext.selection.CheckboxModel', {
+            mode : 'SINGLE'
+        }),
 ### TreePanel
 - [Extjs tree树的方法和配置项](https://blog.csdn.net/yuan1013922969/article/details/51741336)
 - 树节点合上展开显示不同图标

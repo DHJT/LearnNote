@@ -65,7 +65,7 @@ text_general导致不能使用QueryResponse response = solr.query(query);
 solr.cmd start -e cloud
 ```
 - solr是基于 lucence开发的应用，如果query中带有非法字符串，结果很可能是检索出所有内容或者直接报错，所以你对用户的输入必须要先做处理。输入星号，能够检索出所有内容；输入加号，则会报错。
-```java 
+```java
 public static String escapeQueryChars(String s) {
     StringBuilder sb = new StringBuilder();
     for (int i = 0; i < s.length(); i++) {
