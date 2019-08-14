@@ -94,6 +94,23 @@ List results = session.createCriteria(Cat.class)
 ```
 - [解决Hibernate懒加载的4种方式](https://blog.csdn.net/nwpu_geeker/article/details/79091373)
 
+### 使用Hibernate获取最大值(max)的三种方法
+```java
+// 1. 使用 hsql
+Long l = (Long)getSession().createQuery("select max(a.sn) from T a ").uniqueResult();
+System.out.println(c);
+注意：要加上别名“a”, a.ArticleId注意大小写! 否则会出现"无法解释的属性"错误!
+
+// 2. 使用native sql
+sql = "select max(sn) maxid from T";
+maxId = (Long)(session.createSQLQuery(sql).addScalar("maxId", Hibernate.INTEGER)).uniqueResult();
+
+// 3. 使用criteria
+Long l = (Long)dbt.getSession().createCriteria(T.class)
+.setProjection(Projections.projectionList().add(Projections.max("sn"))).uniqueResult();
+同样要注意ArticleId是区分大小写的!
+```
+
 ### 分页
 - `setFirstResult` 是起始数据，`setMaxResults`是查询显示的数据。
 - 如果放在分页程序里边 setFirstResult的值应该是 (当前页面-1)X每页条数，setMaxResults 就是每页的条数了。
@@ -217,3 +234,17 @@ Hibernate自带的，不可卸载，通常在Hibernate的初始化阶段，Hiber
 1.两条query对象必须要有一致的HQL
 2.存的是一个list,当一个成员改变,会导致整个list的改变,效率低
 3.只适用于,不能更改的list集合
+
+
+JPQL有一个重大缺陷：作为查询字符串构建的JPQL查询在编译时不会被计算。JPA2.0引入了criteria 查询：一种类型安全和更面向对象的查询。使用criteria 查询，开发人员可以在编译时检查查询的正确与否。该特性以前只在像Hibernate这样的某些专用框架中可用。
+
+在本文中，我将解释criteria 查询，并且浏览对构建criteria 查询非常有必要的元模型(metamodel)的概念。另外也会讨论criteria 查询的各种API。
+元模型概念
+
+在JPA2.0中，criteria 查询是以元模型的概念为基础的，元模型是为具体持久化单元的受管实体定义的，这些实体可以是实体类，嵌入类或者映射的父类。简答点说，提供受管实体元信息的类就是元模型类。描述受管类的状态和它们之间的关系的静态元模型类可以：
+
+l  从注解处理器产生
+l  从程序产生 
+l  用EntityManager访问
+
+使用元模型类最大的优势是凭借其实例化可以在编译时访问实体的持久属性。该特性使得criteria 查询更加类型安全。
