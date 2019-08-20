@@ -125,7 +125,7 @@ select : function(obj) {
         }
 //回车键监听
 listeners : {
-        specialkey: function(field, e){ 
+        specialkey: function(field, e) {
             if (e.getKey() == e.ENTER) {
                 alert(field.getRawValue())
             }
@@ -200,6 +200,27 @@ Ext.Msg.confirm("提示", "确定完全删除选中卷？", function(btn) {
     });
   }
 });
+//自定义提示信息
+Ext.Msg.show({
+    title:'Save Changes?',
+    msg: 'You are closing a tab that has unsaved changes. Would you like to save your changes?',
+    buttons: Ext.Msg.YESNOCANCEL,  //显示的btn
+    icon: Ext.Msg.QUESTION,//图标 4种  INFO QUESTION ERROR WARNING
+    fn: function(buttonId, text, opt) {// buttonId:yes no cancel
+    }
+});
+//等待框2 wait方法
+Ext.Msg.wait('提示信息', '我是内容', {
+    interval: 500,          //循环定时的间隔
+    duration: 10000,        //总时长
+    increment: 5,           //走完一次进度条次数
+    text: 'Updating...',    //进度条上的文字
+    scope: this,            //作用范围
+    fn: function(){         //回调函数
+        alert('更新成功！！！');
+    }
+})
+
 ```
 - `reader`翻译数据，使其被加载为 Model 实例或Store。
     + `type`包含的数据项与Reader配置的Model(s)中的相符合的属性名称

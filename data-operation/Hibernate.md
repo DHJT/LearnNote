@@ -1,6 +1,13 @@
 # Hibernate
 <!-- @author DHJT 2018-12-11 -->
 
+## 高级
+
+### 连接查询
+HIbernate 中，没有外键关联，Criteria 不能关联查询！所以就不能findByExample，通过一个条件对象来获取数据。
+
+### 子查询（Subqueries）
+
 ## 基础
 - `hibernate`的6种查询方式：
     - `HQL`查询
