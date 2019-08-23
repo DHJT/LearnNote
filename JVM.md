@@ -31,3 +31,4 @@
 
 
 [1]: https://blog.csdn.net/xiaoliuliu2050/article/details/53023734 '为什么要类加载器，类加载器做了什么,加载类的过程'
+[2]: https://mp.weixin.qq.com/s/3_DEPdZTnGmdGBd5iTrVjQ 'JVM核心知识体系'
