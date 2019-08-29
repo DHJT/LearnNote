@@ -105,12 +105,15 @@ List results = session.createCriteria(Cat.class)
 ```java
 // 1. 使用 hsql
 Long l = (Long)getSession().createQuery("select max(a.sn) from T a ").uniqueResult();
-System.out.println(c);
 注意：要加上别名“a”, a.ArticleId注意大小写! 否则会出现"无法解释的属性"错误!
 
 // 2. 使用native sql
+// Query是没有addEntity()的，SqlQuery才有的
+// addEntity()只能添加受Hibernate托管的实体
+// 映射非托管的实体用setResultTransformer(Transformers.aliasToBean(UsingGeneral.class));
 sql = "select max(sn) maxid from T";
 maxId = (Long)(session.createSQLQuery(sql).addScalar("maxId", Hibernate.INTEGER)).uniqueResult();
+Query query = session.createSQLQuery(sql).setResultTransformer(Transformers.aliasToBean(UsingGeneral.class));
 
 // 3. 使用criteria
 Long l = (Long)dbt.getSession().createCriteria(T.class)

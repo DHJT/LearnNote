@@ -14,6 +14,7 @@ multiSelects:['delete'] : 表示当选择一条或多条记录时delete才可点
 selModel : Ext.create('Ext.selection.CheckboxModel', {
             mode : 'SINGLE'
         }),
+
 ### TreePanel
 - [Extjs tree树的方法和配置项](https://blog.csdn.net/yuan1013922969/article/details/51741336)
 - 树节点合上展开显示不同图标
@@ -294,28 +295,28 @@ Ext.Msg.confirm("提示", "确定保存数据？", function(btn) {
 - `columns`中可以获得除本身字段外的列表中一整行数据
 ``` js
 columns : [{
-            header: '密码',
-            dataIndex: 'password',
-            xtype : "hiddenfield",//在列表中不显示，在配置列时也不会出现该项
-            hidden: true
-        }, {
-            header : '借阅状态',
-            dataIndex : "status",
-            sortable : true,
-            width : "15%",
-            align : 'center',
-            stripeRows : true,
-            enableDragDrop : true,
-            renderer : function(value, record, attributes) {
-                var dt = new Date(attributes.data.keepDate);
-                var dt2 = Ext.Date.add(dt, Ext.Date.DAY, attributes.data.keepDay);
-                var str = Ext.Date.between(dt2, dt, new Date());
-                if (value == '1') {
-                    value = '<font color=blue>已归还</font>'
-                }
-                return value;
+        header: '密码',
+        dataIndex: 'password',
+        xtype : "hiddenfield",//在列表中不显示，在配置列时也不会出现该项
+        hidden: true
+    }, {
+        header : '借阅状态',
+        dataIndex : "status",
+        sortable : true,
+        width : "15%",
+        align : 'center',
+        stripeRows : true,
+        enableDragDrop : true,
+        renderer : function(value, record, attributes) {
+            var dt = new Date(attributes.data.keepDate);
+            var dt2 = Ext.Date.add(dt, Ext.Date.DAY, attributes.data.keepDay);
+            var str = Ext.Date.between(dt2, dt, new Date());
+            if (value == '1') {
+                value = '<font color=blue>已归还</font>'
             }
-        }]
+            return value;
+        }
+    }]
 ```
 - 右键菜单
 ``` js
@@ -432,5 +433,22 @@ Ext.apply(Ext.form.VTypes, {
     confirmPwdText:'两次输入的密码不一致！',
 });
 ```
+### 其他
+```js
+// Basic usage:
+var dt = Ext.Date.add(new Date('10/29/2006'), Ext.Date.DAY, 5);
+console.log(dt); // returns 'Fri Nov 03 2006 00:00:00'
+
+// Negative values will be subtracted:
+var dt2 = Ext.Date.add(new Date('10/1/2006'), Ext.Date.DAY, -5);
+console.log(dt2); // returns 'Tue Sep 26 2006 00:00:00'
+
+ // Decimal values can be used:
+var dt3 = Ext.Date.add(new Date('10/1/2006'), Ext.Date.DAY, 1.25);
+console.log(dt3); // returns 'Mon Oct 02 2006 06:00:00'
+// 经过格式的获取前一天的日期
+Ext.Date.format(Ext.Date.add(new Date(),Ext.Date.DAY,-1),'Y-m-d')
+````
 
 [1]: https://www.cnblogs.com/wisdo/p/4896207.html 'EXTJS 密码确认与验证'
+[2]: https://blog.csdn.net/hbclub/article/details/78027652 'ExtJS 6.x 组件xtype一览'
