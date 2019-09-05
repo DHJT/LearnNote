@@ -1,9 +1,11 @@
 # SpringCloud
 <!-- @author DHJT 2018-12-17  -->
-springCloud是基于SpringBoot的一整套实现微服务的框架。他提供了微服务开发所需的配置管理、服务发现、断路器、智能路由、微代理、控制总线、全局锁、决策竞选、分布式会话和集群状态管理等组件。最重要的是，
+springCloud是基于SpringBoot的一整套实现微服务的框架。他提供了微服务开发所需的配置管理、服务发现、断路器、智能路由、微代理、控制总线、全局锁、决策竞选、分布式会话和集群状态管理等组件。最重要的是，跟spring boot框架一起使用的话，会让你开发微服务架构的云服务非常好的方便。
 
-跟spring boot框架一起使用的话，会让你开发微服务架构的云服务非常好的方便。
+https://spring.io/projects/spring-cloud
 
+Note
+    The release train contains a `spring-cloud-dependencies` as well as the `spring-cloud-starter-parent`. You can use the parent as you would the `spring-boot-starter-parent` (if you are using Maven). If you only need dependency management, the "dependencies" version is a BOM-only version of the same thing (it just contains dependency management and no plugin declarations or direct references to Spring or Spring Boot). If you are using the Spring Boot parent POM, then you can use the BOM from Spring Cloud. The opposite is not true: using the Cloud parent makes it impossible, or at least unreliable, to also use the Boot BOM to change the version of Spring Boot and its dependencies. 
 ### Ribbon
 @LoadBalanced
 LB(Load Balance)

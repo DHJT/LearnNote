@@ -36,3 +36,7 @@
 - `updateByPrimaryKeySelective`
     + 只是更新新的model中不为空的字段
 
+### 插件
+实现Interceptor接口
+
+#### PageHelper

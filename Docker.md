@@ -97,6 +97,7 @@ systemctl daemon-reload
 ```
 
 ### 配置镜像加速器
+windows下的配置文件：`%programdata%\docker\config\daemon.json`
 ```sh
 # 针对Docker客户端版本大于 1.10.0 的用户
 # 您可以通过修改daemon配置文件/etc/docker/daemon.json来使用加速器
@@ -111,10 +112,20 @@ systemctl daemon-reload
 systemctl restart docker
 ps -ef|grep docker
 ```
-
+```json
+// Daemon Windows下设置，高级
+{
+    "registry-mirrors":[],
+    "insecure-registries":[],
+    "debug":true,
+    "exnerimental":false,
+    "graph":"D:\\docker\\images"
+}
+```
 
 [1]: https://www.docker.com/ 'docker'
 [2]: https://docs.docker.com/ 'docker-docs'
 [3]: https://hub.docker.com/ 'docker-hub'
 [4]: https://cr.console.aliyun.com/cn-hangzhou/instances/mirrors '阿里云镜像加速'
 [5]: https://www.cnblogs.com/hailun1987/p/7518306.html 'docker端口映射或启动容器时报错Error response from daemon: driver failed programming external connectivity on endpoint quirky_allen'
+[6]: https://www.cnblogs.com/lonquanzj/p/8911977.html 'windows10 彻底卸载 Docker 和 DockerNAT'

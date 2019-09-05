@@ -2,11 +2,6 @@
 <!-- @author DHJT 2018-12-17 -->
 首席架构师:`Chief Software Architect`
 ### 基础
-CAP原则：
-Consistency一致性
-Availability可用性
-Partition tolerance分区容错性
-Eric Brewer 说，这三个指标不可能同时做到。这个结论就叫做CAP定理。
 
 Tomcat集群，Redis共享SESSION处理客户端会话。
 LVS+Keepalived

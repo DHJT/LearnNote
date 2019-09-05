@@ -4,7 +4,18 @@
 ## 分布式
 [redisson分布式锁的简单分析](https://www.jianshu.com/p/d6e9b101f063)
 
+#### CAP原则/定理
+Consistency：一致性
+Availability：可用性
+Partition tolerance：分区容错性
+Eric Brewer 说，这三个指标不可能同时做到。这个结论就叫做CAP定理。
+
+CA：
+AP：Eureka
+CP：Zookeeper
+
 ### BASE理论
+BASE理论是对CAP理论的延伸，思想是即使无法做到强一致性（CAP的一致性就是强一致性），但可以采用适当的采取弱一致性，即最终一致性。
 BASE是Basically Available（基本可用）、Soft state（软状态）和 Eventually consistent（最终一致性）三个短语的缩写。BASE理论是对CAP中一致性和可用性权衡的结果，其来源于对大规模互联网系统分布式实践的总结， 是基于CAP定理逐步演化而来的。BASE理论的核心思想是：即使无法做到强一致性，但每个应用都可以根据自身业务特点，采用适当的方式来使系统达到最终一致性。
 
 #### 基本可用
@@ -19,3 +30,17 @@ BASE是Basically Available（基本可用）、Soft state（软状态）和 Even
 
 #### 最终一致性
 最终一致性强调的是所有的数据副本，在经过一段时间的同步之后，最终都能够达到一个一致的状态。因此，最终一致性的本质是需要系统保证最终数据能够达到一致，而不需要实时保证系统数据的强一致性。
+
+
+服务列表变更Zookeeper服务端会有通知，Eureka则通过长轮询来实现，Eureka未来会实现watch机制
+Eureka看明白了这一点，因此在设计时就优先保证可用性。Eureka各个节点都是平等的，
+Eureka服务治理机制与Dubbo服务治理机制的比较
+
+| Feature                                 | Eureka                      | Zookeeper               |
+| :-------------------------:             | :----------------------:    | :---------------:       |
+| 服务健康检查                            | 可配支持                    | （弱）长连接，keepalive |
+| CAP                                     | AP                          | CP                      |
+| Watch支持（客户端观察到服务提供者变化） | 支持long polling/大部分增量 | 支持                    |
+| 自俄保护                                | 支持                        | -                       |
+| 客户端缓存                              | 支持                        | -                       |
+| 自身集群的监控                          | metrics                     | -                       |
