@@ -51,3 +51,13 @@ done
  
 exit 0
 ```
+
+### 处理U盘
+```sh
+fdisk -l
+
+sudo mkfs.vfat /dev/sdb1
+mount /dev/sdb1 /mnt
+eject /mnt
+
+```

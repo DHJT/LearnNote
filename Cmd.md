@@ -24,7 +24,8 @@ netstat -ano
 tracert ip
 ```
 
-分区处理
+### 分区处理
+```sh
 diskpart
 list disk （此命令是列出所有磁盘驱动器 ，请务必看清楚你的U盘前面的数字编号，例如1）
 select disk # （#是上一步中所显示的U盘编号数字，不要写成硬盘 编号）
@@ -35,6 +36,8 @@ active
 format quick fs=fat32
 assign （U盘会退出重新识别）
 exit
+```
+[U盘修复“系统找不到指定文件”问题记录](https://www.jianshu.com/p/3623cecb41bb)
 
 ### 获取管理员权限
 - [Win10让批处理文件自动获取管理员权限的方法](http://www.xitongzhijia.net/xtjc/20170124/91485.html)

@@ -32,6 +32,7 @@ BASE是Basically Available（基本可用）、Soft state（软状态）和 Even
 最终一致性强调的是所有的数据副本，在经过一段时间的同步之后，最终都能够达到一个一致的状态。因此，最终一致性的本质是需要系统保证最终数据能够达到一致，而不需要实时保证系统数据的强一致性。
 
 
+### Zookeeper与Eureka
 服务列表变更Zookeeper服务端会有通知，Eureka则通过长轮询来实现，Eureka未来会实现watch机制
 Eureka看明白了这一点，因此在设计时就优先保证可用性。Eureka各个节点都是平等的，
 Eureka服务治理机制与Dubbo服务治理机制的比较
