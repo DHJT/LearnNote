@@ -45,3 +45,5 @@ Eureka服务治理机制与Dubbo服务治理机制的比较
 | 自俄保护                                | 支持                        | -                       |
 | 客户端缓存                              | 支持                        | -                       |
 | 自身集群的监控                          | metrics                     | -                       |
+
+[1]: https://www.cnblogs.com/balfish/p/8658691.html '分布式事务，两阶段提交协议，三阶段提交协议'

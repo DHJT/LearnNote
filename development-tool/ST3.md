@@ -40,6 +40,21 @@
     + 文件夹需重命名为`Mermaid`
     + https://packagecontrol.io/packages/Mermaid
 
+### Markdown Editing：这个是非常重要的编辑插件，有很多快捷方式都非常常用，稍微做了一些个人配置修改
+<kbd>tab</kbd>：可以 跳到下一个编辑点
+<kbd>shift + tab</kbd>：把当前标题下的内容折叠起来
+<kbd>alt + b</kbd>：加粗
+<kbd>alt + I</kbd>：斜体
+<kbd>ctrl + 1</kbd>：在标题层级多的时候有用
+<kbd>super+shift+k</kbd>：图片
+<kbd>ctrl+super+v</kbd>：链接（行内式）
+<kbd>ctrl+super+r</kbd>：链接（参考式）
+<kbd>alt+shift+6</kbd>：脚注
+<kbd>ctrl+shift+.</kbd>：引用（因为和插入时间的快捷键冲突了，所以稍微修改了下，只能引用一个层级了，多层引用也一般用不上）
+<kbd>ctrl+shift+tab</kbd>：可选择的，把所有的都折叠展开，or 展开折叠第一层级、第二层级等。
+<kbd>ctrl+shift+alt+pageup</kbd> 和 <kbd>ctrl+shift+alt+pagedown</kbd>：在标题和标题之间进行前后的跳转
+<kbd>ctrl+shift+pageup</kbd> 和 <kbd>ctrl+shift+pagedown</kbd>：也可以实现同上标题前后跳转的功能
+
 ### 插件异常
 - 插件发生报错时，可以从控制查看详细的报错信息。<kbd>Ctrl</kbd>+<kbd>`</kbd>
 ``` log

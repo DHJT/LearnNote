@@ -3,6 +3,15 @@
 
 ## 安装
 - [Installing MariaDB Windows ZIP Packages][3]
+- [mysql_install_db.exe](https://mariadb.com/kb/en/library/mysql_install_dbexe/)
+```sh
+mysql_install_db.exe --datadir=C:\db --service=MyDB --password=secret
+# 启动
+sc start MyDB
+sc stop <servicename>
+sc delete <servicename>
+rmdir /s /q <path-to-datadir>
+```
 
 ### 配置
 在 `/***/data/***.err` 文件中看到了启动报错信息：

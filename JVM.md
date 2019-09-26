@@ -29,6 +29,14 @@
 
 ### 
 
+## 高级
+
+### 调优
+- JVM Server与Client运行模式
+- -Server模式启动时，速度较慢，但是一旦运行起来后，性能将会有很大的提升.原因是:
+当虚拟机运行在-client模式的时候,使用的是一个代号为C1的轻量级编译器, 而-server模式启动的虚拟机采用相对重量级,代号为C2的编译器. C2比C1编译器编译的相对彻底,,服务起来之后,性能更高.
+`JAVA_HOME/jre/lib/amd64/jvm.cfg`/`JAVA_HOME/jre/lib/i386/jvm.cfg`
+
 
 [1]: https://blog.csdn.net/xiaoliuliu2050/article/details/53023734 '为什么要类加载器，类加载器做了什么,加载类的过程'
 [2]: https://mp.weixin.qq.com/s/3_DEPdZTnGmdGBd5iTrVjQ 'JVM核心知识体系'
