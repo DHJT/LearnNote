@@ -17,5 +17,7 @@ Springboot jpa提供了自动填充这两个字段的功能，简单配置一下
 @EntityListeners(AuditingEntityListener.class)
 AuditingEntityListener标签开启后，下面的时间标签才会生效。
 
+- JpaSpecificationExecutor接口不能够单独使用，需要和其他接口一块使用
+
 
 [1]: https://github.com/longfeizheng/jpa-example 'jpa-example'

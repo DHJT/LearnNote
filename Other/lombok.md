@@ -48,3 +48,4 @@ public class EnergySource {
 [1]: https://www.cnblogs.com/30go/p/8468981.html 'eclipse安装lombok'
 [2]: https://www.cnblogs.com/qnight/p/8997493.html '学习Spring Boot：（十五）使用Lombok来优雅的编码'
 [3]: https://www.jianshu.com/p/5411e9efd577 'lombok-maven-plugin delombok你的源码'
+[4]: https://blog.csdn.net/motui/article/details/79012846 'Lombok 介绍'

@@ -1,18 +1,27 @@
 # Tomcat
 <!-- @author DHJT 2018-11-28 -->
 
-## tomcatæ³¨å†Œä¸ºWindowsç³»ç»ŸæœåŠ¡
-1. é¦–å…ˆï¼Œåˆ‡æ¢åˆ°`tomcat\bin`ç›®å½•ä¸‹ï¼Œå¯ä»¥æ‰¾åˆ°`service.bat`ï¼Œ
-2. è¿è¡Œå‘½ä»¤"service install tomcat6"å³å¯å®‰è£…æœåŠ¡ï¼Œè€ŒæœåŠ¡åå°±æ˜¯`tomcat6`ã€‚
-3. æœåŠ¡ä¹Ÿå®Œæˆï¼Œå¯ä»¥åœ¨Windowsçš„æœåŠ¡ç®¡ç†å™¨ä¸­ç›´æŽ¥å¯åŠ¨äº†ã€‚
-4. å¦å¤–ï¼Œä¹Ÿå¯ä»¥ç”¨TOMCATè‡ªå·²æä¾›çš„TOMCATç›‘è§†å™¨åŽ»å¯åŠ¨å’Œé…ç½®TOMCATäº†ï¼Œåªéœ€è¦ä¸ºtomcat6w.exeå»ºç«‹ä¸€ä¸ªå¿«æ·æ–¹å¼ï¼Œç›®æ ‡å†™ä¸º`D:\tomcat6\bin\tomcat6w.exe //MS//Tomcat6`ã€‚
-5. æœåŠ¡å¸è½½ï¼š`service.bat remove tomcat6`
+## tomcat×¢²áÎªWindowsÏµÍ³·þÎñ
+1. Ê×ÏÈ£¬ÇÐ»»µ½`tomcat\bin`Ä¿Â¼ÏÂ£¬¿ÉÒÔÕÒµ½`service.bat`£¬
+2. ÔËÐÐÃüÁî"service install tomcat6"¼´¿É°²×°·þÎñ£¬¶ø·þÎñÃû¾ÍÊÇ`tomcat6`¡£
+3. ·þÎñÒ²Íê³É£¬¿ÉÒÔÔÚWindowsµÄ·þÎñ¹ÜÀíÆ÷ÖÐÖ±½ÓÆô¶¯ÁË¡£
+4. ÁíÍâ£¬Ò²¿ÉÒÔÓÃTOMCAT×ÔÒÑÌá¹©µÄTOMCAT¼àÊÓÆ÷È¥Æô¶¯ºÍÅäÖÃTOMCATÁË£¬Ö»ÐèÒªÎªtomcat6w.exe½¨Á¢Ò»¸ö¿ì½Ý·½Ê½£¬Ä¿±êÐ´Îª`D:\tomcat6\bin\tomcat6w.exe //MS//Tomcat6`¡£
+5. ·þÎñÐ¶ÔØ£º`service.bat remove tomcat6`
 
-## Tomcat é…ç½®é”™è¯¯ç•Œé¢
-- [Tomcat é…ç½®é”™è¯¯ç•Œé¢][1]
+### Tomcat ¹ÜÀíÒ³Ãæ
+```xml
+<!-- ¿ªÆô¹ÜÀí½çÃæ£¬ÔÚtomcat-users.xmlÖÐÅäÖÃ -->
+<!-- http://127.0.0.1:8080/manager -->
+<role rolename="manager-gui"/>
+<user username="admin" password="admin" roles="manager-gui"/>
+```
+`http://127.0.0.1:8080/manager/status`
 
-## tomcatå¯ç”¨èº«ä»½æŽˆæƒéªŒè¯
+## Tomcat ÅäÖÃ´íÎó½çÃæ
+- [Tomcat ÅäÖÃ´íÎó½çÃæ][1]
 
-Solrç‹¬ç«‹æœåŠ¡å°±å¯ä»¥é…ç½®ä½¿ç”¨åŸºç¡€æŽˆæƒæ’ä»¶ä½¿ç”¨tomcatçš„èº«ä»½éªŒè¯
+## tomcatÆôÓÃÉí·ÝÊÚÈ¨ÑéÖ¤
 
-[1]: https://blog.csdn.net/qq_35959573/article/details/80597164 'Tomcat é…ç½®é”™è¯¯ç•Œé¢'
+Solr¶ÀÁ¢·þÎñ¾Í¿ÉÒÔÅäÖÃÊ¹ÓÃ»ù´¡ÊÚÈ¨²å¼þÊ¹ÓÃtomcatµÄÉí·ÝÑéÖ¤
+
+[1]: https://blog.csdn.net/qq_35959573/article/details/80597164 'Tomcat ÅäÖÃ´íÎó½çÃæ'
