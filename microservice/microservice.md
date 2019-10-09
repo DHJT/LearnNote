@@ -6,16 +6,44 @@
 
 能不能做成微服务，取决于四个要素：
 
-小：微服务体积小，2 pizza 团队。
+- 小：微服务体积小，2 pizza 团队。
+- 独：能够独立的部署和运行。
+- 轻：使用轻量级的通信机制和架构。
+- 松：为服务之间是松耦合的。
 
-独：能够独立的部署和运行。
 
-轻：使用轻量级的通信机制和架构。
-
-松：为服务之间是松耦合的。
-
+Nacos 致力于帮助您发现、配置和管理微服务
 
 Spring Cloud：http://projects.spring.io/spring-cloud（现在非常流行的微服务架构）
 Dubbo：http：//dubbo.io
 Dropwizard：http://www.dropwizard.io （关注单个微服务的开发）
 Consul、etcd&etc.（微服务的模块）
+
+服务链路追踪:`Spring Cloud Sleuth`(Zipkin/PinPoint)
+- 链路追踪组件有Google的`Dapper`，Twitter 的`Zipkin`，以及阿里的`Eagleeye`（鹰眼）Skywalking
+- APM（ApplicationPerformance Management）
+
+|       模块       |                          组件                         |
+|------------------|-------------------------------------------------------|
+| 配置中心         | Apollo、`SpringCloud Config`                          |
+| 网关             | Eureka、`SpringCloud Getaway`/Consul,ZK               |
+| 服务链路追踪     | `Spring Cloud Sleuth`(Zipkin/PinPoint)                |
+| 客户端软负载均衡 | `Ribbon`、`spring-cloud-loadbalancer`                 |
+| 熔断器           | Hystrix、spring-cloud-r4j(Resilience4J)，阿里Sentinel |
+
+
+配置管理
+服务注册与发现
+断路器
+智能路由
+服务间调用
+负载均衡
+微代理控制
+总线
+一次性令牌
+全局锁
+领导选举
+分布式会话
+集群状态
+分布式消息
+...
