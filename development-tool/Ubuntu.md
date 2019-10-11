@@ -45,5 +45,7 @@ cat /proc/sys/kernel/hostname
 sudo vim /etc/netplan/50-cloud-init.yaml
 ```
 
+`AppImage`是新型的打包软件，它可以解决Linux上面的依赖问题。
+
 [1]: https://www.jb51.net/article/145542.htm '基于Ubuntu 18.04配置固定IP的方法教程'
 [2]: https://blog.csdn.net/kmblack1/article/details/80931286 'Ubuntu 18.04 修改主机名'

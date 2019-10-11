@@ -20,8 +20,18 @@
 ## Tomcat 配置错误界面
 - [Tomcat 配置错误界面][1]
 
+### 性能优化[^1]
+编辑`tomcat/bin/catalina.bat`文件，添加如下一段，具体要根据现场环境进行参数调整
+```sh
+@echo off
+SET JAVA_OPTS=-server -Xms13312m -Xmx13312m -XX:NewSize=3072m -XX:MaxNewSize=4096m -XX:PermSize=512m -XX:MaxPermSize=512m -XX:MaxTenuringThreshold=10 -XX:NewRatio=2 -XX:+DisableExplicitGC
+```
+
 ## tomcat启用身份授权验证
 
 Solr独立服务就可以配置使用基础授权插件使用tomcat的身份验证
+
+[^1]: [Tomcat 调优总结](https://www.cnblogs.com/onmyway20xx/p/3626449.html)
+
 
 [1]: https://blog.csdn.net/qq_35959573/article/details/80597164 'Tomcat 配置错误界面'

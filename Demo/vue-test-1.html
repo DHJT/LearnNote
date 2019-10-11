@@ -1,0 +1,65 @@
+<!-- /**
+ * @Author: DHJT
+ * @Date:   2019-01-22 12:56:25
+ * @Last Modified by:   DHJT
+ * @Last Modified time: 2019-09-15 21:17:09
+ */ -->
+
+ <!DOCTYPE html>
+ <html lang="zh-CN">
+ <head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+    <title>Ding Jianlong Html</title>
+    <link rel="stylesheet" href="https://cdn.bootcss.com/bootstrap/3.3.7/css/bootstrap.min.css">
+    <!--[if lt IE 9]>
+      <script src="https://cdn.bootcss.com/html5shiv/3.7.3/html5shiv.min.js"></script>
+      <script src="https://cdn.bootcss.com/respond.js/1.4.2/respond.min.js"></script>
+    <![endif]-->
+    <!-- 开发环境版本，包含了有帮助的命令行警告 -->
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+    <style>
+
+</style>
+</head>
+<body>
+    <div id="app">
+        {{ message }}
+    </div>
+    <button @evt="test(message)">test1</button>
+    <button @click='test(message)'>test</button>
+</body>
+<!-- <script src="https://cdn.bootcss.com/jquery/1.12.4/jquery.min.js"></script> -->
+<!-- <script src="https://cdn.bootcss.com/bootstrap/3.3.7/js/bootstrap.min.js"></script> -->
+<script>
+    const vm = new Vue({
+        el: '#app',
+        data: {
+            message: 'Hello Vue!',
+            msg: 'this is test files for vue.js'
+        },
+        computed: {
+            fullName() {
+                return this.firstName + ' ' this.lastName
+            },
+            fullName2: {
+                get() {
+                    return this.msg
+                },
+                set(value) {
+                    const names = value.split(' ')
+                    this.firstName = names[0]
+                    this.lastName = names[1]
+                }
+            }
+        },
+        methods: {
+            test(text) {
+                alert(text + '-' + msg)
+            }
+
+        }
+    });
+</script>
+</html>

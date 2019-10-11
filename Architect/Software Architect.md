@@ -1,8 +1,8 @@
 # Software Architect
 <!-- @author DHJT 2018-12-17 -->
 首席架构师:`Chief Software Architect`
-### 基础
 
+### 基础
 Tomcat集群，Redis共享SESSION处理客户端会话。
 LVS+Keepalived
 VARNISH

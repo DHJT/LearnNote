@@ -1,21 +1,6 @@
 # Java
 <!-- @author DHJT 2018-02-24 -->
 [TOC]
-## 6大基本原则
-1. 单一职责原则
-2. 迪米特法则
-3. 依赖倒置原则
-4. 里氏替换原则
-5. 接口隔离原则
-6. 开闭原则
-
-## 23中设计模式（Design Pattern）
-1. 创建型
-    - 工厂模式、抽象工厂模式
-2. 结构型
-    - 组合模式、装饰器模式、
-3. 行为型
-    - 解释器模式、
 
 ## Java学习
 - java当中的`switch`
@@ -25,6 +10,9 @@
 - 类型参数`<T>`和无界通配符`<?>`
 - 有界通配符`<? extends XXX>`，`<? super XXX>`
     + [List<?>和List<T>的区别？][1]
+
+### 4种引用类型
+强引用、软引用(SoftReference)、弱引用（WeakReference）和幽灵引用（PhantomReference）;
 
 ### 文件操作
 - 兼容Windows、Linux的换行输出：`System.getProperty("line.separator")`
@@ -53,10 +41,18 @@ str.lastIndexOf(".Pdf");
     + 线程安全队列Queue
 
 ### 泛型
+- `？` 表示不确定的 java 类型
+- `T` (type) 表示具体的一个java类型
+-` K V (key value)` 分别代表java键值中的Key Value
+- `E (element)` 代表Element
+
 ```java
 // public <T>这个T是个修饰符的功能，表示是个泛型方法，就像有static修饰的方法是个静态方法一样。
 // <T> 不是返回值，表示传入参数有泛型
 public static final <T> List<T> getBeans(Class<T> clazz) {};
+
+List<T extends Number> list;
+List<? super Student> list;// 只能接收Student及其父类的数据类型。
 ```
 
 ### 集合，数组，处理。

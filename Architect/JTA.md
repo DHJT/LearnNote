@@ -1,9 +1,7 @@
 # JTA
+<!-- @author DHJT 2019-10-11 -->
 
-事务的ACID特性
-原子性（Atomicity）/一致性（Consistency）/隔离性（Isolation）/持久性（Durability）
-
-使用JTA分布式事务）
+## 使用JTA分布式事务
 通过使用Atomikos或Bitronix嵌入式事务管理器，Spring Boot支持跨多个XA资源的分布式JTA事务，在部署到合适的Java EE应用服务器时也支持JTA事务。
 
 当检测到JTA环境时，使用Spring的JtaTransactionManager来管理事务，自动配置的JMS、数据源和JPA bean被升级为支持XA事务，你可以使用标准的Spring风格，例如@Transactional，来参与分布式事务。如果你在JTA环境中，并且仍然希望使用本地事务，你可以设置spring.jta.enabled属性为false以禁用JTA自动配置。
@@ -55,4 +53,3 @@ private ConnectionFactory nonXaConnectionFactory;
 BitronixXAConnectionFactoryWrapper和BitronixXADataSourceWrapper提供了如何编写XA包装器的好例子。
 
 [1]: https://www.cnblogs.com/balfish/p/8658691.html '分布式事务，两阶段提交协议，三阶段提交协议'
-[2]: 
