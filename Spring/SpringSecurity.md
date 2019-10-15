@@ -1,5 +1,37 @@
 # SpringSecurity
 <!-- @author DHJT 2018-09-18 -->
+权限安全控制框架
+
+授权
+## 基本原理
+
+### 认证
+Spring Security 过滤器链
+SecurityContextPersistenceFilter
+- 负责身份认证
+    + `BasicAuthenticationFilter`
+    + `UsernamePasswordAuthenticationFilter`
+    + `RememberMeAuthenticationFilter`
+    + `SmsCodeAuthenticationFilter`
+    + `SocialAuthenticationFilter`
+    + `OAuth2AuthenticationProcessingFilter`
+    + `OAuth2ClientAuthenticationProcessingFilter`
+- 匿名认证
+    + `AnonymousAuthenticationFilter`
+- 异常
+    + `ExceptionTranslationFilter`
+- 最总的过滤器获取到`Authentication`，来判断权限
+    + `FilterSecurityInterceptor`
+- 最终到达资源
+
+### 鉴权
+- `AccessDecisionManager`(I)
+    + `AbstractAccessDecisionManager`
+        * `AffirmativeBased`:一个通过就通过
+        * `ConsensusBased`:多数通过
+        * `UnanimousBased`:一个不通过就不通过
+- `AccessDecisionVoter`
+    + `WebExpressionVoter`
 
 https://github.com/EarthChen/imooc-security-study/
 
@@ -18,6 +50,28 @@ security:
 management:
   security:
     enabled: false
+```
+
+```java
+public void configure(HttpSecurity http) throws Exception {
+    http.authorizeRequests()
+    .antMatchers(
+    SecurityConstants.DEFAULT_UNAUTHENTICATION_URL, SecurityConstants.DEFAULT_LOGIN_PROCESSING_URL_MOBILE,securityProperties.getBrowser().getLoginPage(), SecurityConstants.DEFAULT_VALIDATE_CODE_URL_PREFIX + "/*",securityProperties.getBrowser().getSignUpUrl(), securityProperties.getBrowser().getSession().getSessionInvalidUrl(), securityProperties. getBrowser(). getSignoutUrl(),
+    "/user/regist")
+    .permitAl1()
+    .antMatchersCHttpMethod. GET, "/user/*".hasRole("ADMIN")
+    .anyRequest()
+    .authenticated()
+    .and()
+    .csrf(). disable();
+}
+// 匿名 AnonymousAuthenticationFiter.class
+protected Authentication createAuthentication(HttpServletRequest request){
+    AnonymousAuthenticationToken auth=new AnonymousAuthenticationToken(key, principal, authorities);
+    auth.setDetails(authenticationDetailsSource.buildDetails(request));
+    return auth;
+}
+
 ```
 
 ### 

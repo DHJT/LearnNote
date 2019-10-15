@@ -7,19 +7,38 @@
     + 注：在java中switch后的表达式的类型只能为以下几种：byte、short、char、int（在Java1.6中是这样），在java1.7后支持了对string的判断
 - 静态引入，在程序运行是就加载包中所有静态方法和静态属性，可以不用包名直接调用方法
     + `Java5`增加的功能：`import static java.lang.Integer;`
-- 类型参数`<T>`和无界通配符`<?>`
-- 有界通配符`<? extends XXX>`，`<? super XXX>`
-    + [List<?>和List<T>的区别？][1]
+
+### 自动资源管理(Automatic Resource Management)
+资源会在`try`代码后自动关闭，原因就在于它们都实现了`AutoCloseable`接口。
+```java
+// 在JDK7之后，新增了尝试关闭资源 （try-with-resources）语法
+public void copyFile(String fileInput, String fileOutput) {    
+    try (InputStream input = new FileInputStream(fileInput);
+            OutputStream output = new FileOutputStream(fileOutput)) {
+        byte[] byteArray = new byte[1024];
+        int len = 0;
+        while((len = input.read(byteArray)) != -1) {
+            output.write(byteArray, 0, len);
+        }
+    } catch (IOException e) {
+        e.printStackTrace();
+    }
+}
+```
 
 ### 4种引用类型
 强引用、软引用(SoftReference)、弱引用（WeakReference）和幽灵引用（PhantomReference）;
+
+### 按位与（&）、按位或（|）、异或（^）等运算符
+按位与运算符`&`是双目运算符。
+其功能是参与运算的两数各对应的二进位相与。只有对应的两个二进位都为1时，结果位才为1。参与运算的两个数均以补码出现。
 
 ### 文件操作
 - 兼容Windows、Linux的换行输出：`System.getProperty("line.separator")`
 
 ### 字符串操作
 ```java
-String str = "test1234dasdf.PDF";
+String str = "test1.PDF";
 // 1. 以什么结尾
 str.trim().toLowerCase().endsWith(".pdf");
 // 2. 以什么开始
@@ -45,6 +64,9 @@ str.lastIndexOf(".Pdf");
 - `T` (type) 表示具体的一个java类型
 -` K V (key value)` 分别代表java键值中的Key Value
 - `E (element)` 代表Element
+- 类型参数`<T>`和无界通配符`<?>`
+- 有界通配符`<? extends XXX>`，`<? super XXX>`
+    + [List<?>和List<T>的区别？][1]
 
 ```java
 // public <T>这个T是个修饰符的功能，表示是个泛型方法，就像有static修饰的方法是个静态方法一样。

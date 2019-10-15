@@ -1,6 +1,10 @@
 # Sublime Text 3
 <!-- @author DHJT 2018-12-11 -->
 
+### 快捷键
+<kbd>Ctrl+KU</kbd> 转换文字为大写
+<kbd>Ctrl+KL</kbd> 转换文字为小写
+
 ## NodeJS开发
 ## 配置Git以及Git同步代码
 
