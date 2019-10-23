@@ -199,6 +199,16 @@ mvn spring-boot:run -Drun.arguments="--server.port=8888"
 </dependencyManagement>
 <!-- 其余配置和SpringBoot快速入门程序一样，启动类和测试步骤均一样。 -->
 ```
+```yaml
+management:
+  endpoints:
+    web:
+      exposure:
+        include: "*"
+  endpoint:
+    info:
+      enabled: true
+```
 
 [1]: https://gitee.com/didispace/SpringBoot-Learning 'SpringBoot-Learning'
 [2]: https://blog.csdn.net/love3765/article/details/79291584 'SpringBoot随笔（一）： spring-boot-starter-actuator 模块详解'

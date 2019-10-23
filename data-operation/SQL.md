@@ -106,15 +106,15 @@ ALTER TABLE table_name ADD PRIMARY KEY (column_list)
 ``` sql
 SELECT t.REF,t1.Archive_Name
   FROM qrda_rd.dbo.T_QR_FOLDER_WSDA t,QR_RenDaA.dbo.T_Archive t1
-  where t.REF=t1.Archive_Name
-  
-update qrda_rd.dbo.T_QR_FOLDER_WSDA set DAZL = (select rdjb from QR_RenDaA.dbo.T_Archive where REF=Archive_Name)
+  WHERE t.REF=t1.Archive_Name
 
-Select DAZL,INT_01,MIN(YEAR_CODE)+'-'+MAX(YEAR_CODE) AS y from qrda_rd.dbo.T_QR_FOLDER_WSDA where DAZL is not null GROUP BY DAZL,INT_01 ORDER BY INT_01
+UPDATE qrda_rd.dbo.T_QR_FOLDER_WSDA SET DAZL = (SELECT rdjb FROM QR_RenDaA.dbo.T_Archive WHERE REF=Archive_Name)
+
+SELECT DAZL,INT_01,MIN(YEAR_CODE)+'-'+MAX(YEAR_CODE) AS y from qrda_rd.dbo.T_QR_FOLDER_WSDA WHERE DAZL IS NOT NULL GROUP BY DAZL,INT_01 ORDER BY INT_01
 
 -- 从一张表修改另一张表的值
 UPDATE qrda_rd.dbo.T_QR_FILE_WSDA SET
-  BOX_NO = YEAR_CODE+'-'+RIGHT('0000'+cast(S.qr_hh as varchar(10)),4)
+  BOX_NO = YEAR_CODE+'-'+RIGHT('0000'+cast(S.qr_hh AS varchar(10)),4)
 FROM QR_RenDaA.dbo.T_YWYJ S
 JOIN qrda_rd.dbo.T_QR_FILE_WSDA T ON S.qr_dh = T.REF
 ```
@@ -125,11 +125,62 @@ JOIN qrda_rd.dbo.T_QR_FILE_WSDA T ON S.qr_dh = T.REF
     + [^ ] ：表示不在括号所列之内的单个字符。
     + 查询内容包含通配符时：由于通配符的缘故，导致我们查询特殊字符“%”、“_”、“[”的语句无法正常实现，而把特殊字符用“[ ]”括起便可正常查询。
 ``` sql
-like '%pattern%';
+LIKE '%pattern%';
 SELECT * FROM [user] WHERE u_name LIKE '[张李王]三';
 ```
 - 日期处理。
     + 字符串日期。
+
+### 游标(Cursor)
+- MYSQL 函数，会发现无法使用返回多行结果的语句。但如果你又确实想要使用时，就需要使用到游标，游标可以帮你选择出某个结果（这样就可以做到返回单个结果）。
+- 另外，使用游标也可以轻易的取出在检索出来的行中前进或后退一行或多行的结果。
+- 游标可以遍历返回的多行结果。
+- MYSQL 中游标只适用于存储过程以及函数。
+```sql
+create procedure p1()
+begin
+    declare id int;
+    declare name varchar(15);
+    -- 声明游标
+    declare mc cursor for select * from class;
+    -- 打开游标
+    open mc;
+    -- 获取结果
+    fetch mc into id,name;
+    -- 这里是为了显示获取结果
+    select id,name;
+    -- 关闭游标
+    close mc;
+end;
+
+create procedure p3()
+begin
+    declare id int;
+    declare name varchar(15);
+    declare flag int default 0;
+    -- 声明游标
+    declare mc cursor for select * from class;
+    declare continue handler for not found set flag = 1;
+    -- 打开游标
+    open mc;
+    -- 获取结果
+    l2:loop
+
+    fetch mc into id,name;
+    if flag=1 then -- 当无法fetch会触发handler continue
+        leave l2;
+    end if;
+    -- 这里是为了显示获取结果
+    insert into class2 values(id,name);
+    -- 关闭游标
+    end loop;
+    close mc;
+
+end;
+
+call p3();-- 不报错
+select * from class2;
+```
 
 ### 分页查询
 - MySQL分页查询
@@ -139,7 +190,7 @@ SELECT * FROM [user] WHERE u_name LIKE '[张李王]三';
 * firstIndex:其实的索引
 * pageSize:每页显示的记录数
 */
-select o.* from (sql) o limit firstIndex,pageSize
+SELECT o.* FROM (sql) o LIMIT firstIndex,pageSize
 ```
 - sqlserver2005分页查询
     +  在sqlserver2005之前一直借助top关键字来实现分页查询，不过效率低，在sqlserver2005及其之后的版本都使用row_number()解析函数来完成分页查询，效率有了很大的提高，不过sql语句比较复杂，下面给出分页查询的通式：
@@ -150,7 +201,7 @@ select o.* from (sql) o limit firstIndex,pageSize
 * orderColumn:排序的字段名
 * sql:可以是简单的单表查询语句，也可以是复杂的多表联合查询语句
 */
-select top pageSize o.* from (select row_number() over(order by orderColumn) as rownumber,* from(sql) as o where rownumber>firstIndex;
+SELECT TOP pageSize o.* FROM (SELECT row_number() over(ORDER BY orderColumn) as rownumber,* from(sql) as o where rownumber>firstIndex;
 ```
 - oracle分页查询
     + ROWNUM查询分页通式：

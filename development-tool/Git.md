@@ -153,34 +153,35 @@ $ git log --graph --pretty=oneline --abbrev-commit
 所以，团队合作的分支看起来就像这样：
 
 
-合并分支时，加上--no-ff参数就可以用普通模式合并，合并后的历史有分支，能看出来曾经做过合并，而fast forward合并就看不出来曾经做过合并。
-git merge --no-ff -m "merge with no-ff" dev
+合并分支时，加上`--no-ff`参数就可以用普通模式合并，合并后的历史有分支，能看出来曾经做过合并，而fast forward合并就看不出来曾经做过合并。
+`git merge --no-ff -m "merge with no-ff" dev`
 4.BUG分支
 5.Feature分支
 开发一个新feature，最好新建一个分支；
-如果要丢弃一个没有被合并过的分支，可以通过git branch -D <name>强行删除。
+如果要丢弃一个没有被合并过的分支，可以通过`git branch -D <name>`强行删除。
 - 多人协作
-    + 查看远程库信息，使用git remote -v；
+    + 查看远程库信息，使用`git remote -v`；
     + 本地新建的分支如果不推送到远程，对其他人就是不可见的；
-    + 从本地推送分支，使用git push origin branch-name，如果推送失败，先用git pull抓取远程的新提交；
-    + 在本地创建和远程分支对应的分支，使用git checkout -b branch-name origin/branch-name，本地和远程分支的名称最好一致；
-    + 建立本地分支和远程分支的关联，使用git branch --set-upstream branch-name origin/branch-name；
-    + 从远程抓取分支，使用git pull，如果有冲突，要先处理冲突。
+    + 从本地推送分支，使用`git push origin branch-name`，如果推送失败，先用`git pull`抓取远程的新提交；
+    + 在本地创建和远程分支对应的分支，使用`git checkout -b branch-name origin/branch-name`，本地和远程分支的名称最好一致；
+    + 建立本地分支和远程分支的关联，使用`git branch --set-upstream branch-name origin/branch-name`；
+    + 从远程抓取分支，使用`git pull`，如果有冲突，要先处理冲突。
 
 ## 四.自定义Git
 
 - 忽略特殊文件
-    + 忽略某些文件时，需要编写.gitignore；
+    + 忽略某些文件时，需要编写`.gitignore`；
     + `.gitignore`文件本身要放到版本库里，并且可以对`.gitignore`做版本管理！
 - 配置别名：
-    + 配置Git的时候，加上--global是针对当前用户起作用的，如果不加，那只针对当前的仓库起作用。
-    + 配置文件放哪了？每个仓库的Git配置文件都放在.git/config文件中
-    + 当前用户的Git配置文件放在用户主目录下的一个隐藏文件.gitconfig中
+    + 配置`Git`的时候，加上`--global`是针对当前用户起作用的，如果不加，那只针对当前的仓库起作用。
+    + 配置文件放哪了？每个仓库的 Git 配置文件都放在`.git/config`文件中
+    + 当前用户的`Git`配置文件放在用户主目录下的一个隐藏文件`.gitconfig`中
 ``` sh
 git config --global alias.st status
 git config --global alias.lg "log --color --graph --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset' --abbrev-commit"
 ```
-- 搭建Git服务器
+
+## 搭建Git服务器
 
 ## 标签管理
 - 创建标签
@@ -214,6 +215,7 @@ adduser："/usr/sbin/useradd -d /home/123 -g 123 -s /bin/bash -u 1000 123"返回
 文档在以下网址提供:  https://aka.ms/wsldocs
 ```
 
+```sh
 # or create a new repository on the command line
 echo "# sxy" >> README.md
 git init

@@ -1,4 +1,5 @@
-# Eclipse等开发工具
+# Eclipse & MyEclipse 等开发工具
+<!-- @author DHJT 2019-10-16 -->
 
 ## Eclipse
 
@@ -7,11 +8,19 @@
     + `Windows`->`Perferens`->`General`->`Editors`->`File Associations`
     + 选中相应的文件后缀设置默认打开方式
 
-### 如何在eclipse的配置文件里指定jdk路径（即配置启动eclipse的JDK）
+### Install/Update
+[https://download.eclipse.org/releases/](https://download.eclipse.org/releases/)
+[eclipse 自身升级方法](https://blog.csdn.net/peakerli/article/details/8958733)
+[如何升级Eclipse最新版(Eclipse 2018-12 4.1.0升级）](https://blog.csdn.net/penker_zhao/article/details/91526095)
+When features and plug-ins are manually installed on top of an Eclipse-based product install located on a FAT file system that has already been run at least once, the product must be explicitly restarted with -clean. That is,
+
+    eclipse.exe -clean
+
+### 如何在 Eclipse 的配置文件里指定 jdk 路径（即配置启动 Eclipse 的JDK）
 在eclipse的配置文件里指定jdk路径，只需在eclipse的配置文件里增加-vm参数即可。
 打开eclipse目录下的eclipse.ini配置文件，增加-vm配置，需要注意的是该参数要加在-vmargs之前
 
-### 如何在Eclipse中彻底修改一个项目名称
+### 如何在 Eclipse 中彻底修改一个项目名称
 - [如何在Eclipse中彻底修改一个项目名称](https://blog.csdn.net/a18716374124/article/details/79499589)
 
 ### 代码模板

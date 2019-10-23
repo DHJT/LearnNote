@@ -1,4 +1,8 @@
+# Oracle 数据库
+<!-- @author DHJT 2019-10-16 -->
+
 ## oracle用户创建及权限设置
+
 ### 权限：
 - create session
 - create table
@@ -49,7 +53,7 @@ SQL> @/admin/XX.sql
 
 ### 授予权限
 - 默认的普通用户scott默认未解锁，不能进行那个使用，新建的用户也没有任何权限，必须授予权限
-``` cmd
+```sh
 grant create session to zhangsan;//授予zhangsan用户创建session的权限，即登陆权限
 grant unlimited tablespace to zhangsan;//授予zhangsan用户使用表空间的权限
 grant create table to zhangsan;//授予创建表的权限
