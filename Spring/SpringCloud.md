@@ -91,3 +91,4 @@ Eureka主要提供服务发现和注册，Ribbon提供负载均衡，Feign提供
 [1]: https://www.cnblogs.com/vi-2525/p/8651470.html 'spring cloud eureka-ribbon-fegin'
 [2]: https://blog.csdn.net/yongge1981/article/details/84060978 '（一）Spring Cloud实践： 使用Netflix Eureka实现服务注册与发现'
 [3]: http://www.cnblogs.com/itmsbx/p/9692538.html '关于SpringCloud、SpringBoot 希望这是说得最详细的'
+

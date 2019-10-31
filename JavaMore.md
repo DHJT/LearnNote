@@ -5,6 +5,9 @@
 
 ### Java7与Java8
 - [JAVA8 十大新特性详解](https://www.jb51.net/article/48304.htm)
+```java
+List<String> strList = abList.stream().map(ArchiveBox::getBoxNumber).collect(Collectors.toList());
+```
 
 ## java安全沙箱
 java是一种类型安全的语言，它有四类称为安全沙箱机制的安全机制来保证语言的安全性，这四类安全沙箱分别是：
@@ -27,6 +30,26 @@ java是一种类型安全的语言，它有四类称为安全沙箱机制的安�
 | TreeMap           | 红黑树           | 不安全      | 有序        | 不唯一      |
 | ConcurrentHashMap | 数组+链表/红黑树 | 安全        | 无序        | 不唯一      |
 
+
+## Java之四大内置注解 @Override、 @Deprecated、 @SuppressWarnings、 @SafeVarargs
+
+### @SafeVarargs
+必须是可变参数方法和构造器
+如果是可变参数的方法，那么必须是static和final的
+```java
+public class VarargsWaring {
+
+    @SafeVarargs
+    private static List<String> useVarargs(List<String>... args) {
+        return args.length > 0 ? args[0] : null;
+    }
+
+    public static void main(String[] args) {
+        List list = new ArrayList<String>();
+        System.out.println(VarargsWaring.useVarargs(list));
+    }
+}
+```
 
 [^1]: [java安全沙箱（一）之ClassLoader双亲委派机制](https://my.oschina.net/xionghui/blog/499725)
 [^2]: [java安全沙箱（二）之.class文件检验器](https://www.cnblogs.com/duanxz/p/6108347.html)

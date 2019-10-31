@@ -4,6 +4,11 @@ Spring MVC 是 Spring 提供的一个强大而灵活的 Web 框架。Spring MVC�
 - 处理器映射：选择使用哪个控制器来处理请求
 - 视图解析器：选择结果应该如何渲染
 
+```java
+@PutMapping("/update")
+@CrossOrigin(methods = { RequestMethod.PUT }, origins = "*") // 跨域处理
+```
+
 ### 配置多视图（jsp，freemarker，HTML等）
 - [springmvc 配置多视图（jsp，freemarker，HTML等）](springmvc 配置多视图（jsp，freemarker，HTML等）)
 

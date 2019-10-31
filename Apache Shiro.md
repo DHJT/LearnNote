@@ -1,11 +1,11 @@
 # `Apache Shiro`
 <!-- @author DHJT 2018-12-07 -->
-����ǿ��������ʹ�õ�Java��ȫ��ܣ��ṩ����֤����Ȩ�����ܣ��ͻỰ������
+功能强大且易于使用的Java安全框架，提供了认证，授权，加密，和会话管理。
 
-[ʹ��Shiroʵ��Ȩ����֤][1]
+[使用Shiro实现权限验证][1]
 
-## ���`Struts2`ʹ��
+## 配合`Struts2`使用
 
-## ���`SpringMVC`ʹ��
+## 配合`SpringMVC`使用
 
-[1]: https://blog.csdn.net/qq_39874546/article/details/79081950 'ʹ��Shiroʵ��Ȩ����֤'
+[1]: https://blog.csdn.net/qq_39874546/article/details/79081950 '使用Shiro实现权限验证'

@@ -66,6 +66,8 @@ xxxMapper.insertAllColumn(T);
 // 更新
 xxxMapper.updateById(T);
 xxxMapper.updateAllColumnById(T);
+
+Wrappers.emptyWrapper() // 空的查询器
 ```
 
 ### 活动记录(ActiveRecord)

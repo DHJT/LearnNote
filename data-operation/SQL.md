@@ -25,6 +25,41 @@ select CONVERT(nvarchar(12), GETDATE(), 112);
 select Datename(YEAR, GETDATE());
 ```
 
+|           隔离级别           | 脏读（Dirty Read） | 不可重复读（NonRepeatable Read） | 幻读（Phantom Read） |
+|------------------------------|--------------------|----------------------------------|----------------------|
+| 未提交读（Read uncommitted） | 可能               | 可能                             | 可能                 |
+| 已提交读（Read committed）   | 不可能             | 可能                             | 可能                 |
+| 可重复读（Repeatable read）  | 不可能             | 不可能                           | 可能                 |
+| 可串行化（Serializable ）    | 不可能             | 不可能                           | 不可能               |
+
+### 数据库锁
+共享锁，又称为读锁，获得共享锁之后，可以查看但无法修改和删除数据。
+排他锁，又称为写锁、独占锁，获得排他锁之后，既能读数据，又能修改数据。
+
+#### 加锁原则
+拿MySql的InnoDB引擎来说，对于insert、update、delete等操作。会自动给涉及的数据加排他锁；
+对于一般的select语句，InnoDB不会加任何锁，事务可以通过以下语句给显示加共享锁或排他锁。
+```sql
+共享锁：SELECT ... LOCK IN SHARE MODE;
+排他锁：SELECT ... FOR UPDATE;
+```
+
+### 连接查询
+```sql
+-- 1. 内连接查询 inner join on
+-- -- 产生的结果是AB的交集
+-- 2. 左外连接查询 left outer join
+-- -- 产生表A的完全集，而B表中匹配的则有值，没有匹配的则以null值取代。
+-- 3. 右外连接查询 right outer join
+-- -- 产生表B的完全集，而A表中匹配的则有值，没有匹配的则以null值取代。
+-- 4. 全连接查询 full (outer) join
+-- -- 产生A和B的并集。对于没有匹配的记录，则会以null做为值。
+-- 5. 交叉连接查询 cross join on
+-- 5.1 笛卡尔积
+-- 5.2 select * from user,role;
+
+```
+
 ### UNION ALL
 使用时需要字段对应，语句中不能存在 order by 语句
 

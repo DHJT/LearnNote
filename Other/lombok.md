@@ -44,6 +44,11 @@ public class EnergySource {
 - @NoArgsConstructor：注解在类上；为类提供一个无参的构造方法
 - @AllArgsConstructor：注解在类上；为类提供一个全参的构造方法
 
+### 常见问题
+- lombok注解@Data使用在继承类上时出现警告[^1]
+
+[^1]: [lombok注解@Data使用在继承类上时出现警告](https://blog.csdn.net/feinifi/article/details/85275280)
+
 
 [1]: https://www.cnblogs.com/30go/p/8468981.html 'eclipse安装lombok'
 [2]: https://www.cnblogs.com/qnight/p/8997493.html '学习Spring Boot：（十五）使用Lombok来优雅的编码'

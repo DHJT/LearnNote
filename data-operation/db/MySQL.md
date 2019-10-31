@@ -4,6 +4,9 @@
 ## 安装
 - Mysql 5.7 windows安装 zip安装[^3]
 
+### 注意
+- mysql 不支持全连接查询，即`表1 full (outer) join 表2 on [condition]`
+
 ### 查询更新
 ```sql
 -- 如果是查询更新同一张表，MySql是不允许的，所以这里用INNER JOIN 引入内部关联表即可完后查询更新
@@ -27,7 +30,7 @@ pro_base_timu_knowledge
 GROUP BY
 knowledge_id
 ) b ON pro_base_knowledge.id = b.knowledge_id
-SET pro_base_knowledge.timu_num = b.nums        
+SET pro_base_knowledge.timu_num = b.nums
 ```
 
 ### 动态SQL
@@ -39,6 +42,14 @@ execute s1 using @condition1;
 -- 手工释放，或者是 connection 关闭时， server 自动回收
 deallocate prepare s1;
 ```
+
+### EXPLAIN 分析sql语句执行效率
+
+
+1、开启慢查询日志，设置超过几秒为慢SQL，抓取慢SQL
+2、通过explain对慢SQL分析（重点）
+3、show profile查询SQL在Mysql服务器里的执行细节和生命周期情况（重点）
+4、对数据库服务器的参数调优
 
 ### 错误
 - `[Err] 1093 - You can't specify target table 'bbb_copy' for update in FROM clause`[^1]

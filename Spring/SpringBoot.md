@@ -8,6 +8,13 @@ SpringBoot的主要优点：
   3:内嵌式容器简化Web项目
   4:没有冗余代码生成和XML配置的要求
 
+```java
+@EnableTransactionManagement // 开启事务支持后 service方法上添加 @Transactional
+@SpringBootApplication(scanBasePackages = {"com.hoperun"})
+@EnableScheduling
+@EnableAsync
+```
+
 ## 功能列表
 - spring bootjson
 - spring boot hibernate
