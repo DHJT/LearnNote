@@ -51,6 +51,15 @@ public class VarargsWaring {
 }
 ```
 
+### List转Map
+```java
+Map<Long, User> maps = uList.stream().collect(Collectors.toMap(User::getId, Function.identity()));
+// 看来还是使用JDK 1.8方便一些。另外，转换成map的时候，可能出现key一样的情况，如果不指定一个覆盖规则，上面的代码是会报错的。转成map的时候，最好使用下面的方式：
+maps = uList.stream().collect(Collectors.toMap(User::getId, Function.identity(), (key1, key2) -> key2));
+// 有时候，希望得到的map的值不是对象，而是对象的某个属性，那么可以用下面的方式：
+Map<Long, String> maps = uList.stream().collect(Collectors.toMap(User::getId, User::getAge, (key1, key2) -> key2));
+```
+
 [^1]: [java安全沙箱（一）之ClassLoader双亲委派机制](https://my.oschina.net/xionghui/blog/499725)
 [^2]: [java安全沙箱（二）之.class文件检验器](https://www.cnblogs.com/duanxz/p/6108347.html)
 [^3]: [java安全沙箱（三）之内置于Java虚拟机（及语言）的安全特性](https://my.oschina.net/xionghui/blog/501165)

@@ -1,14 +1,13 @@
 # quartz
 <!-- @author DHJT 2019-10-28 -->
 
+
+### Job 状态和并发
+有一组可添加到 Job 的 Annotation，可以影响 Quartz 的行为。
 ```java
 @PersistJobDataAfterExecution
 @DisallowConcurrentExecution //只有上一个人任务执行完毕才可以执行下一次任务
 ```
-
-### Job 状态和并发
-
-有一组可添加到 Job 的 Annotation，可以影响 Quartz 的行为。
 
 @DisallowConcurrentExecution 添加到 Job 类后，Quartz 将不会同时执行多个 Job 实例（什么是 Job 实例可参看上一节）。
 注意措辞。我们用上一节的例子来讲解，如果 “SalesReportJob” 上添加了这个 Annotation，那么同时只能执行一个“SalesReportForJoe”，但是却可以同时执行“SalesReportForMike”。因此，可以说这个约束是基于 JobDetail 的而不是基于 Job 的。
@@ -26,7 +25,14 @@
 ### JobExecutionException
 最后，我们来看看 Job.execute(…) 方法。这个方法只允许抛出一种异常（包括 RuntimeException），那就是 JobExecutionException。正是因为如此，你通常需要将 execute() 方法中的所有内容放入 try-catch 语句块中。你也需要花点时间看看 JobExecutionException 的文档，你的任务可以使用它提供的各种指令来控制如何处理异常。
 
+### 重试策略
+```java
+Trigger.withMisfireHandlingInstructionDoNothing();
+```
+
 ### 持久化任务
+脚本文件`quartz-2.3.1-sources\org\quartz\impl\jdbcjobstore\db-type.sql`
+
 <details>
   <summary><b>quartz.properties 配置</b> (click to show)</summary>
 Quartz的属性配置文件主要包括三方面的信息：
@@ -77,3 +83,6 @@ org.quartz.jobStore.useProperties:true
 #org.quartz.dataSource.qzDS.maxConnection:10
 ```
 </details>
+
+
+[^1]: [第四十章：基于SpringBoot & Quartz完成定时任务分布式多节点负载持久化](https://www.jianshu.com/p/49133c107143)
