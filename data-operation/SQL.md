@@ -57,7 +57,6 @@ select Datename(YEAR, GETDATE());
 -- 5. 交叉连接查询 cross join on
 -- 5.1 笛卡尔积
 -- 5.2 select * from user,role;
-
 ```
 
 ### UNION ALL
@@ -152,6 +151,12 @@ UPDATE qrda_rd.dbo.T_QR_FILE_WSDA SET
   BOX_NO = YEAR_CODE+'-'+RIGHT('0000'+cast(S.qr_hh AS varchar(10)),4)
 FROM QR_RenDaA.dbo.T_YWYJ S
 JOIN qrda_rd.dbo.T_QR_FILE_WSDA T ON S.qr_dh = T.REF
+-- 一次插入多条数据
+INSERT INTO scheduler.t_schedule_task_log
+(job_key, task_key, task_msg, task_status, task_handle_time, task_handle_finished_time, create_time)
+VALUES( 'test-1', '', '', '', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+( 'test-2', '', '', '', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP);
+
 ```
 - 模糊查询。
     + _ ： 表示任意单个字符。

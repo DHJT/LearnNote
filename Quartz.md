@@ -32,6 +32,34 @@ Trigger.withMisfireHandlingInstructionDoNothing();
 
 ### 持久化任务
 脚本文件`quartz-2.3.1-sources\org\quartz\impl\jdbcjobstore\db-type.sql`
+```yaml
+spring:
+  quartz:
+    #相关属性配置
+    properties:
+      org:
+        quartz:
+          scheduler:
+            instanceName: clusteredScheduler
+            instanceId: AUTO
+          jobStore:
+            class: org.quartz.impl.jdbcjobstore.JobStoreTX
+            driverDelegateClass: org.quartz.impl.jdbcjobstore.StdJDBCDelegate
+            tablePrefix: QRTZ_
+            isClustered: true
+            clusterCheckinInterval: 10000
+            useProperties: false
+          threadPool:
+            class: org.quartz.simpl.SimpleThreadPool
+            threadCount: 10
+            threadPriority: 5
+            threadsInheritContextClassLoaderOfInitializingThread: true
+    #数据库方式
+    job-store-type: jdbc
+    #初始化表结构
+    #jdbc:
+      #initialize-schema: never
+```
 
 <details>
   <summary><b>quartz.properties 配置</b> (click to show)</summary>
@@ -86,3 +114,5 @@ org.quartz.jobStore.useProperties:true
 
 
 [^1]: [第四十章：基于SpringBoot & Quartz完成定时任务分布式多节点负载持久化](https://www.jianshu.com/p/49133c107143)
+
+[1]: '第四十七章：SpringBoot2.0新特性 - Quartz自动化配置集成' https://www.jianshu.com/p/056281e057b3

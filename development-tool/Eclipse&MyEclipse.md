@@ -130,6 +130,9 @@ D:/MyEclipse/Common/binary/com.sun.java.jdk.win32.x86_64_1.6.0.013/bin/javaw.exe
     + eclipse4.11实测：`org.eclipse.ui.editors.prefs`、`org.eclipse.wst.html.ui.prefs`;
 - eclipse中文注释缩进异常[^1]
 - Eclipse注释中文格式没对齐[^2]
+- 修改Eclipse注释里的${Date}变量格式
+    + 日期格式化的方法： ${d:date('yyyy/MM/dd HH:mm:ss')}
+    + 【格外注意】这种日期变量进行格式化的方法只支持eclipse 4.x以上版本，原因：eclipse 4.x之前的版本没有这个功能，不支持日期的字符串格式化。
 
 
 [1]: https://blog.csdn.net/l4432321/article/details/52049125 'Eclipse中将Java项目转换成Web项目的方法'

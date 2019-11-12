@@ -1,6 +1,7 @@
 # python
 <!-- @author DHJT 2018-11-30 -->
 
+## 使用
 ```sh
 # 查看 python 版本
 python --version
@@ -8,6 +9,10 @@ python --version
 pip --version
 # 更新 pip
 pip install --upgrade pip
+# 查看numpy版本;
+pip show numpy
+# 降低numpy的版本
+pip install -U numpy==1.12.0
 ```
 
 ## python 2 / 3 共存
@@ -29,3 +34,6 @@ pip install --upgrade pip
 `pip install Flask`
 - [Python2.7+Django1.8+Bootstrap3 实现增删改查、分页（一）](https://www.cnblogs.com/dingshilei/p/4667642.html)
     + [demo](https://github.com/Dstone11/learn_models)
+
+
+[1]: https://stackoverflow.com/questions/7605631/passing-a-list-to-python-from-command-line 'Passing a List to Python From Command Line'
