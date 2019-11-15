@@ -1,7 +1,6 @@
 # quartz
 <!-- @author DHJT 2019-10-28 -->
 
-
 ### Job 状态和并发
 有一组可添加到 Job 的 Annotation，可以影响 Quartz 的行为。
 ```java
@@ -24,6 +23,11 @@
 
 ### JobExecutionException
 最后，我们来看看 Job.execute(…) 方法。这个方法只允许抛出一种异常（包括 RuntimeException），那就是 JobExecutionException。正是因为如此，你通常需要将 execute() 方法中的所有内容放入 try-catch 语句块中。你也需要花点时间看看 JobExecutionException 的文档，你的任务可以使用它提供的各种指令来控制如何处理异常。
+
+### Quartz之InterruptableJob停止Quartz中正在执行的任务[^2]
+任务类只需要实现InterruptableJob类就可以
+只要实现一个方法:interrupt(),在这个方法中进行标记的改变,在执行中进行这个标记判断
+就可实现中断任务了,另外在调度器上调用方法：sched.interrupt(job.getKey());
 
 ### 重试策略
 ```java
@@ -113,6 +117,7 @@ org.quartz.jobStore.useProperties:true
 </details>
 
 
-[^1]: [第四十章：基于SpringBoot & Quartz完成定时任务分布式多节点负载持久化](https://www.jianshu.com/p/49133c107143)
-
 [1]: '第四十七章：SpringBoot2.0新特性 - Quartz自动化配置集成' https://www.jianshu.com/p/056281e057b3
+
+[^1]: [第四十章：基于SpringBoot & Quartz完成定时任务分布式多节点负载持久化](https://www.jianshu.com/p/49133c107143)
+[^2]: [Quartz之InterruptableJob ](https://www.iteye.com/blog/liuzidong-1145429)

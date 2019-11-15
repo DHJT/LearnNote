@@ -49,12 +49,22 @@ MySQL在5.5.3之后增加了这个utf8mb4的编码，mb4就是most bytes 4的意
 mysql支持的 utf8 编码最大字符长度为 3 字节，如果遇到 4 字节的宽字符就会插入异常了。三个字节的 UTF-8 最大能编码的 Unicode 字符是 0xffff，也就是 Unicode 中的基本多文种平面(BMP)。也就是说，任何不在基本多文本平面的 Unicode字符，都无法使用 Mysql 的 utf8 字符集存储。包括 Emoji 表情(Emoji 是一种特殊的 Unicode 编码，常见于 ios 和 android 手机上)，和很多不常用的汉字，以及任何新增的 Unicode 字符等等(utf8的缺点)。
 
 ### EXPLAIN 分析sql语句执行效率
-
-
 1、开启慢查询日志，设置超过几秒为慢SQL，抓取慢SQL
 2、通过explain对慢SQL分析（重点）
 3、show profile查询SQL在Mysql服务器里的执行细节和生命周期情况（重点）
 4、对数据库服务器的参数调优
+
+### 索引
+索引是在存储引擎中实现的，因此每种存储引擎的索引都不一定完全相同，并且每种存储引擎也不一定支持所有索引类型。
+根据存储引擎定义每个表的最大索引数和最大索引长度。所有存储引擎支持每个表至少16个索引，总索引长度至少为256字节。
+大多数存储引擎有更高的限制。MySQL中索引的存储类型有两种：BTREE和HASH，具体和表的存储引擎相关；
+MYISAM和InnoDB存储引擎只支持BTREE索引；MEMORY和HEAP存储引擎可以支持HASH和BTREE索引
+
+### 备份
+```sql
+-- 需要开启日志记录 mysql.general_log
+SELECT * from mysql.general_log ORDER BY event_time DESC;
+```
 
 ### 错误
 - `[Err] 1093 - You can't specify target table 'bbb_copy' for update in FROM clause`[^1]

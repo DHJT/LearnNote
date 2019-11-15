@@ -78,6 +78,7 @@ drop database qrda_wa;
 -- 创建数据库
 CREATE DATABASE database_name
 ```
+
 ### 表TABLE
 ``` sql
 -- 创建表，删除表
@@ -109,6 +110,19 @@ ALTER TABLE Table1 ALTER COLUMN column1 VARCHAR(255);
 -- 添加/删除列
 ALTER TABLE Person ADD/DROP COLUMN Birthday
 ```
+
+#### truncate和delete[^1]
+删除表中的全部行。但 truncate table 比 delete 速度快，且使用的系统和事务日志资源少。
+
+delete 语句每次删除一行，并在事务日志中为所删除的每行记录一项。truncate table 通过释放存储表数据所用的数据页来删除数据，并且只在事务日志中记录页的释放。
+
+truncate操作与delete操作对比
+
+|   操作   | 回滚 | 高水线 |  空间  | 效率 |
+|----------|------|--------|--------|------|
+| Truncate | 不能 | 下降   | 回收   | 快   |
+| delete   | 可以 | 不变   | 不回收 | 慢   |
+
 ### 视图VIEW
 ``` sql
 CREATE VIEW V_Visit_Reading AS
@@ -314,3 +328,5 @@ SELECT * FROM
     WHERE NAME='qrda_rd'
 )
 ```
+
+[^1]: [truncate和delete之间有什么区别](https://zhidao.baidu.com/question/171481100.html)
