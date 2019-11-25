@@ -7,6 +7,8 @@
 python --version
 # 查看 pip 版本
 pip --version
+# 显示所有pip安装的包
+pip list
 # 更新 pip
 pip install --upgrade pip
 # 查看numpy版本;

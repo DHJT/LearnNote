@@ -1,6 +1,5 @@
 # Excel的一些使用技巧
-
-©大海景天 2017-08-30
+<!-- @author DHJT 2017-08-30 -->
 
 - 合并当前目录下所有工作簿的全部工作表()
 ```vbs
@@ -54,6 +53,7 @@ Loop
 End Sub
 ```
 再点击工具栏中的运行-运行子过程/用户窗体）新的表格会自动保存
+
 ### 公式
 ```vbs
 ="INSERT INTO logistic_basestation (physicalbasestation_id,logisticbasestation_name,basestation_type,project) values('"&A2&"','"&B2&"','"&C2&"','"&D2&"');"

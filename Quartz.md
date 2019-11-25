@@ -2,6 +2,8 @@
 <!-- @author DHJT 2019-10-28 -->
 
 ### Job 状态和并发
+Job默认无状态可以并发执行
+StatefulJob：有状态不能并发执行
 有一组可添加到 Job 的 Annotation，可以影响 Quartz 的行为。
 ```java
 @PersistJobDataAfterExecution

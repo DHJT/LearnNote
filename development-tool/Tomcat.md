@@ -1,42 +1,42 @@
 # Tomcat
 <!-- @author DHJT 2018-11-28 -->
-tomcatÊÖ²á£º [http://tomcat.apache.org/tomcat-9.0-doc/index.html](http://tomcat.apache.org/tomcat-9.0-doc/index.html)
+tomcatæ‰‹å†Œï¼š [http://tomcat.apache.org/tomcat-9.0-doc/index.html](http://tomcat.apache.org/tomcat-9.0-doc/index.html)
 
 ## Tomcat
-- `tomcat`µÄÓ²²¿Êğ(apache-tomcat-6.0.45\conf)
-`MyEclipse`×Ô´øµÄ`tomcat`¿ÉÄÜ½«Ó²²¿ÊğµÄÁ½¸öµØÖ·ºóÃæµÄµØÖ·É¾³ı£¬¿ÉÒÔÊ¹ÓÃÔ­Ê¼µÄ`Tomcat`
+- `tomcat`çš„ç¡¬éƒ¨ç½²(apache-tomcat-6.0.45\conf)
+`MyEclipse`è‡ªå¸¦çš„`tomcat`å¯èƒ½å°†ç¡¬éƒ¨ç½²çš„ä¸¤ä¸ªåœ°å€åé¢çš„åœ°å€åˆ é™¤ï¼Œå¯ä»¥ä½¿ç”¨åŸå§‹çš„`Tomcat`
 `<Host><Context path="/qrda_fy" docBase="F:\project\qrda_fy\WebRoot" /></Host>`
-- ÇåÀí»º´æ
+- æ¸…ç†ç¼“å­˜
     - `apache-tomcat-8.0.43\work\Catalina\localhost`
     - `apache-tomcat-8.0.43\temp`
 
-## tomcat×¢²áÎªWindowsÏµÍ³·şÎñ
-1. Ê×ÏÈ£¬ÇĞ»»µ½`tomcat\bin`Ä¿Â¼ÏÂ£¬¿ÉÒÔÕÒµ½`service.bat`£¬
-2. ÔËĞĞÃüÁî"service install tomcat6"¼´¿É°²×°·şÎñ£¬¶ø·şÎñÃû¾ÍÊÇ`tomcat6`¡£
-3. ·şÎñÒ²Íê³É£¬¿ÉÒÔÔÚWindowsµÄ·şÎñ¹ÜÀíÆ÷ÖĞÖ±½ÓÆô¶¯ÁË¡£
-4. ÁíÍâ£¬Ò²¿ÉÒÔÓÃTOMCAT×ÔÒÑÌá¹©µÄTOMCAT¼àÊÓÆ÷È¥Æô¶¯ºÍÅäÖÃTOMCATÁË£¬Ö»ĞèÒªÎªtomcat6w.exe½¨Á¢Ò»¸ö¿ì½İ·½Ê½£¬Ä¿±êĞ´Îª`D:\tomcat6\bin\tomcat6w.exe //MS//Tomcat6`¡£
-5. ·şÎñĞ¶ÔØ£º`service.bat remove tomcat6`
+## tomcatæ³¨å†Œä¸ºWindowsç³»ç»ŸæœåŠ¡
+1. é¦–å…ˆï¼Œåˆ‡æ¢åˆ°`tomcat\bin`ç›®å½•ä¸‹ï¼Œå¯ä»¥æ‰¾åˆ°`service.bat`ï¼Œ
+2. è¿è¡Œå‘½ä»¤"service install tomcat6"å³å¯å®‰è£…æœåŠ¡ï¼Œè€ŒæœåŠ¡åå°±æ˜¯`tomcat6`ã€‚
+3. æœåŠ¡ä¹Ÿå®Œæˆï¼Œå¯ä»¥åœ¨Windowsçš„æœåŠ¡ç®¡ç†å™¨ä¸­ç›´æ¥å¯åŠ¨äº†ã€‚
+4. å¦å¤–ï¼Œä¹Ÿå¯ä»¥ç”¨TOMCATè‡ªå·²æä¾›çš„TOMCATç›‘è§†å™¨å»å¯åŠ¨å’Œé…ç½®TOMCATäº†ï¼Œåªéœ€è¦ä¸ºtomcat6w.exeå»ºç«‹ä¸€ä¸ªå¿«æ·æ–¹å¼ï¼Œç›®æ ‡å†™ä¸º`D:\tomcat6\bin\tomcat6w.exe //MS//Tomcat6`ã€‚
+5. æœåŠ¡å¸è½½ï¼š`service.bat remove tomcat6`
 
-### Tomcat ¹ÜÀíÒ³Ãæ
+### Tomcat ç®¡ç†é¡µé¢
 ```xml
-<!-- ¿ªÆô¹ÜÀí½çÃæ£¬ÔÚtomcat-users.xmlÖĞÅäÖÃ -->
+<!-- å¼€å¯ç®¡ç†ç•Œé¢ï¼Œåœ¨tomcat-users.xmlä¸­é…ç½® -->
 <!-- http://127.0.0.1:8080/manager -->
 <role rolename="manager-gui"/>
 <user username="admin" password="admin" roles="manager-gui"/>
 ```
 `http://127.0.0.1:8080/manager/status`
 
-## Tomcat ÅäÖÃ´íÎó½çÃæ
-- [Tomcat ÅäÖÃ´íÎó½çÃæ][1]
+## Tomcat é…ç½®é”™è¯¯ç•Œé¢
+- [Tomcat é…ç½®é”™è¯¯ç•Œé¢][1]
 
-### ĞÔÄÜÓÅ»¯[^1]
-±à¼­`tomcat/bin/catalina.bat`ÎÄ¼ş£¬Ìí¼ÓÈçÏÂÒ»¶Î£¬¾ßÌåÒª¸ù¾İÏÖ³¡»·¾³½øĞĞ²ÎÊıµ÷Õû
+### æ€§èƒ½ä¼˜åŒ–[^1]
+ç¼–è¾‘`tomcat/bin/catalina.bat`æ–‡ä»¶ï¼Œæ·»åŠ å¦‚ä¸‹ä¸€æ®µï¼Œå…·ä½“è¦æ ¹æ®ç°åœºç¯å¢ƒè¿›è¡Œå‚æ•°è°ƒæ•´
 ```sh
 @echo off
 SET JAVA_OPTS=-server -Xms13312m -Xmx13312m -XX:NewSize=3072m -XX:MaxNewSize=4096m -XX:PermSize=512m -XX:MaxPermSize=512m -XX:MaxTenuringThreshold=10 -XX:NewRatio=2 -XX:+DisableExplicitGC
 ```
 
-### ¿ªÆô`JMX`Ô¶³ÌÁ¬½Ó(Enabling JMX Remote)[^2]
+### å¼€å¯`JMX`è¿œç¨‹è¿æ¥(Enabling JMX Remote)[^2]
 ```sh
 set CATALINA_OPTS=-Dcom.sun.management.jmxremote
   -Dcom.sun.management.jmxremote.port=%my.jmx.port%
@@ -44,13 +44,13 @@ set CATALINA_OPTS=-Dcom.sun.management.jmxremote
   -Dcom.sun.management.jmxremote.authenticate=false
 ```
 
-## tomcatÆôÓÃÉí·İÊÚÈ¨ÑéÖ¤
+## tomcatå¯ç”¨èº«ä»½æˆæƒéªŒè¯
 
-Solr¶ÀÁ¢·şÎñ¾Í¿ÉÒÔÅäÖÃÊ¹ÓÃ»ù´¡ÊÚÈ¨²å¼şÊ¹ÓÃtomcatµÄÉí·İÑéÖ¤
+Solrç‹¬ç«‹æœåŠ¡å°±å¯ä»¥é…ç½®ä½¿ç”¨åŸºç¡€æˆæƒæ’ä»¶ä½¿ç”¨tomcatçš„èº«ä»½éªŒè¯
 
 
 
-[1]: https://blog.csdn.net/qq_35959573/article/details/80597164 'Tomcat ÅäÖÃ´íÎó½çÃæ'
+[1]: https://blog.csdn.net/qq_35959573/article/details/80597164 'Tomcat é…ç½®é”™è¯¯ç•Œé¢'
 
-[^1]: [Tomcat µ÷ÓÅ×Ü½á](https://www.cnblogs.com/onmyway20xx/p/3626449.html)
+[^1]: [Tomcat è°ƒä¼˜æ€»ç»“](https://www.cnblogs.com/onmyway20xx/p/3626449.html)
 [^2]: [Enabling_JMX_Remote](http://tomcat.apache.org/tomcat-9.0-doc/monitoring.html#Enabling_JMX_Remote)

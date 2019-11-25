@@ -40,3 +40,21 @@
 实现Interceptor接口
 
 #### PageHelper
+
+### MyBatis一次执行多条SQL语句
+1、多条sql分批执行；2、存储过程或函数调用；3、sql批量执行。
+
+MyBatis中如何一次执行多条语句（使用mysql数据库）。
+1、修改数据库连接参数加上allowMultiQueries=true，如：
+```yml
+hikariConfig:
+    security: 
+        jdbcUrl: jdbc:mysql://xx.xx.xx:3306/xxxxx?characterEncoding=utf-8&autoReconnect=true&failOverReadOnly=false&allowMultiQueries=true
+```
+2、直接写多条语句，用“；”隔开即可
+```xml
+<delete id="deleteUserById" parameterType="String">
+    delete from sec_user_role where userId=#{id};
+    delete from sec_user where id=#{id};
+</delete>
+```
