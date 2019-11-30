@@ -74,6 +74,8 @@ OmniMarkupPreviewer: [ERROR] Error while launching user defined web browser
 ```
 - 解决国内 https://packagecontrol.io 无法访问的问题
     + `https://github.com/HBLong/channel_v3_daily`
+- [OmniMarkupPreviewer 预览文档遭遇 404](https://www.ituring.com.cn/article/507691)
+
 
 [1]: https://blog.csdn.net/u010071211/article/details/80791368 'sublime3176注册码破解汉化及常用插件'
 [2]: https://www.cnblogs.com/ma-dongdong/p/7653231.html 'Sublime Text3使用指南'

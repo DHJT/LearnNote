@@ -3,7 +3,7 @@
 [MongoDB](https://www.mongodb.com/zh)是专为可扩展性，高性能和高可用性而设计的数据库。它可以从单服务器部署扩展到大型、复杂的多数据中心架构。
 
 - MongoDB将数据目录存储在 db 目录下。但是这个数据目录不会主动创建，我们在安装完成后需要创建它
-MongoDB使用BSON对象来存储，与JSON格式类型的键值对（key/value）类似，MongoDB数据库和关系型DB的存储模型对应关系：
+MongoDB使用`BSON`对象来存储，与`JSON`格式类型的键值对（key/value）类似，MongoDB数据库和关系型DB的存储模型对应关系：
 | 关系型数据库 |        MongoDB        |
 |--------------|-----------------------|
 | Database     | Database              |
@@ -11,7 +11,7 @@ MongoDB使用BSON对象来存储，与JSON格式类型的键值对（key/value�
 | Row          | Document              |
 | Column       | Key/Value or Document |
 
-NoSQL 数据库的理论基础是CAP 理论
+NoSQL 数据库的理论基础是`CAP`理论
 
 ### `mongodb`启动
 ``` sh
@@ -35,7 +35,7 @@ D:\ProgramFiles\mongodb\bin\mongo.exe --port 27017
 rs0:SECONDARY> rs.add('localhost:27018')
 ```
 
-- 将MongoDB服务器作为Windows服务运行
+- 将`MongoDB`服务器作为`Windows`服务运行
 
 请注意，你必须有管理权限才能运行下面的命令。执行以下命令将MongoDB服务器作为Windows服务运行：
 

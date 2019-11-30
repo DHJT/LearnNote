@@ -18,6 +18,10 @@ GlobalConfiguration
 @TableId(value = "id", type = IdType.AUTO)//指定自增策略
 //若没有开启驼峰命名，或者表中列名不符合驼峰规则，可通过该注解指定数据库表中的列名，exist标明数据表中有没有对应列
 @TableField(value = "last_name", exist = true)
+// 一般会更新操作都会判断null值，为null就不更新对应的字段。但是有时候需要把特定的字段更新为null，使用mybatis-plus时可以在实体类特定属性上面加注解@TableField(strategy=FieldStrategy.IGNORED)，就会忽略null值判断，将null更新进数据库。
+// public enum FieldStrategy
+// IGNORED(0, "忽略判断"), NOT_NULL(1, "非NULL判断"), NOT_EMPTY(2, "非空判断")
+@TableField(strategy=FieldStrategy.IGNORED)
 
 #逻辑删除配置
 #3.1.1开始不再需要这一步

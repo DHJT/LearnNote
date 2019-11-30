@@ -98,6 +98,7 @@ systemctl daemon-reload
 
 ### 配置镜像加速器
 windows下的配置文件：`%programdata%\docker\config\daemon.json`
+- windows10下的默认镜像位置：`C:\ProgramData\DockerDesktop\vm-data\DockerDesktop.vhdx`;2019-11-30
 ```sh
 # 针对Docker客户端版本大于 1.10.0 的用户
 # 您可以通过修改daemon配置文件/etc/docker/daemon.json来使用加速器
@@ -130,3 +131,4 @@ ps -ef|grep docker
 [5]: https://www.cnblogs.com/hailun1987/p/7518306.html 'docker端口映射或启动容器时报错Error response from daemon: driver failed programming external connectivity on endpoint quirky_allen'
 [6]: https://www.cnblogs.com/lonquanzj/p/8911977.html 'windows10 彻底卸载 Docker 和 DockerNAT'
 [7]: https://www.jianshu.com/p/c32175d04d69 '解决Windows10卸载Docker不干净导致无法重装'
+[8]: https://blog.csdn.net/weixin_30764883/article/details/101610771 'Docker 安装报错：没有找到installationmanifest.json文件'

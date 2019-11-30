@@ -3,6 +3,8 @@
 [TOC]
 
 ## Java学习
+- [C语言：值传递，地址传递和引用传递（example：值交换）](https://www.cnblogs.com/chen-kh/p/6696305.html)
+    + 如果一个函数出入一个对象Person person = new Person（"ZHANG San"）,而在函数体内进行这个操作：person = new Person（"LI Si"）;那么person的值并不能被改变，所以我们说java的函数传递都是值传递。
 - java当中的`switch`
     + 注：在java中switch后的表达式的类型只能为以下几种：byte、short、char、int（在Java1.6中是这样），在java1.7后支持了对string的判断
 - 静态引入，在程序运行是就加载包中所有静态方法和静态属性，可以不用包名直接调用方法
