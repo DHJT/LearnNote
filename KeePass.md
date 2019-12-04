@@ -10,6 +10,9 @@ LastPass 和 1PassWord 默认是收费的，貌似只有 Keepass 是免费的。
 - [KeePass Edition Comparison][1]
 - [官方语言包——Translations][2]
 
+### 安装与更新
+- zip版的更新：直接下载解压后，将解压后的文件覆盖老版本的`keepa`即可；
+
 ### 下载类型区别
 KeePass-2.xx-Setup.exe: An installer program for Windows.
 KeePass-2.xx.zip: A KeePass ZIP package (portable version).

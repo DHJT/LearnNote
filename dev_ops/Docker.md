@@ -132,3 +132,4 @@ ps -ef|grep docker
 [6]: https://www.cnblogs.com/lonquanzj/p/8911977.html 'windows10 彻底卸载 Docker 和 DockerNAT'
 [7]: https://www.jianshu.com/p/c32175d04d69 '解决Windows10卸载Docker不干净导致无法重装'
 [8]: https://blog.csdn.net/weixin_30764883/article/details/101610771 'Docker 安装报错：没有找到installationmanifest.json文件'
+[9]: https://www.cnblogs.com/boazy/p/11661277.html 'Docker Desktop: Error response from daemon: driver failed programming external connectivity on endpoint xxx 问题'

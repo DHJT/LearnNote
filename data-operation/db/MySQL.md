@@ -6,6 +6,10 @@
 
 ### 注意
 - mysql 不支持全连接查询，即`表1 full (outer) join 表2 on [condition]`
+- zeroDateTimeBehavior=convertToNull
+- useUnicode=true
+- characterEncoding=utf-8
+- allowMultiQueries=true
 
 ### 查询更新
 ```sql

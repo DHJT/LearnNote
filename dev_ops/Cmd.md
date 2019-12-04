@@ -17,9 +17,15 @@ if exist c:\windows\History\*.* del c:\windows\History\*.*
 - 获取无线密码信息：`for /f "skip=9 tokens=1,2 delims=:" %i in ('netsh wlan show profiles') do @echo %j | findstr -i -v echo | netsh wlan show profiles %j key=clear`
     + 指定wifi的密码：`Netsh wlan show profile name=”热点名字” key=clear`
 
-``` batch
+```sh
 # 获取已经使用的端口信息：第一行的本地地址显示端口为80，最右面对应的是PID=4.。
 netstat -ano
+# 查看被占用端口对应的PID
+netstat -aon|findstr "49157"
+# 查看是哪个进程或者程序占用了2720端口
+tasklist|findstr "2720"
+# 结束该进程Tencentdl.exe
+taskkill /f /t /im Tencentdl.exe
 # 获取到ip的路由跳转节点
 tracert ip
 ```
@@ -127,7 +133,7 @@ sc stop AudioSrv
 
 ### 启动系统服务
 - Oracle数据库启动
-``` dos
+```sh
 ::比较好的启动顺序是：OracleOracle_homeTNSListener,OracleServiceSID,OracleDBConsoleSID。关闭时次序相反
 rem sc start OracleOraDb11g_home1TNSListener
 net start OracleOraDb11g_home1TNSListener
@@ -166,3 +172,5 @@ netsh int ip set dns name="%name%" dhcp
 echo 动态自动获取IP设置完成
 pause
 ```
+
+[1]: https://jingyan.baidu.com/article/3c48dd34491d47e10be358b8.html '如何查看某个端口被谁占用'

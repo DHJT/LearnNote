@@ -52,3 +52,6 @@ get myKey
 如果在setnx之后执行expire之前进程意外crash或者要重启维护了，那会怎么样？
 set指令有非常复杂的参数，这个应该是可以同时把setnx和expire合成一条指令来用的！
 
+### RedisDesktopManager
+Cross-platform GUI management tool for Redis https://redisdesktop.com
+https://github.com/uglide/RedisDesktopManager
