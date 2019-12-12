@@ -1,8 +1,17 @@
 # Go Basic
 <!-- @author DHJT 2019-11-20 -->
 
-使用场景
-    区块链、云计算、容器Docker
+- 使用场景：区块链、云计算、容器Docker
+- [Golang标准库文档](https://studygolang.com/pkgdoc)
+- 安装包下载地址为：https://golang.org/dl/。
+- 如果打不开可以使用这个地址：https://golang.google.cn/dl/
+- [Downloads](https://golang.google.cn/dl/)
+- [IDEsAndTextEditorPlugins](https://github.com/golang/go/wiki/IDEsAndTextEditorPlugins)
+    + [GoSublime](https://github.com/DisposaBoy/GoSublime)
+    + [Sublime-build](https://github.com/golang/sublime-build)
+        * 运行代码：<kbd>Ctrl</kbd>+<kbd>Shift</kbd>+<kbd>b</kbd>
+        * 运行代码(按上一次运行命令直接执行)：<kbd>Ctrl</kbd>+<kbd>b</kbd>
+- `2006-01-02 15:04:05`
 
 ## install
 [golang 在windows中设置环境变量](https://blog.csdn.net/keepd/article/details/79430254)
@@ -13,34 +22,12 @@ go env # 可以查看环境变量。
 go build mian.go
 # 编译并执行得出结果
 go run main.go
-# 安装MySQL启动包
-go get -u github.com/go-sql-driver/mysql # github.com/denisenkom/go-mssqldb
+# 从互联网上下载或更新指定的代码包及其依赖包，并对它们进行编译和安装。
 go get github.com/denisenkom/go-mssqldb
+# 安装MySQL启动包 强行更新代码包，可以在执行go get命令时加入-u标记
+go get -u github.com/go-sql-driver/mysql # github.com/denisenkom/go-mssqldb
+go get -u github.com/garyburd/redigo/redis
 ```
-
-```go
-package main
-import "fmt"
-var (
-    n = 12
-    m = "tomcat"
-)
-func main() {
-    i := 0
-    fmt.Println("i=", i)
-}
-```
-
-安装包下载地址为：https://golang.org/dl/。
-如果打不开可以使用这个地址：https://golang.google.cn/dl/
-[Downloads](https://golang.google.cn/dl/)
-[IDEsAndTextEditorPlugins](https://github.com/golang/go/wiki/IDEsAndTextEditorPlugins)
-    - [GoSublime](https://github.com/DisposaBoy/GoSublime)
-    - [Sublime-build](https://github.com/golang/sublime-build)
-        + 运行代码：
-        + <kbd>Ctrl</kbd>+<kbd>Shift</kbd>+<kbd>b</kbd>
-        + <kbd>Ctrl</kbd>+<kbd>b</kbd>
-
 
 ### 基本知识
 - Golang中是没有引用传递的，引用类型与引用传递是不一样的概念，基本上引用传递只有 C++ 实现了；2019-11-30
@@ -48,8 +35,18 @@ func main() {
 - 数组声明之后会分配内存空间；
 - map映射声明并不会分配内存空间，需要使用 make 方法来分配，直接使用会报错；
     + map中是无序存储的；
-
+- 常量在声明的时候必须赋值，常量不能修改
+    + 只能修饰bool、string、数值类型（int、float系列）
+    + `const tax int = 12`
+    + 首字母大小写控制访问范围
 ```go
+// 常量
+const (
+    a = iota // 0 一行递增一次
+    b // 1
+    c, d = iota, iota // 2 2
+)
+
 // 基本数据类型
 int, int64、int32、float32/float64
 string
@@ -121,6 +118,20 @@ var cat4 *Cat = new(Cat)
 var cat5 *Cat = &Cat{}
 (*cat5).Name = "cat5"// cat.Name = "cat5"; . 的优先级比 * 高
 ```
+
+### 函数
+```go
+func test() {
+    // 使用匿名函数与 defer + recover 来处理异常
+    defer func() {
+        if err := recover(); err != nil {
+            fmt.Println("test() 发生错误")
+        }
+    }()
+    // 以下就是代码的具体执行逻辑 省略
+}
+```
+
 
 ### 方法
 - 作用在指定的数据类型上的，跟数据类型绑定在一起的；
@@ -210,6 +221,7 @@ go test -v -test.run TestXxxx # 测试指定方法
     + 管道是有类型：string类型的管道只能存储string类型
     + 引用类型；必须初始化才能写入数据（make）
 - 管道关闭后只能读取而不能写入数据；
+- 使用`select`可以解决从管道读取数据的阻塞问题
 ```go
 // 协程与全局变量加锁——同步问题
 import (
@@ -250,8 +262,42 @@ close(intChan) // 管道的关闭
 // 管道的遍历 支持for-range循环 不关闭管道进行遍历，最后会报告deadlock错误
 for v := intChan {
 }
+
+// select
+for {
+    select {
+    case v:= <-intChan :
+        fmt.Printf("%d", v)
+    default :
+        fmt.Printf("--")
+        // 此处使用break只能跳出select
+    }
+}
 ```
 
 ### 反射
+- 应用场景
+    + 结构体的标签
+    + 编写函数的适配器
+- reflect.Type reflect.Value
+- 变量、interfa{}、reflect.Value是可以相互转化的
+- Kind：类别，是一个常量 struct,int.etc
+- Type：类型 pkg.Strudent
+```go
+import (
+    "reflect" // “reflect”包实现了运行时反射
+)
+type A struct {
+
+}
+func test(b interface{}) {
+    rType := reflect.TypeOf(b) // reflect.Type
+    rVal := reflect.ValueOf(b) // 获取到的是reflect.Value,值可以打印出来
+    rType.Kind() // 获取变量对应的Kind，为常量
+    rVal.Kind() //
+    iV := rVal.Interface()
+}
+```
 
 [1]: https://www.cnblogs.com/fanbi/p/10019316.html 'sublime text3 golang插件(golang build)'
+[2]: http://wiki.jikexueyuan.com/project/go-command-tutorial/0.3.html 'GO 命令教程'

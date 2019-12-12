@@ -5,6 +5,7 @@ Spring MVC 是 Spring 提供的一个强大而灵活的 Web 框架。Spring MVC�
 - 视图解析器：选择结果应该如何渲染
 
 ```java
+@RequestMapping(value = "/example", method = { RequestMethod.POST }, produces = "application/json;charset=UTF-8")
 @PutMapping("/update")
 @CrossOrigin(methods = { RequestMethod.PUT }, origins = "*") // 跨域处理
 ```

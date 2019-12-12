@@ -235,3 +235,4 @@ dependencyManagement适用于父pom文件中管理依赖
 [5]: https://blog.csdn.net/ou_yu_chen/article/details/82999577 'maven本地仓库jar包下载失败/不完全的解决'
 [6]: https://blog.csdn.net/She_lock/article/details/79557022 '使用docker-maven-plugin插件构建和推送Docker映像'
 [7]: https://blog.csdn.net/moneyshi/article/details/67637563 'maven异常：Updating Maven Project 的统一解决方案'
+[8]: https://blog.csdn.net/z410970953/article/details/50680603 'maven打包加时间戳'

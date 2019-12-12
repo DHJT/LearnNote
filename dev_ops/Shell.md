@@ -1,5 +1,10 @@
 # Shell命令
-一，Shell输入输出功能和字符颜色设置
+<!-- @author DHJT -->
+```sh
+netstat -anp | grep 80     # 查看80端口
+```
+
+## Shell输入输出功能和字符颜色设置
 ``` sh
 #!/bin/bash
 #test.sh
@@ -59,5 +64,4 @@ fdisk -l
 sudo mkfs.vfat /dev/sdb1
 mount /dev/sdb1 /mnt
 eject /mnt
-
 ```

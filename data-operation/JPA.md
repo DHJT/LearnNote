@@ -19,5 +19,7 @@ AuditingEntityListener标签开启后，下面的时间标签才会生效。
 
 - JpaSpecificationExecutor接口不能够单独使用，需要和其他接口一块使用
 
+`spring.jpa.properties.hibernate.default_schema`
+
 
 [1]: https://github.com/longfeizheng/jpa-example 'jpa-example'

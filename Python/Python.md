@@ -39,3 +39,4 @@ pip install -U numpy==1.12.0
 
 
 [1]: https://stackoverflow.com/questions/7605631/passing-a-list-to-python-from-command-line 'Passing a List to Python From Command Line'
+[2]: https://blog.csdn.net/weixin_43118891/article/details/85316291 'python3 java调用python出现中文乱码解决方案'

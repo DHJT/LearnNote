@@ -225,3 +225,4 @@ management:
 [1]: https://gitee.com/didispace/SpringBoot-Learning 'SpringBoot-Learning'
 [2]: https://blog.csdn.net/love3765/article/details/79291584 'SpringBoot随笔（一）： spring-boot-starter-actuator 模块详解'
 [3]: http://docs.spring.io/spring-boot/docs/1.4.3.RELEASE/reference/htmlsingle/#using-boot-maven-without-a-parent 'using-boot-maven-without-a-parent'
+[4]: https://www.cnblogs.com/liaojie970/p/8043150.html 'spring boot 使用@ConfigurationProperties'

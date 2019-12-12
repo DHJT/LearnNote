@@ -1,9 +1,9 @@
 # Swagger
 <!-- @author DHJT 2018-09-28 -->
 
-swagger2访问url
+## swagger2访问url
 swagger ： http://localhost:8080/swagger/index.html
-springboot中的swagger：http://localhost:8080/swagger-ui.html      非常简单
+springboot中的swagger：http://localhost:8080/swagger-ui.html
 
 ```xml
 <dependency>
@@ -25,35 +25,41 @@ springboot中的swagger：http://localhost:8080/swagger-ui.html      非常简�
 </dependency>
 ```
 
-### 
-3.1 @Api 类注释
-@Api：用来描述类的，属性如下：
-tags 描述类的用途value 对显示而言没有任何用途可以不用设置
-代码示例：
-@Api(tags = "文章接口")
-3.2 @ApiOperation 方法注释
-@ApiOperation：用来描述方法的，属性如下：
-value 方法的描述notes 方法备注说明
-3.3 @ApiImplicitParams 参数注释
-
-@ApiImplicitParams：描述多参数
-
-@ApiImplicitParam：描述单参数
-
-属性如下：
-
-name 参数value 参数的描述required 是否必传paramType 参数存放位置：header、query、path(resuful接口)、body、formdataType 参数类型defaultValue 参数默认值
-
-3.4 @ApiModel 实体对象描述
-
-@ApiModel：实体类名描述，属性如下：
-
-description 类描述
-
-@ApiModelProperty：字段描述，属性如下：
-
-value 字段描述
+### 几个基本注解
 ```java
+@Api：用在请求的类上，表示对类的说明
+    tags="说明该类的作用，可以在UI界面上看到的注解"
+    value="该参数没什么意义，在UI界面上也看到，所以不需要配置"
+
+@ApiOperation：用在请求的方法上，说明方法的用途、作用
+    value="说明方法的用途、作用"
+    notes="方法的备注说明"
+
+@ApiImplicitParams：用在请求的方法上，表示一组参数说明
+    @ApiImplicitParam：用在@ApiImplicitParams注解中，指定一个请求参数的各个方面
+        name：参数名
+        value：参数的汉字说明、解释
+        required：参数是否必须传
+        paramType：参数放在哪个地方
+            · header --> 请求参数的获取：@RequestHeader
+            · query --> 请求参数的获取：@RequestParam
+            · path（用于restful接口）--> 请求参数的获取：@PathVariable
+            · body（不常用）
+            · form（不常用）
+        dataType：参数类型，默认String，其它值dataType="Integer"
+        defaultValue：参数的默认值
+
+@ApiResponses：用在请求的方法上，表示一组响应
+    @ApiResponse：用在@ApiResponses中，一般用于表达一个错误的响应信息
+        code：数字，例如400
+        message：信息，例如"请求参数没填好"
+        response：抛出异常的类
+
+@ApiModel：用于响应类上，表示一个返回响应数据的信息
+            （这种一般用在post创建的时候，使用@RequestBody这样的场景，
+            请求参数无法使用@ApiImplicitParam注解进行描述的时候）
+@ApiModelProperty：用在属性上，描述响应类的属性
+
 // controller描述
 @Api(description = "问卷控制器")
 // 方法描述

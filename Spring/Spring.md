@@ -104,13 +104,13 @@ spring的核心接口及核类配置文件是什么?
 ```
 ``` java
 public class TimedTask  extends QuartzJobBean{
-    private int timeout;  
-    private static int i = 0;  
-    //调度工厂实例化后，经过timeout时间开始执行调度  
-    public void setTimeout(int timeout) {  
-    this.timeout = timeout;  
-    } 
-    
+    private int timeout;
+    private static int i = 0;
+    //调度工厂实例化后，经过timeout时间开始执行调度
+    public void setTimeout(int timeout) {
+    this.timeout = timeout;
+    }
+
     @Override
     protected void executeInternal(JobExecutionContext arg0)
             throws JobExecutionException {
@@ -121,7 +121,7 @@ public class TimedTask  extends QuartzJobBean{
         file = f.getParent();
         String pdf = "\\PDF\\pdf_bak";
         file+=pdf;
-        System.out.println("定时任务执行中…" +file); 
+        System.out.println("定时任务执行中…" +file);
         String Date = Util.getCurrentDate();
         String hql = " update Borrow  b set b.status ='3' where b.returnDate<='"+Date+"' ";
         App.getHibernateDao().executeBySql(hql);

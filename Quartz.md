@@ -119,7 +119,9 @@ org.quartz.jobStore.useProperties:true
 </details>
 
 
-[1]: '第四十七章：SpringBoot2.0新特性 - Quartz自动化配置集成' https://www.jianshu.com/p/056281e057b3
+[1]: https://www.jianshu.com/p/056281e057b3 '第四十七章：SpringBoot2.0新特性 - Quartz自动化配置集成'
+[2]: https://blog.csdn.net/sx1119183530/article/details/85623937 'spring的task和quartz的区别'
+[3]: https://www.jianshu.com/p/544daba1f7f6 'spring 定时任务不能并发执行问题'
 
 [^1]: [第四十章：基于SpringBoot & Quartz完成定时任务分布式多节点负载持久化](https://www.jianshu.com/p/49133c107143)
 [^2]: [Quartz之InterruptableJob ](https://www.iteye.com/blog/liuzidong-1145429)
