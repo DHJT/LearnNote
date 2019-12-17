@@ -84,6 +84,9 @@ SpringBoot配置文件默认可以放到以下目录中，可以自动读取到�
         2、如果同一个配置属性，在多个配置文件都配置了，默认使用第1个读取到的，后面读取的不覆盖前面读取到的。
         3、创建SpringBoot项目时，一般的配置文件放置在“项目的resources目录下”
 
+#### springboot项目实现jar包外配置文件管理[^1]
+- [SpringBoot配置文件放在jar外部](https://blog.csdn.net/weixin_38405253/article/details/92802591)
+
 ### spring-boot的三种启动方式
 运行带有main方法类
 
@@ -226,3 +229,6 @@ management:
 [2]: https://blog.csdn.net/love3765/article/details/79291584 'SpringBoot随笔（一）： spring-boot-starter-actuator 模块详解'
 [3]: http://docs.spring.io/spring-boot/docs/1.4.3.RELEASE/reference/htmlsingle/#using-boot-maven-without-a-parent 'using-boot-maven-without-a-parent'
 [4]: https://www.cnblogs.com/liaojie970/p/8043150.html 'spring boot 使用@ConfigurationProperties'
+[5]: https://www.cnblogs.com/long88-club/p/11361174.html 'springboot中返回值json中null转换空字符串'
+
+[^1]: [springboot项目实现jar包外配置文件管理](https://blog.csdn.net/xrq0508/article/details/80050119)
