@@ -123,9 +123,12 @@ user.selectById();
 
 ### 查询器
 ```java
-QueryWrapper<ScheduleJob> queryWrapper = new QueryWrapper<>();
-queryWrapper.ge("job_name", key);
-
+QueryWrapper<ScheduleJob> wrapper = new QueryWrapper<>();
+wrapper.ge("job_name", key)
+    .likeRight("point_name", "B1-02 REX").or().likeRight("point_name", "B1-17 Door 1 REX")
+wrapper.and(
+    i -> i.isNotNull("last_name").ne("last_name", "").
+        or(j -> j.isNotNull("first_name").ne("first_name", "")));
 Condition.create()
     .setSqlSelect("sum(quantity)")
     .isNull("order_id")

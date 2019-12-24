@@ -13,7 +13,7 @@ Docker 本身并不是容器，它是创建容器的工具，是应用容器引�
 K8S，就是基于容器的集群管理平台，它的全称，是kubernetes。
 
 ## 安装
-```sh
+```sh[^1]
 # 获取最新版本的 Docker 安装包
 wget -qO- https://get.docker.com/ | sh
 # 移除旧的版本：
@@ -133,3 +133,7 @@ ps -ef|grep docker
 [7]: https://www.jianshu.com/p/c32175d04d69 '解决Windows10卸载Docker不干净导致无法重装'
 [8]: https://blog.csdn.net/weixin_30764883/article/details/101610771 'Docker 安装报错：没有找到installationmanifest.json文件'
 [9]: https://www.cnblogs.com/boazy/p/11661277.html 'Docker Desktop: Error response from daemon: driver failed programming external connectivity on endpoint xxx 问题'
+[10]: https://blog.csdn.net/SIMBA1949/article/details/82915638 'Docker常用镜像'
+
+
+[^1]: [Get Docker Engine - Community for CentOS](https://docs.docker.com/install/linux/docker-ce/centos/)

@@ -27,7 +27,14 @@
 
 ## 基础
 
-### 
+### 垃圾回收器类型
+1、串行：垃圾回收器 (Serial Garbage Collector)
+2、串行：ParNew收集器
+3、并行：Parallel收集器
+4、并行：Parallel Old 收集器
+5、并发标记扫描CMS收集器
+CMS（Concurrent Mark Sweep）
+6、G1收集器
 
 ## 高级
 
@@ -37,6 +44,9 @@
 当虚拟机运行在-client模式的时候,使用的是一个代号为C1的轻量级编译器, 而-server模式启动的虚拟机采用相对重量级,代号为C2的编译器. C2比C1编译器编译的相对彻底,,服务起来之后,性能更高.
 `JAVA_HOME/jre/lib/amd64/jvm.cfg`/`JAVA_HOME/jre/lib/i386/jvm.cfg`
 
+![gc回收算法](./link-img/gc.png)
 
 [1]: https://blog.csdn.net/xiaoliuliu2050/article/details/53023734 '为什么要类加载器，类加载器做了什么,加载类的过程'
 [2]: https://mp.weixin.qq.com/s/3_DEPdZTnGmdGBd5iTrVjQ 'JVM核心知识体系'
+[3]: https://blog.csdn.net/coderlius/article/details/79272773 '详解 JVM Garbage First(G1) 垃圾收集器'
+[4]: https://blog.csdn.net/high2011/article/details/80177473 '[Java基础]-- Java GC 垃圾回收器的分类和优缺点'
