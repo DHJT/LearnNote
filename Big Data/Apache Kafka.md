@@ -35,6 +35,12 @@ bin/windows/kafka-console-consumer.bat --bootstrap-server localhost:9092 --topic
 创建一个消息生产者
 ### 
 
+Kafka Tool 2
+
+Kafka Tool 2是一款Kafka的可视化客户端工具，可以非常方便的查看Topic的队列信息以及消费者信息以及kafka节点信息。直接丢下载地址：http://www.kafkatool.com/download.html
+
+
+
 [kafka实战]: https://www.cnblogs.com/hei12138/p/7805475.html 'kafka实战'
 [kafka-0.10-demo]: https://gitee.com/wsmd/kafka-0.10-demo '王思密达/kafka-0.10-demo'
 [1]: https://blog.csdn.net/u010513487/article/details/79483860 'kafka运行错误：找不到或者无法加载主类等错误解决方法'
