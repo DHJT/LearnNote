@@ -29,6 +29,9 @@ git config -e [--global]
 #设置提交代码时的用户信息
 git config [--global] user.name "[name]"
 git config [--global] user.email "[email address]"
+
+# git 查看远程仓库，以及与本地仓库的关系：
+git remote show origin
 ```
 
 git clone 指定分支,拉代码

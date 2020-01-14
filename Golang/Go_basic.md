@@ -22,6 +22,23 @@ go env # 可以查看环境变量。
 go build mian.go
 # 编译并执行得出结果
 go run main.go
+```
+
+### go get
+- 借助代码管理工具通过远程拉取或更新代码包及其依赖包，并自动完成编译和安装。
+- 可以动态获取远程代码包，目前支持的有 BitBucket、GitHub、Google Code 和 Launchpad。在使用 go get 命令前，需要安装与远程包匹配的代码管理工具，如 Git、SVN、HG 等，参数中需要提供一个包名。
+- 这个命令在内部实际上分成了两步操作：第一步是下载源码包，第二步是执行 go install。
+- 获取前，请确保 GOPATH 已经设置。Go 1.8 版本之后，GOPATH 默认在用户目录的 go 文件夹下。
+
+参数介绍：
+    -d 只下载不安装
+    -f 只有在你包含了 -u 参数的时候才有效，不让 -u 去验证 import 中的每一个都已经获取了，这对于本地 fork 的包特别有用
+    -fix 在获取源码之后先运行fix，然后再去做其他的事情
+    -t 同时也下载需要为运行测试所需要的包
+    -u 强制使用网络去更新包和它的依赖包
+    -v 显示执行的命令
+
+```sh
 # 从互联网上下载或更新指定的代码包及其依赖包，并对它们进行编译和安装。
 go get github.com/denisenkom/go-mssqldb
 # 安装MySQL启动包 强行更新代码包，可以在执行go get命令时加入-u标记
@@ -70,6 +87,22 @@ a = make(map[string]string, 10)
 引用类型：指针、切片、map
 默认零值：`nil`
 
+golang 中string和int类型相互转换
+原创 置顶 排骨瘦肉丁 发布于2018-03-14 10:26:56 阅读数 83195 收藏
+展开
+
+总结了golang中字符串和各种int类型之间的相互转换方式：
+    string转成int：
+        int, err := strconv.Atoi(string)
+    string转成int64：
+        int64, err := strconv.ParseInt(string, 10, 64) 
+    int转成string：
+        string := strconv.Itoa(int)
+    int64转成string：
+        string := strconv.FormatInt(int64,10) 
+
+
+
 ### 切片 slice
 ```go
 切片需要分配空间使用
@@ -84,7 +117,7 @@ delete(mapDemo, "no1") // 内置方法：map删除
 // map 查找
 val, ok := mapDemo["no1"]
 // 遍历 for-range
-// 
+
 len(mapDemo) // 获取 mapDemo 大小
 // slice of map map切片
 var monsters []map[string]string = make([]map[string]string, 2)

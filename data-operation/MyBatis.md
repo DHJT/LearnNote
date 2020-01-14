@@ -58,3 +58,16 @@ hikariConfig:
     delete from sec_user where id=#{id};
 </delete>
 ```
+
+### 注解操作
+```java
+// 返回自增主键
+@Insert({ "insert into sys_role(role_name, enabled, create_by, create_time) values(#{roleName}, #{enabled}, #{createBy}, #{createTime, jdbcType=TIMESTAMP})" })
+@Options(useGeneratedKeys = true, keyProperty = "id")
+int insertSysRole2(SysRole sysRole);
+
+// 返回非自增主键
+@Insert({"insert into sys_role(role_name, enabled, create_by, create_time) values(#{roleName}, #{enabled}, #{createBy}, #{createTime, jdbcType=TIMESTAMP})"})
+@SelectKey(statement = "SELECT LAST_INSERT_ID()", keyProperty = "id", resultType = Long.class, before = false)
+int insertSysRole3(SysRole sysRole);
+```
