@@ -46,3 +46,4 @@ http://localhost:8080/business-central
 
 
 [1]: https://download.jboss.org/drools/release/7.31.0.Final/org.drools.updatesite/ 'Drools 7.31.0.Final Update Site - Nightly Build Update Site'
+[2]: https://blog.csdn.net/qq_21383435/article/details/82987288 'drools 7.x 模板的简单使用'

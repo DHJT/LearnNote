@@ -1,6 +1,9 @@
 # docker-compose
 <!-- @author DHJT 2019-12-26 -->
 
+https://github.com/docker/compose
+https://docs.docker.com/compose/completion/
+
 Docker Compose 是一个用来定义和运行复杂应用的 Docker 工具。
 使用 Docker Compose 不再需要使用 shell 脚本来启动容器。(通过 docker-compose.yml 配置)
 
@@ -69,3 +72,8 @@ docker-compose down
 docker-compose pull
 docker-compose up -d
 ```
+
+## 相关案例
+- [docker-compose部署zk集群、kafka集群以及kafka-manager，及其遇到的问题和解决](https://www.cnblogs.com/jay763190097/p/10292227.html)
+- [docker-compose 部署kafka](https://blog.csdn.net/Crystalqy/article/details/94006936)
+- [docker安装kafka（wurstmeister）](https://blog.csdn.net/C1041067258/article/details/97616574)
