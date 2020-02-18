@@ -1,7 +1,10 @@
 # Shell命令
 <!-- @author DHJT -->
 ```sh
+sudo -i
 netstat -anp | grep 80     # 查看80端口
+netstat -nlpt| grep 80
+ps aux|grep main
 ```
 
 ## Shell输入输出功能和字符颜色设置

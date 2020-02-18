@@ -13,26 +13,41 @@ Apache Kafka 是一个分布式高吞吐量的流消息系统，Kafka 建立在 
 - 高吞吐量、低延迟： Kafka每秒可以处理几十万消息，延迟最低只有几毫秒，每个消息主题topic可以分多个区，消费者组(consumer group)对消息分区(partition)进行消费。
 
 ### 使用场景
-- 日志收集： 可以用 kafka 收集各种服务的日志，通过kafka以统一接口服务的方式开放给各种消费者，如 hadoop，Hbase，Solr 等。
+- 日志收集： 可以用 kafka 收集各种服务的日志，通过kafka以统一接口服务的方式开放给各种消费者，如 Hadoop，Hbase，Solr 等。
 - 消息系统： 解耦生产者和消费者、缓存消息等。
-- 用户活动跟踪： Kafka 经常被用来记录web用户或者app用户的各种活动，如浏览网页，搜索，点击等活动，这些活动信息被各个服务器发布到 kafka 的 topic 中，然后订阅者通过订阅这些 topic 来做实时的监控分析，或者装载到 hadoop、数据仓库中做离线分析和挖掘。
+- 用户活动跟踪： Kafka 经常被用来记录web用户或者app用户的各种活动，如浏览网页，搜索，点击等活动，这些活动信息被各个服务器发布到 kafka 的 topic 中，然后订阅者通过订阅这些 topic 来做实时的监控分析，或者装载到 Hadoop、数据仓库中做离线分析和挖掘。
 - 运营指标： Kafka也经常用来记录运营监控数据，包括收集各种分布式应用的数据，比如报警和报告等。
-- 流式处理： 比如 spark streaming 和 storm。
+- 流式处理： 比如 Spark streaming 和 Storm。
 
 ### 使用场景
 1. Building real-time streaming data pipelines that reliably get data between systems or applications.在系统或应用程序之间构建可靠的用于传输实时数据的管道，消息队列功能
 2. Building real-time streaming applications that transform or react to the streams of data。构建实时的流数据处理程序来变换或处理数据流，数据处理功能
 
-### 
+### 几个重要概念
 - Producer：消息生产者。
 - Broker：kafka集群中的服务器。
-- Topic：消息的主题，可以理解为消息的分类，kafka的数据就保存在topic。在每个broker上都可以创建多个topic。
-- Partition：Topic的分区，每个topic可以有多个分区，分区的作用是做负载，提高kafka的吞吐量。
+- Topic：消息的主题，可以理解为消息的分类，kafka的数据就保存在Topic。在每个broker上都可以创建多个Topic。
+- Partition：Topic 的分区，每个 Topic 可以有多个分区，分区的作用是做负载，提高Kafka的吞吐量。
 - Replication：每一个分区都有多个副本，副本的作用是做备胎。当主分区（Leader）故障的时候会选择一个备胎（Follower）上位，成为Leader。在kafka中默认副本的最大数量是10个，且副本的数量不能大于Broker的数量，follower和leader绝对是在不同的机器，同一机器对同一个分区也只可能存放一个副本（包括自己）。
 - Consumer：消息消费者。
 - Consumer Group：我们可以将多个消费组组成一个消费者组，在kafka的设计中同一个分区的数据只能被消费者组中的某一个消费者消费。同一个消费者组的消费者可以消费同一个topic的不同分区的数据，这也是为了提高kafka的吞吐量！
 - Zookeeper：kafka集群依赖zookeeper来保存集群的的元信息，来保证系统的可用性。
     + ZooKeeper安装模式分为三种，分别为：单机模式（stand-alone）、集群模式和集群伪分布模式。
+
+### 什么情况会导致 kafka 运行变慢
+- cpu 性能瓶颈
+- 磁盘读写瓶颈
+- 网络瓶颈
+
+### 数据保留的策略
+- 按照过期时间保留
+- 按照存储的消息大小保留。
+
+*kafka 执行数据清除工作，时间和大小不论那个满足条件，都会清空数据。*
+
+### 使用 kafka 集群需要注意什么？
+- 集群的数量不是越多越好，最好不要超过 7 个，因为节点越多，消息复制需要的时间就越长，整个群组的吞吐量就越低。
+- 集群数量最好是单数，因为超过一半故障集群就不能用了，设置为单数容错率更高。
 
 ### 常见错误
 - [kafka运行错误：找不到或者无法加载主类等错误解决方法][1]
