@@ -12,8 +12,8 @@ Docker 本身并不是容器，它是创建容器的工具，是应用容器引�
 仓库（Repository）
 K8S，就是基于容器的集群管理平台，它的全称，是kubernetes。
 
-## 安装
-```sh[^1]
+## 安装[^1]
+```sh
 # 获取最新版本的 Docker 安装包
 wget -qO- https://get.docker.com/ | sh
 # 移除旧的版本：
@@ -63,11 +63,15 @@ docker run -d ubuntu:15.10 /bin/sh -c "while true; do echo hello world; sleep 1;
 # 运行tomcat
 docker run --name tomcat -p 8080:8080 -v $PWD/test:/usr/local/tomcat/webapps/test -d tomcat
 docker exec -it tomcat /bin/bash
-
+# 退出交互模式 Ctrl-D， 这种方式会停止容器
+# 正常退出不关闭容器，请按Ctrl+P+Q进行退出容器
+exit
 docker run --name runoob-nginx-test -p 8081:80 -d nginx
 # 查看容器日志
 docker logs -tf --tail 10 `CONTAINER ID`
 
+# docker cp 要拷贝的文件路径 容器名：要拷贝到容器里面对应的路径
+docker cp /root/hadoop-mapreduce-examples-2.6.0.jar b7d7f88574fb:/usr/local/hadoop-2.6.0
 docker cp mysolr:/opt/solr/ /usr/local/ # 容器拷贝宿主机
 # mysql
 docker run -p 3306:3306 --name d_dh_mysql5 -v $PWD/conf5:/etc/mysql/conf.d -v $PWD/logs5:/logs -v $PWD/data5:/var/lib/mysql -e MYSQL_ROOT_PASSWORD=123456 -d mysql:5.7.26
@@ -90,6 +94,8 @@ docker ps -aq
 docker pull  redis:3.2
 # 查看容器的详细信息
 docker inspect name/`CONTAINER ID`
+# 启动容器并进入交互模式
+docker start -i engine-web-uaa
 docker stop name
 # 重启之前停掉的 docker 容器或者正在运行的容器 name/CONTAINER ID
 docker restart name/`CONTAINER ID`
@@ -124,6 +130,54 @@ ps -ef|grep docker
 }
 ```
 
+## 网络
+```sh
+# 显示docker中已经存在的网络
+docker network ls
+```
+
+## Dockerfile
+```sh
+# -t：指定新镜像名 v1是标签TAG
+# .：表示Dockfile在当前路径
+docker build -t admin:v1 .
+```
+```dockfie
+# 基于Java 9
+FROM java:9
+# 设置工作目录
+WORKDIR /app
+# 复制文件到工作目录
+COPY . /app
+# 设置Java环境变量
+ENV PATH=$PATH:$JAVA_HOME/bin
+ENV JRE_HOME=${JAVA_HOME}/jre
+ENV CLASSPATH=.:${JAVA_HOME}/lib:${JRE_HOME}/lib
+ENV TZ=Asia/Shanghai
+RUN ln -snf /usr/share/zoneinfo/$TZ /etc/localtime && echo $TZ > /etc/timezone
+# 编译
+RUN ["/usr/lib/jvm/java-9-openjdk-amd64/bin/javac","Hello.java"]
+# 运行
+ENTRYPOINT ["/usr/lib/jvm/java-9-openjdk-amd64/bin/java", "Hello"]
+```
+### 容器启动后即退出
+一般来说，使用`java -jar ***.jar`就可以了，但是如果项目没有配置日志输出，导致控制台在一段时间后没有任何输出，在此种情况下是可能导致容器退出的。
+
+### 容器访问宿主机
+使用默认的网络模式下（即桥接模式），通过宿主机在docker0或者dockerNat下的ip，是可以访问宿主机的服务的，但是这种情况下的访问会受到防火墙的拦截影响，在连接不到宿主机的情况下可以尝试关闭宿主机的防火墙再试一次看看（仅限自己的机器，生产环境不建议）。
+
+## 优雅的容器调试方式[^2]
+与目标容器共享命名空间，即通过`--ipc --net --pid`三个参数来共享资源，以此注入排查工具。
+借鉴之 Itio 的 istio-proxy ：将Pod中的流量都代理到自己的容器中。
+
+可以使用`alpine linux`作为基础镜像，经过特别优化，体积比较小，拥有完全的包管理工具`apk`，可以随意添加工具或功能；
+`busybox`已经集成了多个常见的UNIX工具，非常小巧且适配广泛，但问题在于不能方便地动态添加新的功能或者工具；
+```sh
+docker run -it --rm --net=container:<container_id> --pid=container:<container_id> --ipc=container:<container_id> --name=t_busybox busybox
+# 以下是例子 b9c8ab7ed577是容器id
+docker run -it --rm --net=container:b9c8ab7ed577 --pid=container:b9c8ab7ed577 --ipc=container:b9c8ab7ed577 --name=t_busybox busybox
+```
+
 [1]: https://www.docker.com/ 'docker'
 [2]: https://docs.docker.com/ 'docker-docs'
 [3]: https://hub.docker.com/ 'docker-hub'
@@ -134,6 +188,24 @@ ps -ef|grep docker
 [8]: https://blog.csdn.net/weixin_30764883/article/details/101610771 'Docker 安装报错：没有找到installationmanifest.json文件'
 [9]: https://www.cnblogs.com/boazy/p/11661277.html 'Docker Desktop: Error response from daemon: driver failed programming external connectivity on endpoint xxx 问题'
 [10]: https://blog.csdn.net/SIMBA1949/article/details/82915638 'Docker常用镜像'
+[11]: https://blog.csdn.net/newtelcom/article/details/79548152 'docker0: iptables: No chain/target/match by that name'
 
 
 [^1]: [Get Docker Engine - Community for CentOS](https://docs.docker.com/install/linux/docker-ce/centos/)
+[^2]: [如何从单独的容器调试运行中的Docker容器](https://segmentfault.com/a/1190000020740899)
+
+
+## 样例
+
+### Sqlserver
+```sh
+docker pull exoplatform/sqlserver
+# 注意问题： 密码需要符合sql server 的安全策略，非1433 端口的连接配置
+# Microsoft SQL Server Management Studio 连接配置 服务器名称(s):ip,port 例：localhost,1444
+docker run -d -e SA_PASSWORD=<passord> -e SQLSERVER_DATABASE=<db name> -e      SQLSERVER_USER=<user> -e SQLSERVER_PASSWORD=<password> -p <local port>:1433 exoplatform/sqlserver:ctp2-1-1
+```
+
+### nodejs
+```sh
+
+```

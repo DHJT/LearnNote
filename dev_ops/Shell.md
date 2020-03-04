@@ -68,3 +68,13 @@ sudo mkfs.vfat /dev/sdb1
 mount /dev/sdb1 /mnt
 eject /mnt
 ```
+
+### 其他常用命令
+```sh
+unzip test.zip
+# 显示压缩包内容但不解压
+unzip -l test.zip
+
+curl -L http://*.*.*.*:web/test.zip -o /usr/local/test2.zip
+
+```

@@ -11,6 +11,23 @@
 - characterEncoding=utf-8
 - allowMultiQueries=true
 
+### 连接sql
+```sql
+-- mysql -P3307 -uroot -p123456
+# 显示所有数据库
+show databases
+use [database name];
+-- 显示当前库下的所有表
+show tables;
+show create database [database name];-- 查看数据库的编码方式
+-- 显示数据表的结构：
+describe 表名;
+-- 删库和删表:
+drop database 库名;
+drop table 表名；
+exit/quit -- 退出到终端命令行
+```
+
 ### 查询更新
 ```sql
 -- 如果是查询更新同一张表，MySql是不允许的，所以这里用INNER JOIN 引入内部关联表即可完后查询更新
@@ -74,6 +91,19 @@ SELECT * from mysql.general_log ORDER BY event_time DESC;
 - `[Err] 1093 - You can't specify target table 'bbb_copy' for update in FROM clause`[^1]
 - MySQL—JDBC出现The server time zone value '???ú±ê×??±??' is unrecognized or represents more...的错误提示[^2]
     + 解决方法：JDBC连接的URL后面加上`serverTimezone = GMT`，如果需要使用`GMT + 8`时区，需要写成`GMT％2B8`。
+
+#### mysql is not allowed to connect to this MySQL server解决方案
+在检查mysql服务开启后，3306端口也已经开放后连接数据库报"is not allowed to connect to this MySQL server"错误，
+这种情况是因为MySQL安装完毕后不允许远程登录
+
+解决方法如下：
+
+1.执行 mysql -u root -p，然后输入密码登陆mysql
+2.授权法。使用myuser使用mypassword从任何主机连接到mysql服务器。
+执行：`GRANT ALL PRIVILEGES ON *.* TO 'myuser'@'%' IDENTIFIED BY 'mypassword' WITH GRANT OPTION;`
+3.执行：`FLUSH PRIVILEGES;`
+4.此时可以使用myuser用户，mypassword密码远程登陆mysql服务器了
+
 
 [为什么MariaDB更优于MySQL](https://cloud.tencent.com/developer/article/1140522)
 

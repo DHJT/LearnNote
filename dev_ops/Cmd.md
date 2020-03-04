@@ -18,6 +18,11 @@ if exist c:\windows\History\*.* del c:\windows\History\*.*
     + 指定wifi的密码：`Netsh wlan show profile name=”热点名字” key=clear`
 
 ```sh
+telnet
+quit
+# 查看  127.0.0.1 这个IP的 80 端口是否开启，可以在打开的dos命令行中输入
+telnet 127.0.0.1 80
+
 # 获取已经使用的端口信息：第一行的本地地址显示端口为80，最右面对应的是PID=4.。
 netstat -ano
 # 查看被占用端口对应的PID
