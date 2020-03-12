@@ -64,23 +64,20 @@ docker run -d ubuntu:15.10 /bin/sh -c "while true; do echo hello world; sleep 1;
 docker run --name tomcat -p 8080:8080 -v $PWD/test:/usr/local/tomcat/webapps/test -d tomcat
 docker exec -it tomcat /bin/bash
 # 退出交互模式 Ctrl-D， 这种方式会停止容器
-# 正常退出不关闭容器，请按Ctrl+P+Q进行退出容器
+# 正常退出不关闭容器，请按 Ctrl+P+Q 进行退出容器
 exit
 docker run --name runoob-nginx-test -p 8081:80 -d nginx
+# --rm 在容器退出时就能够自动清理容器内部的文件系统
+# --rm选项不能与-d同时使用，即只能自动清理foreground容器，不能自动清理detached容器
+# 注意，--rm选项也会清理容器的匿名data volumes。
+# 所以，执行docker run命令带--rm命令选项，等价于在容器退出后，执行docker rm -v。
+docker run --rm=true busybox
 # 查看容器日志
 docker logs -tf --tail 10 `CONTAINER ID`
 
 # docker cp 要拷贝的文件路径 容器名：要拷贝到容器里面对应的路径
 docker cp /root/hadoop-mapreduce-examples-2.6.0.jar b7d7f88574fb:/usr/local/hadoop-2.6.0
 docker cp mysolr:/opt/solr/ /usr/local/ # 容器拷贝宿主机
-# mysql
-docker run -p 3306:3306 --name d_dh_mysql5 -v $PWD/conf5:/etc/mysql/conf.d -v $PWD/logs5:/logs -v $PWD/data5:/var/lib/mysql -e MYSQL_ROOT_PASSWORD=123456 -d mysql:5.7.26
-# elasticsearch
-docker network create somenetwork
-docker run -d --name elasticsearch --net somenetwork -p 9200:9200 -p 9300:9300 -e "discovery.type=single-node" elasticsearch:tag
-# rabbitmq
-# PostgreSQL
-docker run --name some-postgres -p 5432:5432 -e POSTGRES_PASSWORD=123456 -d postgres
 ```
 
 ## 常用命令
@@ -130,10 +127,33 @@ ps -ef|grep docker
 }
 ```
 
+### 清理镜像
+我们在使用 Docker 一段时间后，系统一般都会残存一些临时的、没有被使用的镜像文件，可以通过以下命令进行清理：
+`docker image prune`
+它支持的子命令有：
+`-a, --all`: 删除所有没有用的镜像，而不仅仅是临时文件；
+`-f, --force`：强制删除镜像文件，无需弹出提示确认；
+另外，执行完`docker image prune`命令后，还是告诉我们释放了多少存储空间！
+
+### 快速批量删除 docker 镜像或容器
+docker 本身并没有提供批量删除的功能，当有大量的镜像或者容器需要删除的时候，手动的一个一个删就比较麻烦了。
+```sh
+# 直接删除所有镜像
+docker rmi `docker images -q`
+# 直接删除所有容器
+docker rm `docker ps -aq`
+# 按条件筛选之后删除镜像
+docker rmi `docker images | grep xxxxx | awk '{print $3}'`
+# 按条件筛选之后删除容器
+docker rm `docker ps -a | grep xxxxx | awk '{print $1}'`
+```
+
 ## 网络
 ```sh
 # 显示docker中已经存在的网络
 docker network ls
+# 创建网络 somenetwork
+docker network create somenetwork
 ```
 
 ## Dockerfile
@@ -204,7 +224,20 @@ docker pull exoplatform/sqlserver
 # Microsoft SQL Server Management Studio 连接配置 服务器名称(s):ip,port 例：localhost,1444
 docker run -d -e SA_PASSWORD=<passord> -e SQLSERVER_DATABASE=<db name> -e      SQLSERVER_USER=<user> -e SQLSERVER_PASSWORD=<password> -p <local port>:1433 exoplatform/sqlserver:ctp2-1-1
 ```
-
+### mysql
+```sh
+docker run -p 3306:3306 --name d_dh_mysql5 -v $PWD/conf5:/etc/mysql/conf.d -v $PWD/logs5:/logs -v $PWD/data5:/var/lib/mysql -e MYSQL_ROOT_PASSWORD=123456 -d mysql:5.7.26
+```
+### elasticsearch
+```sh
+docker network create somenetwork
+docker run -d --name elasticsearch --net somenetwork -p 9200:9200 -p 9300:9300 -e "discovery.type=single-node" elasticsearch:tag
+```
+### rabbitmq
+### PostgreSQL
+```sh
+docker run --name some-postgres -p 5432:5432 -e POSTGRES_PASSWORD=123456 -d postgres
+```
 ### nodejs
 ```sh
 

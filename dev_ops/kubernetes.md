@@ -7,6 +7,8 @@ https://kubernetes.io/
 https://github.com/kubernetes/kubernetes
 [kubernetes中文社区](https://www.kubernetes.org.cn/)
 
+Helm, 在Kubernetes中部署应用的利器https://helm.sh/
+
 ## 基础
 - 学习 Kubernetes 基础知识[^1]
 

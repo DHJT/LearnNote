@@ -14,5 +14,7 @@ java -jar zipkin.jar
 java -jar ./zipkin-server/target/zipkin-server-*exec.jar
 # start Zipkin via Docker.
 docker run -d -p 9411:9411 openzipkin/zipkin
+# 瘦身版 仅支持内存、Elasticsearch持久化
+docker run -d -p 9411:9411 openzipkin/zipkin-slim
 ```
 view traces with the Zipkin UI at http://your_host:9411/zipkin/.

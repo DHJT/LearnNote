@@ -1,15 +1,26 @@
 # SpringCloud
 <!-- @author DHJT 2018-12-17  -->
-springCloud是基于SpringBoot的一整套实现微服务的框架。他提供了微服务开发所需的配置管理、服务发现、断路器、智能路由、微代理、控制总线、全局锁、决策竞选、分布式会话和集群状态管理等组件。最重要的是，跟spring boot框架一起使用的话，会让你开发微服务架构的云服务非常好的方便。
+springCloud是基于SpringBoot的一整套实现微服务的框架。他提供了微服务开发所需的配置管理、服务发现、断路器、智能路由、微代理、控制总线、一次性Token、全局锁、决策竞选、分布式会话和集群状态管理等组件。最重要的是，跟spring boot框架一起使用的话，会让你开发微服务架构的云服务非常好的方便。
 
 https://spring.io/projects/spring-cloud
 
 Note
     The release train contains a `spring-cloud-dependencies` as well as the `spring-cloud-starter-parent`. You can use the parent as you would the `spring-boot-starter-parent` (if you are using Maven). If you only need dependency management, the "dependencies" version is a BOM-only version of the same thing (it just contains dependency management and no plugin declarations or direct references to Spring or Spring Boot). If you are using the Spring Boot parent POM, then you can use the BOM from Spring Cloud. The opposite is not true: using the Cloud parent makes it impossible, or at least unreliable, to also use the Boot BOM to change the version of Spring Boot and its dependencies.
+
+### SpringBoot与SpringCloud 版本对应 ，这儿是大版本对应
+|  Spring Boot  |       Spring Cloud       |
+|---------------|--------------------------|
+| 1.2.x         | Angel版本                |
+| 1.3.x         | Brixton版本              |
+| 1.4.x stripes | Camden版本               |
+| 1.5.x         | Dalston版本、Edgware版本 |
+| 2.0.x stripes | Finchley版本             |
+| 2.1.x         | Greenwich版本            |
+
 ### Ribbon
 @LoadBalanced
 LB(Load Balance)
-Spring Cloud Ribbon是基于Netflix Ribbon的实现的一套客户端 负载均衡的工具。
+Spring Cloud Ribbon是基于Netflix Ribbon的实现的一套客户端负载均衡的工具。
 主要功能是提供客户端的软件负载均衡算法。
 
 ```
@@ -57,9 +68,33 @@ Eureka主要提供服务发现和注册，Ribbon提供负载均衡，Feign提供
 - 7色、1圈、1线
 - 故障实例和高压实例
 
+### Zuul(API网关)
+包含了对请求的路由和过滤两个最主要的功能。
+- 代理+路由+过滤；
+- 路由：负责外部请求转发到具体的微服务实例上，是实现外部访问统一入口的基础；
+- 过滤：负责对请求的处理过程进行干预，是实现请求校验、服务聚合等功能的基础。
+
+```java
+@EnableZuulProxy
+```
+```yaml
+# 禁用指定路由
+zuul.routes.routename.retryable: false
+zuul:
+  retryable: false # 全部禁用
+  prefix: /web # 设置统一公共前缀
+  ignored-services: "*" # 原真实服务名忽略 所有
+  ignored-services: microservicecloud-dept # 指定原真实服务名忽略，即不能通过microservicecloud-dept访问，要通过mydept
+  routes:
+    mydept.serviceId: microservicecloud-dept
+    mydept.path: /mydept/**
+```
+
 ### spring cloud子项目包括：
 - `Spring Cloud Config`：配置管理开发工具包，可以让你把配置放到远程服务器，目前支持本地存储、Git以及Subversion。
 - `Spring Cloud Bus`：事件、消息总线，用于在集群（例如，配置变化事件）中传播状态变化，可与Spring Cloud Config联合实现热部署。
+    + 广播，例如：配置统一管理;
+    + 监控;
 - `Spring Cloud Netflix`：针对多种Netflix组件提供的开发工具包，其中包括Eureka、Hystrix、Zuul、Archaius等。
 - `Netflix Eureka`：云端负载均衡，一个基于REST的服务，用于定位服务，以实现云端的负载均衡和中间层服务器的故障转移。
     + 保证AP。
@@ -68,13 +103,16 @@ Eureka主要提供服务发现和注册，Ribbon提供负载均衡，Feign提供
 - `Netflix Archaius`：配置管理`API`，包含一系列配置管理`API`，提供动态类型化属性、线程安全配置操作、轮询框架、回调机制等功能。
 - `Spring Cloud for Cloud Foundry`：通过`Oauth2`协议绑定服务到CloudFoundry，CloudFoundry是`VMware`推出的开源`PaaS`云平台。
 - `Spring Cloud Sleuth`：日志收集工具包，封装了Dapper,Zipkin和HTrace操作。
+    + 链路追踪
 - `Spring Cloud Data Flow`：大数据操作工具，通过命令行方式操作数据流。
 - `Spring Cloud Security`：安全工具包，为你的应用程序添加安全控制，主要是指`OAuth2`。
 - `Spring Cloud Consul`：封装了`Consul`操作，consul是一个服务发现与配置工具，与`Docker`容器可以无缝集成。
 - `Spring Cloud Zookeeper`：操作`Zookeeper`的工具包，用于使用`zookeeper`方式的服务注册和发现。
 - `Spring Cloud Stream`：数据流操作开发包，封装了与Redis,Rabbit、Kafka等发送接收消息。
+    + 官方定义 Spring Cloud Stream 是一个构建消息驱动微服务的框架。
+    + Spring Cloud Stream is a framework for building message-driven microservice applications. 
 - `Spring Cloud CLI`：基于`Spring Boot CLI`，可以让你以命令行方式快速建立云组件。
-
+ 
 - SpringCloud特点
 1：约定优于配置
 2：开箱即用、快速启动
@@ -83,6 +121,20 @@ Eureka主要提供服务发现和注册，Ribbon提供负载均衡，Feign提供
 5：组件支持丰富，功能齐全
 
 ![spring cloud tools](./../link-img/spring_cloud_tools.jpg "spring cloud tools")
+
+#### Spring Cloud Sleuth
+可以使用http方式收集
+或者使用消息中间件，使客户端与zipkin服务端解耦。
+整合zipkin
+```yaml
+#使用默认 http 方式收集 span 需要配置此项
+spring.zipkin.sender.type=web
+#sleuth 使用 rabbitmq 来向 zipkin 发送数据
+spring.zipkin.sender.type=rabbit
+# 设置采样率默认为 0.1 注意之前的版本是percentage 新版本中更换为 probability
+spring.sleuth.sampler.probability=1
+```
+持久化
 
 ## 样例
 - [spring cloud eureka-ribbon-fegin][1]
