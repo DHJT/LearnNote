@@ -148,6 +148,27 @@ docker rmi `docker images | grep xxxxx | awk '{print $3}'`
 docker rm `docker ps -a | grep xxxxx | awk '{print $1}'`
 ```
 
+## 容器数据卷
+卷就是目录或文件，存在于一个或多个容器中，由docker挂载到容器，但不属于联合文件系统，因此能够绕过Union File System提供一些用于持续存储或共享数据的特性：
+
+卷的设计目的就是数据的持久化，完全独立于容器的生存周期，因此Docker不会在容器删除时删除其挂载的数据卷
+特点；
+1：数据卷可在容器之间共享或重用数据
+2：卷中的更改可以直接生效
+3：数据卷中的更改不会包含在镜像的更新中
+4：数据卷的生命周期一直持续到没有容器使用它为止
+
+持久化到宿主机，如果没有显示指定映射地址，则有docker虚拟机进行管理，映射到宿主机上的磁盘上。
+
+
+docker rm -f 容器id/容器名
+docker run -it --name dc04 --volumes-from dc03 zzyy/centos
+### 数据卷容器
+--volumes-from
+容器之间配置信息的传递，数据卷的生命周期一直持续到没有容器使用它为止。
+可以做到容器间共享数据、文件夹、文件等；
+
+
 ## 网络
 ```sh
 # 显示docker中已经存在的网络

@@ -118,6 +118,7 @@ docker-compose scale user=3 movie=3
 docker-compose run web bash
 ```
 
+[Compose file version 3 reference](https://docs.docker.com/compose/compose-file/)
 ### 通过 docker-compose.yml 部署应用
 
 我将上面所创建的镜像推送到了阿里云，在此使用它

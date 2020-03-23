@@ -232,7 +232,7 @@ git remote add origin git@github.com:DHJT/sxy.git
 git push -u origin master
 ```
 给现有的代码项目打上标签
-git tag -a v1.4 -m 'my version 1.4' 
+git tag -a v1.4 -m 'my version 1.4'
 分享标签 ， 默认情况下，git push 并不会把标签传送到远端服务器上，只有通过显式命令才能分享标签到远端仓库。其命令格式如同推送分支，运行
 `git push origin [tagname]` 即可
 
@@ -240,3 +240,35 @@ git tag -a v1.4 -m 'my version 1.4'
 ### 不要用git pull，用git fetch和git merge代替它。
 git pull的问题是它把过程的细节都隐藏了起来，以至于你不用去了解git中各种类型分支的区别和使用方法。当然，多数时候这是没问题的，但一旦代码有问题，你很难找到出错的地方。看起来git pull的用法会使你吃惊，简单看一下git的使用文档应该就能说服你。
 将下载（fetch）和合并（merge）放到一个命令里的另外一个弊端是，你的本地工作目录在未经确认的情况下就会被远程分支更新。当然，除非你关闭所有的安全选项，否则git pull在你本地工作目录还不至于造成不可挽回的损失，但很多时候我们宁愿做的慢一些，也不愿意返工重来。
+
+### Gitlab中的操作建议
+```sh
+# Command line instructions
+# Git global setup
+git config --global user.name "sun_lianhai"
+git config --global user.email "sun_lianhai@hoperun.com"
+
+# Create a new repository
+git clone git@192.168.1.45:decision_engine/engine-web.git
+cd engine-web
+touch README.md
+git add README.md
+git commit -m "add README"
+git push -u origin master
+
+# Existing folder
+# cd existing_folder
+git init
+git remote add origin git@192.168.1.45:decision_engine/engine-web.git
+git add .
+git commit -m "Initial commit"
+git push -u origin master
+
+# Existing Git repository
+# cd existing_repo
+git remote rename origin old-origin
+git remote add origin git@192.168.1.45:decision_engine/engine-web.git
+git push -u origin --all
+git push -u origin --tags
+```
+
