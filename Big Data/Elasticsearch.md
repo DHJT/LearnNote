@@ -12,3 +12,21 @@ cd D:\ProgramFiles\elasticsearch-6.6.1
 线上服务不要这样设置，要设成具体的 IP。
 本质上是一个分布式数据库，允许多台服务器协同工作，每台服务器可以运行多个 Elastic 实例。
 单个 Elastic 实例称为一个节点（node）。一组节点构成一个集群（cluster）。
+
+### jar包下载
+```xml
+<dependency>
+  <groupId>org.elasticsearch.plugin</groupId>
+  <artifactId>x-pack-sql-jdbc</artifactId>
+  <version>7.6.1</version>
+</dependency>
+```
+from `artifacts.elastic.co/maven` by adding it to the repositories list:
+```xml
+<repositories>
+  <repository>
+    <id>elastic.co</id>
+    <url>https://artifacts.elastic.co/maven</url>
+  </repository>
+</repositories>
+```

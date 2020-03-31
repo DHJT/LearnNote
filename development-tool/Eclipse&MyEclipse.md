@@ -23,6 +23,10 @@ When features and plug-ins are manually installed on top of an Eclipse-based pro
 ### 如何在 Eclipse 中彻底修改一个项目名称
 - [如何在Eclipse中彻底修改一个项目名称](https://blog.csdn.net/a18716374124/article/details/79499589)
 
+### Eclipse设置禁用IPv6：-Djava.net.preferIPv4Stack=true
+Window--Preferences--JAVA--Installed JREs--选中JDK--EDIT
+Deault VM Arguments:-Djava.net.preferIPv4Stack=true
+
 ### 代码模板
 - 在Preferences”对话框中点击“Java”->“Editor”->“Templates”
 ```ini

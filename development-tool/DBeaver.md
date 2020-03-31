@@ -12,6 +12,8 @@ https://github.com/dbeaver/dbeaver/tree/4.1.1
 ### 使用
 - 生成测试数据(Mock Data)
     + 在版本（6.1.5）中可用，之后版本移除
+    + Note: since version 6.2 MockData generator extension is available only in Enterprise Edition.
+    + [Mock Data Generation in DBeaver](https://github.com/dbeaver/dbeaver/wiki/Mock-Data-Generation-in-DBeaver)
 
 ### 自定义数据库连接
 - Adding driver configuration in DBeaver.[^2]

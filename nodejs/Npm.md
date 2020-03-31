@@ -1,5 +1,7 @@
-## cnpm
+# NPM
 <!-- @author DHJT 2019-01-23 -->
+
+## cnpm
 说明：因为npm安装插件是从国外服务器下载，受网络影响大，可能出现异常，如果npm的服务器在中国就好了，所以我们乐于分享的淘宝团队干了这事。来自官网：“这是一个完整 npmjs.org 镜像，你可以用此代替官方版本(只读)，同步频率目前为 10分钟 一次以保证尽量与官方服务同步。”
 官方网址：http://npm.taobao.org
 安装：命令提示符执行npm install cnpm -g --registry=https://registry.npm.taobao.org
@@ -8,7 +10,6 @@
 - [cnpm](http://npm.taobao.org)
 ```sh
 npm install cnpm -g --registry=https://registry.npm.taobao.org
-
 ```
 
 ### audit
@@ -26,6 +27,23 @@ $ npm audit --json
 ```
 npm-audit 官网地址：https://docs.npmjs.com/cli/audit
 
+## nvm
+nvm和n都是node版本管理工具，为了解决node各种版本存在不兼容现象；
+nvm是让你在同一台机器上安装和切换不同版本的node的工具；
+
+### 安装：两种方式
+```sh
+curl -o- https://raw.githubusercontent.com/creationix/nvm/v0.33.0/install.sh | bash
+wget -qO- https://raw.githubusercontent.com/creationix/nvm/v0.33.0/install.sh | bash
+```
+此时nvm就被安装在了/.nvm下
+
+### 命令：
+- nvm ls-remote：列出所有可以安装的node版本号
+- nvm install v10.4.0：安装指定版本号的node
+- nvm use v10.3.0：切换node的版本，这个是全局的
+- nvm current：当前node版本
+- nvm ls：列出所有已经安装的node版本
 
 ## 报错
 

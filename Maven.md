@@ -1,4 +1,22 @@
 # MAVEN
+<!-- @author DHJT -->
+### 保持现有值并添加配置的正确方法是使用 @ {...} 语法：
+
+```xml
+<!-- 在maven-surefire-plugin中附加argLine param的值(Append the value of argLine param in maven-surefire-plugin) -->
+<plugin>
+  <groupId>org.apache.maven.plugins</groupId>
+  <artifactId>maven-surefire-plugin</artifactId>
+  <configuration>
+    <argLine>@{argLine} -D... -D...</argLine>
+  </configuration>
+</plugin>
+<!-- 或者您可以将 argLine 设置为您的 pom.xml 文件中的 property ： -->
+<properties>
+  <argLine>-DCRR.Webservice.isSimulated=true -D...</argLine>
+</properties>
+```
+
 ``` xml
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
   xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
@@ -48,6 +66,7 @@
     <slf4j.version>1.6.1</slf4j.version>
     <spring.version>4.0.9.RELEASE</spring.version>
   </properties>
+
 
 </project>
 ```

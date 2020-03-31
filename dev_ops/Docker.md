@@ -71,7 +71,8 @@ docker run --name runoob-nginx-test -p 8081:80 -d nginx
 # --rm选项不能与-d同时使用，即只能自动清理foreground容器，不能自动清理detached容器
 # 注意，--rm选项也会清理容器的匿名data volumes。
 # 所以，执行docker run命令带--rm命令选项，等价于在容器退出后，执行docker rm -v。
-docker run --rm=true busybox
+#通过 -e TZ="Asia/Shanghai" 设置时区
+docker run --rm=true -e TZ="Asia/Shanghai" busybox
 # 查看容器日志
 docker logs -tf --tail 10 `CONTAINER ID`
 
@@ -160,14 +161,14 @@ docker rm `docker ps -a | grep xxxxx | awk '{print $1}'`
 
 持久化到宿主机，如果没有显示指定映射地址，则有docker虚拟机进行管理，映射到宿主机上的磁盘上。
 
-
 docker rm -f 容器id/容器名
 docker run -it --name dc04 --volumes-from dc03 zzyy/centos
+
 ### 数据卷容器
 --volumes-from
 容器之间配置信息的传递，数据卷的生命周期一直持续到没有容器使用它为止。
 可以做到容器间共享数据、文件夹、文件等；
-
+[利用 Docker 备份、迁移数据库](https://www.cnblogs.com/JacZhu/p/7835237.html)
 
 ## 网络
 ```sh
@@ -175,6 +176,27 @@ docker run -it --name dc04 --volumes-from dc03 zzyy/centos
 docker network ls
 # 创建网络 somenetwork
 docker network create somenetwork
+```
+## 时区不一致
+
+1、【镜像未生产前】基础镜像 在 Dockerfile 中设置时区:
+```Dockerfile
+ENV TZ=Asia/Shanghai
+RUN ln -snf /usr/share/zoneinfo/$TZ /etc/localtime && echo $TZ > /etc/timezone
+```
+2、【镜像生成后 && 容器未创建】 创建并启动容器时：
+```sh
+# 共享主机时间
+docker run --name <name> -v /etc/localtime:/etc/localtime:ro ...
+```
+3、【镜像生成后 && 容器启动】  容器外，宿主机中修改：
+```sh
+docker cp /etc/localtime [容器ID或者NAME]:/etc/localtime
+```
+4、【镜像生成后 && 容器启动】  容器中
+```sh
+apk add tzdata
+ln -sf /usr/share/zoneinfo/Asia/Shanghai /etc/localtime echo "Asia/Shanghai" > /etc/timezone
 ```
 
 ## Dockerfile
@@ -219,6 +241,16 @@ docker run -it --rm --net=container:<container_id> --pid=container:<container_id
 docker run -it --rm --net=container:b9c8ab7ed577 --pid=container:b9c8ab7ed577 --ipc=container:b9c8ab7ed577 --name=t_busybox busybox
 ```
 
+## windows10 启动zookeeper，报端口被占用，但是查询没有占用
+- 启动zookeeper，但是报 Unexpected exception, exiting abnormally java.net.BindException: Address already in use: bind
+解决之路
+- 使用命令netstat -ano|findstr 2181，但是提示为空。说明端口没有被占用；
+- 使用命令netsh interface ipv4 show excludedportrange protocol=tcp,这个是查询windows10下面的Hyper-V的端口保留的TCP范围
+- 从命令的结果可以看出，端口2181被Hyper-V给保留了。
+- 解决方案：配置文件将zookeeper的端口改为高位端口，即可解决。
+
+## Docker 镜像仓库为什么要分库分权限？[^3]
+
 [1]: https://www.docker.com/ 'docker'
 [2]: https://docs.docker.com/ 'docker-docs'
 [3]: https://hub.docker.com/ 'docker-hub'
@@ -234,6 +266,8 @@ docker run -it --rm --net=container:b9c8ab7ed577 --pid=container:b9c8ab7ed577 --
 
 [^1]: [Get Docker Engine - Community for CentOS](https://docs.docker.com/install/linux/docker-ce/centos/)
 [^2]: [如何从单独的容器调试运行中的Docker容器](https://segmentfault.com/a/1190000020740899)
+[^3]: [Docker 镜像仓库为什么要分库分权限？](https://www.jianshu.com/p/6cb357eaf556)
+
 
 
 ## 样例

@@ -1,5 +1,19 @@
 # Spring-Kafka
 <!-- @author DHJT 2020-02-12 -->
+## Features
+- KafkaTemplate
+- KafkaMessageListenerContainer
+- @KafkaListener
+- KafkaTransactionManager
+- spring-kafka-test jar with embedded kafka server
+
+## Kafka Client Compatibility
+| Spring for Apache Kafka Version | Spring Integration for Apache Kafka Version |    kafka-clients    |
+|---------------------------------|---------------------------------------------|---------------------|
+| 2.4.x                           | 3.3.x                                       | 2.4.0               |
+| 2.3.x                           | 3.2.x                                       | 2.3.1               |
+| 2.2.x                           | 3.1.x                                       | 2.0.1, 2.1.x, 2.2.x |
+| 1.3.x                           | 2.3.x                                       | 0.11.0.x, 1.0.x     |
 
 ### 事务
 

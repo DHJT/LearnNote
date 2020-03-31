@@ -45,6 +45,25 @@ get myKey
 3. rdb性能比aof好
 4. 如果两个都配了优先加载AOF
 
+## 队列
+Redis的列表是使用__双向链表__实现的，保存了头尾节点，所以在列表头尾两边插取元素都是非常快的。
+可以直接使用Redis的List实现消息队列，只需简单的两个指令lpush和rpop或者rpush和lpop。
+`brpop`指令，这个指令只有在有元素时才返回，没有则会阻塞直到超时返回null，
+列表类型天生支持用作消息队列;
+
+## 发布/订阅模式
+利用Redis的pub/sub模式可以实现一次生产多次消费的队列。
+有两种类型，一种是频道，还有一种就是模式。
+模式其实就是模式匹配的概念，`order.*`就表示匹配所有和 order 相关的消息。
+Redis的pub/sub也有其缺点，那就是如果消费者下线，生产者的消息会丢失。
+
+springboot2.0整合redis的发布和订阅[^1]
+
+### Redis 订阅发布功能整的适合做消息中间件吗？
+Redis 发送消息，是循环订阅者列表实现的，比如我有 100 个频道，每个频道有100个订阅者，由于是单线程，岂不是要循环处理，那么最后一个频道的最后一个订阅者岂不是会等死去。使用 redis 做消息中间件的，redis 并没有提供消息重试机制，也没有提供消息确认机制，更没有提供消息的持久化，所以一旦消息丢失，我们是没有任何办法的。而且现在突然订阅方断线，那么他将会丢失所有在短线期间发布者发布的消息，
+
+[1]: http://redisdoc.com/index.html 'Redis 命令参考'
+
 ## 面试题
 
 ### 使用过Redis分布式锁么，它是怎么实现的
@@ -55,3 +74,5 @@ set指令有非常复杂的参数，这个应该是可以同时把setnx和expire
 ### RedisDesktopManager
 Cross-platform GUI management tool for Redis https://redisdesktop.com
 https://github.com/uglide/RedisDesktopManager
+
+[^1]: [springboot2.0整合redis的发布和订阅](https://www.cnblogs.com/powerwu/p/11505481.html)

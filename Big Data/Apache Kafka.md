@@ -78,6 +78,17 @@ bin/windows/kafka-console-consumer.bat --bootstrap-server localhost:9092 --topic
 - Kafka Tool 2是一款Kafka的可视化客户端工具，可以非常方便的查看Topic的队列信息以及消费者信息以及kafka节点信息。
 - 直接丢下载地址：http://www.kafkatool.com/download.html
 
+### 跨网络访问设置[^1][^2]
+```
+# Hostname and port the broker will advertise to producers and consumers. If not set, 
+# it uses the value for "listeners" if configured.  Otherwise, it will use the value
+# returned from java.net.InetAddress.getCanonicalHostName().
+#advertised.listeners=PLAINTEXT://your.host.name:9092
+```
+KAFKA_ADVERTISED_LISTENERS: PLAINTEXT://xxx.xxx.xxx.xxx：port （局域网宿主机的IP地址而非容器的IP，及暴露出来的端口）
+advertised.listeners=PLAINTEXT://主机的域名:9092
+kafka 0.9.x以后的版本新增了advertised.listeners配置
+kafka 0.9.x以后的版本不要使用 advertised.host.name 和 advertised.host.port 已经deprecated
 
 
 [kafka实战]: https://www.cnblogs.com/hei12138/p/7805475.html 'kafka实战'
@@ -85,3 +96,6 @@ bin/windows/kafka-console-consumer.bat --bootstrap-server localhost:9092 --topic
 [1]: https://blog.csdn.net/u010513487/article/details/79483860 'kafka运行错误：找不到或者无法加载主类等错误解决方法'
 [2]: http://www.kafka.cc/ 'Kafka网站——趣谈kafka'
 [3]: https://www.jianshu.com/c/0c9d83802b0c 'Spring-Kafka史上最强入门教程'
+
+[^1]: [Kafka跨网络访问设置](https://www.cnblogs.com/cf532088799/p/7425021.html)
+[^2]: [kafka listeners 和 advertised.listeners 的应用](https://segmentfault.com/a/1190000020715650?utm_source=tag-newest)
