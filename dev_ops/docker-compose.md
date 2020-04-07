@@ -162,8 +162,17 @@ services:
     build: .  # 指定 Dockerfile 所在路径
     ports:    # 指定端口映射
       - "9000:8761"
+    volumes:
+      - data:/var/lib/postgresql/data
     tty: true
     stdin_open: true
+# 如果设置为true，则指定此卷是在合成之外创建的。DOCKE编写不尝试创建它，并且如果不存在，则会引发错误。
+# 对于3.3及以下版本的格式，外部不能与其他卷配置键（驱动程序、驱动程序选项、标签）一起使用。对于第3.4版及以上版本，此限制不再存在。
+volumes:
+  data:
+    external: true
+  logs:
+    external: true
 ```
 
 ## 相关案例

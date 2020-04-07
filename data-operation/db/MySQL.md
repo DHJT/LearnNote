@@ -64,6 +64,9 @@ execute s1 using @condition1;
 deallocate prepare s1;
 ```
 
+### Mysql锁详解（行锁、表锁、意向锁、Gap锁、插入意向锁）[^4]
+
+
 ### utf8mb4 & utf8 的区别
 MySQL在5.5.3之后增加了这个utf8mb4的编码，mb4就是most bytes 4的意思，专门用来兼容四字节的unicode。好在utf8mb4是utf8的超集，除了将编码改为utf8mb4外不需要做其他转换。当然，为了节省空间，一般情况下使用utf8也就够了。
 
@@ -110,3 +113,4 @@ SELECT * from mysql.general_log ORDER BY event_time DESC;
 [^1]: [sql异常及解决方法[Err] 1093 - You can't specify target table 'bbb_copy' for update in FROM clause](https://blog.csdn.net/qq_35216516/article/details/80524652)
 [^2]: [MySQL—JDBC出现The server time zone value '???ú±ê×??±??' is unrecognized or represents more...的错误提示](https://blog.csdn.net/weixin_39126856/article/details/90766822)
 [^3]: [Mysql 5.7 windows安装 zip安装](https://www.cnblogs.com/FlyJeans/p/10658386.html)
+[^4]: [Mysql锁详解（行锁、表锁、意向锁、Gap锁、插入意向锁）](https://blog.csdn.net/u010841296/article/details/84204701)
