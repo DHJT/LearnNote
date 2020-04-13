@@ -71,8 +71,16 @@ Redis 发送消息，是循环订阅者列表实现的，比如我有 100 个频
 如果在setnx之后执行expire之前进程意外crash或者要重启维护了，那会怎么样？
 set指令有非常复杂的参数，这个应该是可以同时把setnx和expire合成一条指令来用的！
 
+### redis-redisTemplate 模糊匹配keys
+做项目遇到的问题模糊匹配
+//匹配img开头的key,直接使用正则无效
+redis中模糊匹配 redisTemplate.keys("img"+"*");//img.* //"img."+"*" 
+stringRedisTemplate.keys() 这个线上用会导致redis 耗时很久，redis又是单线程的会容易被锁住，严重一点会导致redis服务器宕机
+
 ### RedisDesktopManager
 Cross-platform GUI management tool for Redis https://redisdesktop.com
 https://github.com/uglide/RedisDesktopManager
+
+[1]: https://blog.csdn.net/weixin_30301449/article/details/101239123 '在RedisTemplate中使用scan代替keys指令'
 
 [^1]: [springboot2.0整合redis的发布和订阅](https://www.cnblogs.com/powerwu/p/11505481.html)

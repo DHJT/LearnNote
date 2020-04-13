@@ -34,6 +34,8 @@ Apache Kafka 是一个分布式高吞吐量的流消息系统，Kafka 建立在 
 - Zookeeper：kafka集群依赖zookeeper来保存集群的的元信息，来保证系统的可用性。
     + ZooKeeper安装模式分为三种，分别为：单机模式（stand-alone）、集群模式和集群伪分布模式。
 
+kafka将topic中的消息存在不同的partition中。如果存在键值（key），消息按照键值（key）做分类存在不同的partiition中，如果不存在键值（key），消息按照轮询（Round Robin）机制存在不同的partition中。默认情况下，键值（key）决定了一条消息会被存在哪个partition中。
+
 ### 什么情况会导致 kafka 运行变慢
 - cpu 性能瓶颈
 - 磁盘读写瓶颈

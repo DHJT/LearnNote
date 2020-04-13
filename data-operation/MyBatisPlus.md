@@ -101,6 +101,9 @@ PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
 </configuration>
 ```
 
+#### 使用 Wrapper 自定义SQL
+在使用了mybatis-plus之后, 自定义SQL的同时也想使用Wrapper的便利应该怎么办？ 在mybatis-plus版本3.0.7得到了完美解决 版本需要大于或等于3.0.7, 以下两种方案取其一即可
+
 ### 方法使用
 ```java
 // 插入
