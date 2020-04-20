@@ -272,3 +272,4 @@ git push -u origin --all
 git push -u origin --tags
 ```
 
+[1]: https://blog.csdn.net/lincyang/article/details/21519333 'Git冲突：commit your changes or stash them before you can merge.'

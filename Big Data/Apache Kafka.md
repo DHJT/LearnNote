@@ -3,6 +3,8 @@
 [Kafka](http://kafka.apache.org/)是一种高吞吐量的分布式发布订阅消息系统。Kafka建立在ZooKeeper同步服务之上
 Apache Kafka 是一个分布式高吞吐量的流消息系统，Kafka 建立在 ZooKeeper 同步服务之上。它与 Apache Storm 和 Spark 完美集成，用于实时流数据分析，与其他消息传递系统相比，Kafka具有更好的吞吐量，内置分区，数据副本和高度容错功能，因此非常适合大型消息处理应用场景。
 
+不支持严格的消息有序。仅仅保证在一个topic分区(队列）中是有序的。
+
 - [kafka实战][kafka实战]
 
 ### Kafka 特性

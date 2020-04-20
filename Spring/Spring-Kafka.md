@@ -15,6 +15,20 @@
 | 2.2.x                           | 3.1.x                                       | 2.0.1, 2.1.x, 2.2.x |
 | 1.3.x                           | 2.3.x                                       | 0.11.0.x, 1.0.x     |
 
+
+1、Use this for processing individual ConsumerRecord s received from the kafka consumer poll() operation when using auto-commit, or one of the container-managed commit methods.
+使用MessageListener接口实现时，当消费者拉取消息之后，消费完成会自动提交offset，即enable.auto.commit为true时，适合使用此接口
+2、Use this for processing individual ConsumerRecord s received from the kafka consumer poll() operation when using one of the manual commit methods.
+使用AcknowledgeMessageListener时，当消费者消费一条消息之后，不会自动提交offset，需要手动ack，即enable.auto.commit为false时，适合使用此接口
+3、Use this for processing all ConsumerRecord s received from the kafka consumer poll() operation when using auto-commit, or one of the container-managed commit methods. AckMode.RECORD is not supported when using this interface since the listener is given the complete batch.
+
+4、Use this for processing all ConsumerRecord s received from the kafka consumer poll() operation when using one of the manual commit methods.
+
+BatchMessageListener和BatchAcknowledgingMessageListener接口作用与上述两个接口大体类似，只是适合批量消费消息决定是否自动提交offset
+
+由于业务较重，且offset自动提交时，出现消费异常或者消费失败的情况，消费者容易丢失消息，所以需要采用手动提交offset的方式，因此实现AcknowledgeMessageListener接口。
+
+
 ### 事务
 
 #### 配置Kafka事务管理器并使用@Transactional注解
@@ -90,13 +104,23 @@ kafkaTemplate.executeInTransaction(new KafkaOperations.OperationsCallback() {
 
 ### 使用Ack机制确认消费
 Kafka的Ack机制相对于RabbitMQ的Ack机制差别比较大
+```java
+public class KafkaMessageListener implements AcknowledgingMessageListener<Integer, String> {
+    @Override
+    public void onMessage(final ConsumerRecord<Integer, String> message, final Acknowledgment acknowledgment) {
+        //TODO 这里具体实现个人业务逻辑
+        // 最后 调用acknowledgment的ack方法，提交offset
+        acknowledgment.acknowledge();
+    }
+}
+```
 
 ### KafkaListenerEndpointRegistry 注册 KafkaListener
 ```java
 @Component
 @EnableScheduling
 @Slf4j
-public class TaskListener{
+public class TaskListener {
 
     @Autowired
     private KafkaListenerEndpointRegistry registry;
