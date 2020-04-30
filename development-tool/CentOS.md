@@ -97,3 +97,4 @@ export PATH=$PATH:$JAVA_HOME/bin
 
 [1]: https://blog.csdn.net/xiaoyu19910321/article/details/78504400 'CentOS 7如何连接无线网络'
 [2]: https://www.cnblogs.com/startcentos/p/6147444.html '【centos7】添加开机启动服务/脚本'
+[3]: https://blog.csdn.net/qq_36582604/article/details/80526287 'CentOS7安装MySQL（完整版）'

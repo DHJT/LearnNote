@@ -30,3 +30,10 @@ To enable a page for Google Analytics you need to added the following block of J
   })();
 </script>
 ```
+
+- js中获取应用根目录
+``` js
+var local = window.location;
+var contextPath = local.pathname.split("/")[1];
+var basePath = local.protocol + "//" + local.host + "/" + contextPath;
+```

@@ -30,6 +30,24 @@ java是一种类型安全的语言，它有四类称为安全沙箱机制的安�
 | TreeMap           | 红黑树           | 不安全      | 有序        | 不唯一      |
 | ConcurrentHashMap | 数组+链表/红黑树 | 安全        | 无序        | 不唯一      |
 
+## 多线程与并发
+
+### ThreadLocal
+ThreadLocal<T>其实是与线程绑定的一个变量。
+ThreadLocal和Synchonized都用于解决多线程并发访问。
+但是ThreadLocal与synchronized有本质的区别。Synchronized用于线程间的数据共享，而ThreadLocal则用于线程间的数据隔离。
+ThreadLocal为每一个线程都提供了变量的副本，使得每个线程在某一时间访问到的并不是同一个对象，这样就隔离了多个线程对数据的数据共享。
+
+线程隔离的秘密，就在于 ThreadLocalMap 这个类。 ThreadLocalMap 是ThreadLocal类的一个静态内部类，它实现了键值对的设置和获取，每个线程中都有一个独立的 ThreadLocalMap 副本，它所存储的值，只能被当前线程读取和修改。
+
+ThreadLocal是一种空间换时间的思想
+
+ThreadLocal 的使用场景:用来解决数据库连接、Session 管理等。
+
+[ThreadLocal使用场景分析](https://www.jianshu.com/p/f956857a8304)
+[ThreadLocal 的使用场景](https://zhuanlan.zhihu.com/p/82737256)
+
+### 闭锁CountDownLatch
 
 ## Java之四大内置注解 @Override、 @Deprecated、 @SuppressWarnings、 @SafeVarargs
 

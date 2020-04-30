@@ -68,6 +68,27 @@ rule "name"
         RHS-结果
 end
 ```
+@Duration：Drools引擎中事件的持续时间。
+
+
+date-expires
+此属性与date-effective的作用相反，用来设置规则的过期时间。时间格式可完全参考date-effective的时间格式。引擎在执行规则时会检查属性是否设置，如果设置则比较当前系统时间与设置时间，如果设置时间大于系统时间，则执行规则，否则不执行。实例代码同样参考date-effective。
+
+duration
+已废弃。设置该属性，规则将指定的时间之后在另外一个线程里触发。属性值为一个长整型，单位是毫秒。如果属性值设置为0，则标示立即执行，与未设置相同。
+
+enabled
+设置规则是否可用。true：表示该规则可用；false：表示该规则不可用。
+
+salience:设置规则执行的优先级
+值：数字（数字越大执行优先级越高）
+no-loop:控制已经执行的规则条件再次满足是否再次执行
+值：true/false
+activation-group:若干个规则分为一个组
+值：分组名称
+declare:Drools除了接收用户在外部向WorkingMemory当中插入现成的Fact对象，还允许用户在规则文件当中定义一个新的Fact对象
+
+### CEP
 
 ### 规则模板
 

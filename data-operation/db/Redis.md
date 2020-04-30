@@ -28,6 +28,13 @@ get myKey
 - Set（集合）
 - zset(sorted set：有序集合)
 
+## Redis Modules
+You can find the list of modules for Redis on redis.io or on redismodules.com. A few of the standard modules can be found here:
+
+- RediSearch: Search and Query with Indexing on Redis
+- ReJSON: Extended JSON processing for Redis
+- ReBloom: Bloom Filters data type for membership/existence search on Redis
+
 ## Redis持久化？Redis有哪几种持久化方式？优缺点是什么？
 持久化就是把内存的数据写到磁盘中去，防止服务宕机了内存数据丢失。
 两种持久化方式:RDB（默认） 和AOF
@@ -61,6 +68,43 @@ springboot2.0整合redis的发布和订阅[^1]
 
 ### Redis 订阅发布功能整的适合做消息中间件吗？
 Redis 发送消息，是循环订阅者列表实现的，比如我有 100 个频道，每个频道有100个订阅者，由于是单线程，岂不是要循环处理，那么最后一个频道的最后一个订阅者岂不是会等死去。使用 redis 做消息中间件的，redis 并没有提供消息重试机制，也没有提供消息确认机制，更没有提供消息的持久化，所以一旦消息丢失，我们是没有任何办法的。而且现在突然订阅方断线，那么他将会丢失所有在短线期间发布者发布的消息，
+
+## 布隆过滤器
+本质上是一种数据结构，比较巧妙的概率型数据结构（probabilistic data structure）；
+特点是高效地插入和查询，可以用来告诉你 “某样东西一定不存在或者可能存在”。
+相比于传统的 List、Set、Map 等数据结构，它更高效、占用空间更少，但是缺点是其返回的结果是概率性的，而不是确切的。
+传统的布隆过滤器并不支持删除操作。但是名为`Counting Bloom filter`的变种可以用来测试元素计数个数是否绝对小于某个阈值，它支持元素删除。
+
+Redis从4.0版本开始对布隆过滤器的支持，需要额外安装此模块并进行配置方可使用。
+
+### 最佳实践
+常见的适用常见有，利用布隆过滤器减少磁盘 IO 或者网络请求，因为一旦一个值必定不存在的话，我们可以不用进行后续昂贵的查询请求。
+
+另外，既然你使用布隆过滤器来加速查找和判断是否存在，那么性能很低的哈希函数不是个好选择，推荐 MurmurHash、Fnv 这些。
+
+### 大Value拆分
+Redis 因其支持 setbit 和 getbit 操作，且纯内存性能高等特点，因此天然就可以作为布隆过滤器来使用。但是布隆过滤器的不当使用极易产生大 Value，增加 Redis 阻塞风险，因此生成环境中建议对体积庞大的布隆过滤器进行拆分。
+
+拆分的形式方法多种多样，但是本质是不要将 Hash(Key) 之后的请求分散在多个节点的多个小 bitmap 上，而是应该拆分成多个小 bitmap 之后，对一个 Key 的所有哈希函数都落在这一个小 bitmap 上。
+
+### redis+RedisBloom的安装和使用【Docker】
+```sh
+# 第一步: Launch RedisBloom with Docker
+docker run -p 6379:6379 --name redis-redisbloom redislabs/rebloom:latest
+# 第二步: Use RedisBloom withredis-cli
+docker exec -it redis-redisbloom bash
+redis-cli # 出现 127.0.0.1:6379>
+# 第三步: Start a new bloom filter by adding a new item
+BF.ADD newFilter foo # 出现 (integer) 1
+# 第四步: Checking if an item exists in the filter
+BF.EXISTS newFilter foo # 出现 (integer) 1
+# 第五步: 配置密码或其它相关设置 ......
+config set requirepass xxxxx # 结果 OK
+config set notify-keyspace-events xE # 结果 (error) NOAUTH Authentication required.
+auth xxxxx # 结果 OK
+config set notify-keyspace-events xE # 结果 OK
+```
+[SpringBoot+Redis布隆过滤器防恶意流量击穿缓存的正确姿势](https://blog.csdn.net/lifetragedy/article/details/103945885)
 
 [1]: http://redisdoc.com/index.html 'Redis 命令参考'
 

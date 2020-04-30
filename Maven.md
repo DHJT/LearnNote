@@ -1,5 +1,8 @@
 # MAVEN
 <!-- @author DHJT -->
+
+mvn spring-boot:run -Ptest，但这是Maven的Profile。
+
 ### 保持现有值并添加配置的正确方法是使用 @ {...} 语法：
 
 ```xml

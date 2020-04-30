@@ -114,3 +114,5 @@ SELECT * from mysql.general_log ORDER BY event_time DESC;
 [^2]: [MySQL—JDBC出现The server time zone value '???ú±ê×??±??' is unrecognized or represents more...的错误提示](https://blog.csdn.net/weixin_39126856/article/details/90766822)
 [^3]: [Mysql 5.7 windows安装 zip安装](https://www.cnblogs.com/FlyJeans/p/10658386.html)
 [^4]: [Mysql锁详解（行锁、表锁、意向锁、Gap锁、插入意向锁）](https://blog.csdn.net/u010841296/article/details/84204701)
+
+[1]: https://www.cnblogs.com/HeiDi-BoKe/p/11531582.html 'MySQL5.7.27报错“[Warning] Using a password on the command line interface can be insecure.”在命令行使用密码不安全警告'

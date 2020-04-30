@@ -241,6 +241,11 @@ git tag -a v1.4 -m 'my version 1.4'
 git pull的问题是它把过程的细节都隐藏了起来，以至于你不用去了解git中各种类型分支的区别和使用方法。当然，多数时候这是没问题的，但一旦代码有问题，你很难找到出错的地方。看起来git pull的用法会使你吃惊，简单看一下git的使用文档应该就能说服你。
 将下载（fetch）和合并（merge）放到一个命令里的另外一个弊端是，你的本地工作目录在未经确认的情况下就会被远程分支更新。当然，除非你关闭所有的安全选项，否则git pull在你本地工作目录还不至于造成不可挽回的损失，但很多时候我们宁愿做的慢一些，也不愿意返工重来。
 
+## Gitlab
+- 个人项目迁移至组项目
+    + 方案1：`New Project`->`Import project`->`Repo by URL`->`https://username:password@gitlab.company.com/group/project.git`;
+    + 方案2：`Settings`->`General`->`Transfer project`->`Select a new namespace`;
+
 ### Gitlab中的操作建议
 ```sh
 # Command line instructions

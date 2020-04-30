@@ -14,7 +14,7 @@
 资源会在`try`代码后自动关闭，原因就在于它们都实现了`AutoCloseable`接口。
 ```java
 // 在JDK7之后，新增了尝试关闭资源 （try-with-resources）语法
-public void copyFile(String fileInput, String fileOutput) {    
+public void copyFile(String fileInput, String fileOutput) {
     try (InputStream input = new FileInputStream(fileInput);
             OutputStream output = new FileOutputStream(fileOutput)) {
         byte[] byteArray = new byte[1024];
@@ -59,7 +59,8 @@ str.lastIndexOf(".Pdf");
         * [java使用siger 获取服务器硬件信息（CPU 内存 网络 io等）](http://www.cnblogs.com/jifeng/archive/2012/05/16/2503519.html)
         * [sigar官方主页](http://support.hyperic.com/display/SIGAR/Home;jsessionid=D9A582CF35294BA1F39FCBD2CC3CF0DB#Home-download)
 - 队列`Queue`
-    + 线程安全队列Queue
+    + 线程安全队列 Queue
+    + LinkedList 实现了`Queue`接口
 
 ### 泛型
 - `？` 表示不确定的 java 类型

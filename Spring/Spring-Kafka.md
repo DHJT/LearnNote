@@ -162,6 +162,9 @@ public class TaskListener {
     }
 }
 ```
+### Kafka动态topic消费方式
+- [CDC场景下Kafka动态topic消费方式](http://cache.baiducontent.com/c?m=9d78d513d9d431ab4f9ee0697c67c015684381132ba6a4020ba4843896732d42506793e274764957c7823c390ef50f1aa8b12173441e3df2de8d9f4aaae3c97b73c97d73671cf1104f8c04edd642239176c60be3a94de5e9a1&p=ce6f8315d9c541e001be9b7c174c&newp=9c759a43d6d018fc57efd2601b5692695d0fc20e3bddd201298ffe0cc4241a1a1a3aecbf2d211b0fd5c57a6c02ab4b5beefb32743d0034f1f689df08d2ecce7e3cd1&user=baidu&fm=sc&query=%B6%AF%CC%AC%CF%FB%B7%D1kafka&qid=d7060038000068f2&p1=1)
+- [Spring集成kafka态订阅消费消息](https://www.jianshu.com/p/5ea2de323e18)
 
 [1]: https://blog.csdn.net/jpfjdmm/article/details/100709256 'kafka介绍及使用'
 [2]: https://www.jianshu.com/p/13589c6839ec 'Spring-Kafka（七）—— 实现消息转发以及ReplyTemplate'
