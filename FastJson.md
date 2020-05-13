@@ -1,6 +1,90 @@
 # FastJson
 <!-- @author DHJT 2018-12-19 -->
 
+### fastjson的@JsonField指定部分字段的序列化方式
+```java
+import lombok.*;
+
+@Data
+public class Demo implements Serializable {
+    @JSONField(serializeUsing = HexValueSerializer.class, deserializeUsing = HexStringDeserializer.class)
+    private String field1;
+    private String field2;
+
+    public static class HexValueSerializer implements ObjectSerializer {
+
+        @Override
+        public void write(JSONSerializer serializer, Object object, Object fieldName, Type fieldType, int features) {
+            String field1 = (String) object;
+            // todo 对field1做业务处理
+            serializer.write(field1);
+        }
+    }
+
+    public static class HexStringDeserializer implements ObjectDeserializer {
+
+        @SneakyThrows
+        @Override
+        public String deserialze(DefaultJSONParser parser, Type type, Object fieldName) {
+            String field1Orig = parser.getLexer().stringVal();
+            // todo 对field1Orig做业务处理
+            return field1Orig;
+        }
+
+        @Override
+        public int getFastMatchToken() {
+            return 0;
+        }
+    }
+}
+```
+```java
+    @JsonIgnoreProperties(ignoreUnknown = true)
+    static class Student {
+        private String name;
+        private String sex;
+        private Integer age;
+        public String getName() {
+            return name;
+        }
+        public String getSex() {
+            return sex;
+        }
+        public Integer getAge() {
+            return age;
+        }
+        public void setName(String name) {
+            this.name = name;
+        }
+        public void setSex(String sex) {
+            this.sex = sex;
+        }
+        public void setAge(Integer age) {
+            this.age = age;
+        }
+        @Override
+        public String toString() {
+            return "Student [name=" + name + ", sex=" + sex + ", age=" + age + "]";
+        }
+    }
+
+    // fastjson 少字段
+    @Test
+    public void testFastjson01() {
+        String jsonStr = "{\"age\":18,\"name\":\"zhangsan\"}";
+        Student stu = JSON.parseObject(jsonStr, Student.class);
+        System.out.println(stu); // Student [name=zhangsan, sex=null, age=18]
+    }
+
+    // fastjson 多字段
+    @Test
+    public void testFastjson02() {
+        String jsonStr = "{\"age\":20,\"name\":\"lisi\",\"sex\":\"男\",\"hobby\":\"basketball\"}";
+        Student stu = JSON.parseObject(jsonStr, Student.class);
+        System.out.println(stu); // Student [name=lisi, sex=男, age=20]
+    }
+```
+
 ## 过滤字段
 1、在对象对应字段前面加`transient`，表示该字段不用序列化，即在生成json的时候就不会包含该字段了。
 比如

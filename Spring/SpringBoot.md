@@ -20,6 +20,10 @@ SpringBoot的主要优点：
 //maxAge飞行前响应的缓存持续时间的最大年龄，简单来说就是Cookie的有效期 单位为秒
 //若maxAge是负数,则代表为临时Cookie,不会被持久化,Cookie信息保存在浏览器内存中,浏览器关闭Cookie就消失
 @CrossOrigin(origins = "*", maxAge = 3600)
+// 使用定义的properties或者自定义的属性配置，@Autowired自动导入bean使用配置；
+@ConfigurationProperties(prefix = "wisely2")
+@ConfigurationProperties(prefix = "wisely", locations = "classpath:config/wisely.properties")
+@EnableConfigurationProperties({WiselySettings.class, Wisely2Settings.class})
 ```
 
 ## 功能列表
@@ -232,5 +236,6 @@ management:
 [3]: http://docs.spring.io/spring-boot/docs/1.4.3.RELEASE/reference/htmlsingle/#using-boot-maven-without-a-parent 'using-boot-maven-without-a-parent'
 [4]: https://www.cnblogs.com/liaojie970/p/8043150.html 'spring boot 使用@ConfigurationProperties'
 [5]: https://www.cnblogs.com/long88-club/p/11361174.html 'springboot中返回值json中null转换空字符串'
+[6]: https://www.iteye.com/blog/wiselyman-2184586 'Spring Boot使用自定义的properties'
 
 [^1]: [springboot项目实现jar包外配置文件管理](https://blog.csdn.net/xrq0508/article/details/80050119)

@@ -218,6 +218,24 @@ Object value = method.invoke(o, new Object[] {});
 ```
 - 枚举中的`foreach`遍历
 
+## 自定义注解[^1]
+
+注解按生命周期来划分可分为3类：
+
+1、RetentionPolicy.SOURCE：注解只保留在源文件，当Java文件编译成class文件的时候，注解被遗弃；
+2、RetentionPolicy.CLASS：注解被保留到class文件，但jvm加载class文件时候被遗弃，这是默认的生命周期；
+3、RetentionPolicy.RUNTIME：注解不仅被保存到class文件中，jvm加载class文件之后，仍然存在；
+
+这3个生命周期分别对应于：Java源文件(.java文件) ---> .class文件 ---> 内存中的字节码。
+
+```java
+@Retention(RetentionPolicy.RUNTIME) // 适用方法
+@Target(ElementType.METHOD)
+public @interface EventFilter {
+    String value() default "";
+}
+```
+
 ## 数据库链接
 #### `JDBC`
 - [完整java开发中JDBC连接数据库代码和步骤](http://www.cnblogs.com/hongten/archive/2011/03/29/1998311.html)
@@ -347,3 +365,4 @@ public static void doAsyncSendHtmlEmail(String headName, String sendHtml, String
 ```
 
 [1]: https://www.zhihu.com/question/31429113 'List<?>和List<T>的区别？'
+[^1]: [自定义注解之运行时注解(RetentionPolicy.RUNTIME)](https://blog.csdn.net/github_35180164/article/details/52118286)

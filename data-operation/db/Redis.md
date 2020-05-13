@@ -77,6 +77,13 @@ Redis 发送消息，是循环订阅者列表实现的，比如我有 100 个频
 
 Redis从4.0版本开始对布隆过滤器的支持，需要额外安装此模块并进行配置方可使用。
 
+### 假阳性(False positive)——False positive&&False negatives
+由于BloomFiter牺牲了一定的准确率换取空间效率。所以带来了False positive的问题。
+False positive: BloomFilter在判断一个元素在集合中的时候，会出现一定的错误率，这个错误率称为False positive的。通常缩写为fpp。
+False negatives: BloomFilter判断一个元素不在集合中的时候的错误率。
+BloomFilter判断该元素不在集合中，则该元素一定不再集合中。故False negatives概率为0。
+
+
 ### 最佳实践
 常见的适用常见有，利用布隆过滤器减少磁盘 IO 或者网络请求，因为一旦一个值必定不存在的话，我们可以不用进行后续昂贵的查询请求。
 

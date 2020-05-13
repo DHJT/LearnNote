@@ -4,6 +4,7 @@ Drools 是用 Java 语言编写的开放源码规则引擎，使用 Rete 算法�
 https://download.jboss.org/drools/release/7.31.0.Final/drools-distribution-7.31.0.Final.zip
 
 https://github.com/kiegroup/drools/tree/master/drools-examples
+
 ### Try the examples now
 - Download the zip and unzip it
 - On Linux/Mac, run examples/runExamples.sh
@@ -51,6 +52,53 @@ http://localhost:8080/business-central
 ## 基础
 KieSession：有状态Session
 StatelessKieSession：无状态Session
+基于KIE（Knowledge Is Everything 知识就是一切）概念的API
+
+日期的格式默认是"dd-mmmm-yyyy"，可以更改。
+Drools使用标准的java 正规表达式：java API中 Pattern 类；
+
+### Drools的构成
+
+#### Guvnor
+Guvnor是一个通过Web界面可以管理,更改规则的工具,也可以提供Repository的服务.(似乎各种开源软件里都会提供这样的Web管理界面,Heritrix,Nutch,AllGeography等等等等).支持Dsl和QA.
+
+#### Expert
+传统的规则引擎,应该说Drools的核心,也是前身.通过Rete算法来实现模式匹配.
+
+#### Jbpm
+工作流的处理交给了JBPM这个模块,除了工作流之外还提供了各种各样的集成(Camel,Spring,Osgi等).其中Camel适用于路由转发
+
+#### Fusion
+用于做CEP的处理.
+
+#### Planner
+Planer用来解决一系列的问题,如N皇后问题,TSP
+(话说这些问题有什么共同点我还没有领会得到,大体的感觉是可以用来解决一些规划问题,或者是说求解问题).
+
+(Linear,Rete,Treat,Leap).
+
+### 条件元素
+```java
+// 1. and、&&，不写默认为and
+// 2. or、||，不写默认为and
+// 3. exists 、Not
+// 4. from
+// customer中的accounts列表中存在name="碧落"的account对象
+Account(name=="碧落") from $customer.accounts
+// 5. collect
+// 列表中status="Y"的Account对象大于等于4个，
+$accounts:ArrayList(size >= 4) from collect (Account(status == "Y"))
+// 6. Accumulate 聚合函数
+// 工作空间中，account对象的num属性之和大于400时符合规则
+$total:Number( intValue > 400) from accumulate (Account($num:num),sum($num))
+```
+
+### Drools规则文件种类
+1、DRL高级别的表达式语言
+2、xml结构化规则
+3、DSL
+4、Decision Tables决策表，如：解析Excel
+5、自定义UI界面
 
 ```java
 // *.drl 语法
@@ -88,7 +136,14 @@ activation-group:若干个规则分为一个组
 值：分组名称
 declare:Drools除了接收用户在外部向WorkingMemory当中插入现成的Fact对象，还允许用户在规则文件当中定义一个新的Fact对象
 
+#### agenda-group 的使用[^1]
+1. 如果没有指定agenda-group 则默认把所有未指定agenda-group的 rules 都执行一遍
+2. 如果指定了agenda-group 使用的时候必须指定该name才能被使用，默认是不能使用的
+3. agenda-group name可以重复
+4. agenda-group 用于区分rule
+
 ### CEP
+[Drools Fusion(CEP)定义及使用方法讲解](https://www.jb51.net/article/157770.htm)
 
 ### 规则模板
 
@@ -109,3 +164,10 @@ declare:Drools除了接收用户在外部向WorkingMemory当中插入现成的Fa
 [1]: https://download.jboss.org/drools/release/7.31.0.Final/org.drools.updatesite/ 'Drools 7.31.0.Final Update Site - Nightly Build Update Site'
 [2]: https://blog.csdn.net/qq_21383435/article/details/82987288 'drools 7.x 模板的简单使用'
 [3]: https://blog.csdn.net/gongxsh00/article/details/79529924 'JBoss Drools如何动态加载并更新规则？'
+[4]: https://blog.csdn.net/u013115157/article/details/88119175 'Drools7多线程，高并发测试总结'
+[5]: https://blog.csdn.net/lifetragedy/article/details/51143914 'jboss规则引擎KIE Drools 6.3.0 Final 教程(1)'
+[6]: https://blog.csdn.net/lifetragedy/article/details/60755213 'jboss规则引擎KIE Drools 6.3.0-高级讲授篇'
+[7]: https://blog.csdn.net/qq_21383435/article/details/82907021 'drools 7.x-复杂事件处理入门'
+
+
+[^1]: [drools7 (二、agenda-group 的使用)](https://www.cnblogs.com/xiaojf/p/8331351.html)
