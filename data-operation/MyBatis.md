@@ -71,3 +71,5 @@ int insertSysRole2(SysRole sysRole);
 @SelectKey(statement = "SELECT LAST_INSERT_ID()", keyProperty = "id", resultType = Long.class, before = false)
 int insertSysRole3(SysRole sysRole);
 ```
+
+[1]: https://blog.csdn.net/Xu_JL1997/article/details/90934359 'Spring 与 Mybatis 中的 @Repository 与 @Mapper'

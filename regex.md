@@ -5,9 +5,15 @@
         String regex = "^[a-z0-9A-Z]+$";
         return str.matches(regex);
     }
+
+    String content = "I am (noob) from runoob.com.";
+    String pattern = ".*runoob.*";
+    pattern = ".*\\(noob\\).*"; // 匹配字符串中的小括号，需要对小括号进行转义；
+    boolean isMatch = Pattern.matches(pattern, content);
+    System.out.println("字符串中是否包含了 'runoob' 子字符串? " + isMatch);
 ```
 
-```regular
+```regex
 汉字:/^[\u4e00-\u9fa5]+$/
 日期格式验证:/((?!0000)[0-9]{4}-((0[1-9]|1[0-2])-(0[1-9]|1[0-9]|2[0-8])|(0[13-9]|1[0-2])-(29|30)|(0[13578]|1[02])-31)|([0-9]{2}(0[48]|[2468][048]|[13579][26])|(0[48]|[2468][048]|[13579][26])00)-02-29)/
 英文数字下滑线:/^\w+$/

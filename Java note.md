@@ -236,6 +236,29 @@ public @interface EventFilter {
 }
 ```
 
+## 队列Queue
+在java5中新增加了java.util.Queue接口，用以支持队列的常见操作。该接口扩展了java.util.Collection接口。
+
+### ConcurrentLinkedQueue
+`size()`是要遍历一遍集合的，会比较慢，所以尽量要避免用size而改用`isEmpty()`.
+Queue的一个安全实现．Queue中元素按FIFO原则进行排序．采用CAS操作，来保证元素的一致性。
+
+### BlockingQueue
+
+#### LinkedBlockingQueue
+线程安全的阻塞队列，它实现了BlockingQueue接口，BlockingQueue接口继承自java.util.Queue接口，并在这个接口的基础上增加了take和put方法，这两个方法正是队列操作的阻塞版本。
+是作为生产者消费者的首选，LinkedBlockingQueue 可以指定容量，也可以不指定，不指定的话，默认最大是Integer.MAX_VALUE，其中主要用到put和take方法，put方法在队列满的时候会阻塞直到有队列成员被消费，take方法在队列空的时候会阻塞，直到有队列成员被放进来。
+
+### 双端队列Deque(double ended queue)
+既可以当作栈使用，也可以当作队列使用。
+提供了java.util.Stack来实现栈结构,但官方目前已不推荐使用,而是使用java.util.Deque双端队列来实现队列与栈的各种需求.如下图所示java.util.Deque的实现子类有java.util.LinkedList和java.util.ArrayDeque.顾名思义前者是基于链表,后者基于数组实现的双端队列.
+
+#### ArrayDeque
+从名字可以看出ArrayDeque底层通过数组实现，为了满足可以同时在数组两端插入或删除元素的需求，该数组还必须是循环的，即循环数组（circular array），也就是说数组的任何一点都可能被看作起点或者终点。ArrayDeque是非线程安全的（not thread-safe），当多个线程同时使用的时候，需要程序员手动同步；另外，该容器不允许放入null元素。
+
+#### LinkedList
+LinkedList实现了Deque接口,因此其具备双端队列的特性,由于其是链表结构,因此不像ArrayDeque要考虑越界问题,容量问题,那么对应操作就很简单了,另外当需要使用栈和队列是官方推荐的是ArrayDeque
+
 ## 数据库链接
 #### `JDBC`
 - [完整java开发中JDBC连接数据库代码和步骤](http://www.cnblogs.com/hongten/archive/2011/03/29/1998311.html)
