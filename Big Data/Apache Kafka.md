@@ -95,6 +95,8 @@ kafka 0.9.x以后的版本新增了advertised.listeners配置
 kafka 0.9.x以后的版本不要使用 advertised.host.name 和 advertised.host.port 已经deprecated
 
 
+#### Error while fetching metadata with correlation id 34 : {other=LEADER_NOT_AVAILABLE}
+
 [kafka实战]: https://www.cnblogs.com/hei12138/p/7805475.html 'kafka实战'
 [kafka-0.10-demo]: https://gitee.com/wsmd/kafka-0.10-demo '王思密达/kafka-0.10-demo'
 [1]: https://blog.csdn.net/u010513487/article/details/79483860 'kafka运行错误：找不到或者无法加载主类等错误解决方法'

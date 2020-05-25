@@ -1,6 +1,9 @@
 # MyBatis
 <!-- @author DHJT 2019-03-07 -->
 
+可以看到有个<if test="_parameter != null" >，如果只有一个参数，那么_parameter 就代表该参数，如果有多个参数，那么_parameter 可以get(0)得到第一个参数。
+${_parameter} #{_parameter} #{id,jdbcType=INTEGER}
+
 ### `mybatis-config.xml`
 ``` xml
 <?xml version="1.0" encoding="UTF-8"?>
