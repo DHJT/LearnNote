@@ -48,6 +48,8 @@ http://localhost:8080/business-central
 ## kmoudle.xml
 一个module下面可以配多个kbase，一个kbase可以配多个drl文件（如下边的配置方式），一个drl文件里可以配多个规则
 
+### GEF 插件
+http://download.eclipse.org/tools/gef/updates/releases/
 
 ## 基础
 KieSession：有状态Session
@@ -91,6 +93,34 @@ $accounts:ArrayList(size >= 4) from collect (Account(status == "Y"))
 // 6. Accumulate 聚合函数
 // 工作空间中，account对象的num属性之和大于400时符合规则
 $total:Number( intValue > 400) from accumulate (Account($num:num),sum($num))
+
+// contains： 对比是否包含操作，操作的被包含目标可以是一个复杂对象也可以是一个简单的值
+Person( fullName not contains "Jr" )
+// not contains：与contains相反。
+// memberOf：判断某个Fact属性值是否在某个集合中，与contains不同的是他被比较的对象是一个集合，而contains被比较的对象是单个值或者对象
+CheeseCounter( cheese memberOf $matureCheeses )
+// not memberOf：与memberOf正好相反
+// matches：正则表达式匹配
+Cheese( type matches "(Buffalo)?\\S*Mozarella" )
+// 注意： 就像在Java中，写为字符串的正则表达式需要转义“\”
+// not matches：与matches正好相反
+```
+操作符：`>`、`>=`、`<`、`<=`、`==`、`!=`、`contains`、`not contains`、`memberOf`、`not memberOf`、`matches`、`not matches`
+
+### 结果部分- RHS
+insert：往当前workingMemory中插入一个新的Fact对象，会触发规则的再次执行，除非使用no-loop限定
+update：更新
+modify：修改，与update语法不同，结果都是更新操作
+retract：删除
+```java
+rule "Rule 03"
+    when
+        $number : Number( )
+        not Number( intValue < $number.intValue )
+    then
+        System.out.println("Number found with value: " + $number.intValue() );
+        retract( $number );
+end
 ```
 
 ### Drools规则文件种类
@@ -145,6 +175,29 @@ declare:Drools除了接收用户在外部向WorkingMemory当中插入现成的Fa
 ### CEP
 [Drools Fusion(CEP)定义及使用方法讲解](https://www.jb51.net/article/157770.htm)
 
+### Drools事件监听
+RuleRuntimeEvenListener
+AgendaEventListener
+ProcessEventListener 3个接口
+
+Drools提供了一些监听器来获得规则引擎执行过程中发生的一些事件：
+WorkingMemoryEventListene，AgendEventListener和RuleFlowEventListener
+
+从名称来看我们也大概能知道他们分别的作用：
+WorkingMemoryEventListene是监听WorkingMemory中发生的一些时间，WorkingMemory发生的事件那就是Fact的插入，删除，修改。
+对应的借口为：
+objectInserted(ObjectInsertedEvent e);
+objectRetracted(ObjectRetractedEvent e);
+objectUpdated(ObjectUpdatedEvent e);
+AgendEventListener是舰艇运行过程中Agenda管理调配规则发生的一些事件：
+Action 在我理解应该是一个冲突就是上面提到过的 完全符合规则条件的，包含规则和数据的对象。
+activationCancelled action被取消，可能是因为在规则的执行过程中，某个对象被修改或者某个对象被删除引起。
+activationCreated 当有数据能匹配到规则，就能发生这个事件。
+afterActivationFired 在规则执行后触发这个事件
+agendaGroupPopped 规则组。。。
+agendaGroupPushed
+beforeActivationFired 在规则执行前触发这个事件
+
 ### 规则模板
 
 ### 决策表(decision tables)
@@ -168,6 +221,9 @@ declare:Drools除了接收用户在外部向WorkingMemory当中插入现成的Fa
 [5]: https://blog.csdn.net/lifetragedy/article/details/51143914 'jboss规则引擎KIE Drools 6.3.0 Final 教程(1)'
 [6]: https://blog.csdn.net/lifetragedy/article/details/60755213 'jboss规则引擎KIE Drools 6.3.0-高级讲授篇'
 [7]: https://blog.csdn.net/qq_21383435/article/details/82907021 'drools 7.x-复杂事件处理入门'
+[8]: https://blog.csdn.net/top_explore/article/details/93882257 'drools 复杂事件处理Complex Event Processing'
+[9]: https://www.lefer.cn/posts/30551/ 'Drools性能实践总结'
+[10]: https://www.cnblogs.com/mufeng07/p/12626251.html#_label23 'drools基本知识'
 
 
 [^1]: [drools7 (二、agenda-group 的使用)](https://www.cnblogs.com/xiaojf/p/8331351.html)

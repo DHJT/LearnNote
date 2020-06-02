@@ -10,6 +10,13 @@
 - useUnicode=true
 - characterEncoding=utf-8
 - allowMultiQueries=true
+```sql
+-- ('2,1')形式仅仅会匹配出一个结果，即第一个逗号匹配的数据
+SELECT * from tbl_condi_atom_cfg r where rec_id in ('2,1');
+SELECT * from tbl_condi_atom_cfg r where rec_id in (1,2);
+SELECT * from tbl_condi_atom_cfg r where rec_id in ('2','1');
+SELECT * from tbl_condi_atom_cfg r where rec_id in (Replace('\'1,2\'','\'',''));
+```
 
 ### 连接sql
 ```sql
