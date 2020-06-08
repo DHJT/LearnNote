@@ -119,6 +119,7 @@ rule "Rule 03"
         not Number( intValue < $number.intValue )
     then
         System.out.println("Number found with value: " + $number.intValue() );
+        modify ( $number )  { setValue( 23 ) }
         retract( $number );
 end
 ```
