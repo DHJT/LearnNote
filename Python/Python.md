@@ -31,6 +31,32 @@ pip install -U numpy==1.12.0
 - pip   easy_install
     + `./Scripts`
 
+## pip
+
+### 临时使用，添加“-i”或“--index”参数
+```sh
+pip install -i http://pypi.douban.com/simple/ flask
+```
+### 设置阿里云的镜像源
+pip 安装完成后会在家目录创建一个目录.pip
+- linux操作系统下运行命令
+```sh
+vi ~/.pip/pip.conf
+[global]
+trusted-host =  mirrors.aliyun.com
+index-url = https://mirrors.aliyun.com/pypi/simple
+```
+- windows操作系统下:
+位置： %HOMEPATH%\pip\pip.ini
+```ini
+[global]
+trusted-host =  mirrors.aliyun.com
+index-url = https://mirrors.aliyun.com/pypi/simple
+```
+
+切换国内源
+[Mirror index of https://www.python.org/ftp/python/](https://npm.taobao.org/mirrors/python/)
+
 ## plugin
 ### web模块：flask
 `pip install Flask`

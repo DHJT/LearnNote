@@ -58,9 +58,6 @@ str.lastIndexOf(".Pdf");
     + 第三方开源jar包sigar.jar;
         * [java使用siger 获取服务器硬件信息（CPU 内存 网络 io等）](http://www.cnblogs.com/jifeng/archive/2012/05/16/2503519.html)
         * [sigar官方主页](http://support.hyperic.com/display/SIGAR/Home;jsessionid=D9A582CF35294BA1F39FCBD2CC3CF0DB#Home-download)
-- 队列`Queue`
-    + 线程安全队列 Queue
-    + LinkedList 实现了`Queue`接口
 
 ### 泛型
 - `？` 表示不确定的 java 类型
@@ -243,7 +240,17 @@ public @interface EventFilter {
 `size()`是要遍历一遍集合的，会比较慢，所以尽量要避免用size而改用`isEmpty()`.
 Queue的一个安全实现．Queue中元素按FIFO原则进行排序．采用CAS操作，来保证元素的一致性。
 
+### PriorityQueue-优先级队列
+非线程安全：`java.util.PriorityQueue`
+`PriorityQueue`的`iterator()`不保证以任何特定顺序遍历队列元素。
+若想按特定顺序遍历，先将队列转成数组，然后排序遍历
+
 ### BlockingQueue
+
+#### PriorityBlockingQueue
+一个支持优先级的线程安全的无界阻塞队列。默认情况下元素采用自然顺序升序排列。也可以自定义类实现compareTo()方法来指定元素排序规则，或者初始化PriorityBlockingQueue时，指定构造参数Comparator来对元素进行排序。但需要注意的是不能保证同优先级元素的顺序。
+`java.util.concurrent.PriorityBlockingQueue`
+内部是采用二叉堆来实现的，这里不再解释，同时，该类使用ReentrantLock和Condition来确保多线程环境下的同步问题。
 
 #### LinkedBlockingQueue
 线程安全的阻塞队列，它实现了BlockingQueue接口，BlockingQueue接口继承自java.util.Queue接口，并在这个接口的基础上增加了take和put方法，这两个方法正是队列操作的阻塞版本。
@@ -252,12 +259,13 @@ Queue的一个安全实现．Queue中元素按FIFO原则进行排序．采用CAS
 ### 双端队列Deque(double ended queue)
 既可以当作栈使用，也可以当作队列使用。
 提供了java.util.Stack来实现栈结构,但官方目前已不推荐使用,而是使用java.util.Deque双端队列来实现队列与栈的各种需求.如下图所示java.util.Deque的实现子类有java.util.LinkedList和java.util.ArrayDeque.顾名思义前者是基于链表,后者基于数组实现的双端队列.
+Deque 实现了`Queue`接口
 
 #### ArrayDeque
 从名字可以看出ArrayDeque底层通过数组实现，为了满足可以同时在数组两端插入或删除元素的需求，该数组还必须是循环的，即循环数组（circular array），也就是说数组的任何一点都可能被看作起点或者终点。ArrayDeque是非线程安全的（not thread-safe），当多个线程同时使用的时候，需要程序员手动同步；另外，该容器不允许放入null元素。
 
 #### LinkedList
-LinkedList实现了Deque接口,因此其具备双端队列的特性,由于其是链表结构,因此不像ArrayDeque要考虑越界问题,容量问题,那么对应操作就很简单了,另外当需要使用栈和队列是官方推荐的是ArrayDeque
+LinkedList实现了`Deque`接口,因此其具备双端队列的特性,由于其是链表结构,因此不像ArrayDeque要考虑越界问题,容量问题,那么对应操作就很简单了,另外当需要使用栈和队列是官方推荐的是ArrayDeque
 
 ## 数据库链接
 #### `JDBC`

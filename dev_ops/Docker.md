@@ -242,10 +242,9 @@ docker run -it --rm --net=container:b9c8ab7ed577 --pid=container:b9c8ab7ed577 --
 ```
 
 ## windows10 启动zookeeper，报端口被占用，但是查询没有占用
-- 启动zookeeper，但是报 Unexpected exception, exiting abnormally java.net.BindException: Address already in use: bind
-解决之路
-- 使用命令netstat -ano|findstr 2181，但是提示为空。说明端口没有被占用；
-- 使用命令netsh interface ipv4 show excludedportrange protocol=tcp,这个是查询windows10下面的Hyper-V的端口保留的TCP范围
+- 启动zookeeper，但是报`Unexpected exception, exiting abnormally java.net.BindException: Address already in use: bind`解决之路
+- 使用命令`netstat -ano|findstr 2181`，但是提示为空。说明端口没有被占用；
+- 使用命令`netsh interface ipv4 show excludedportrange protocol=tcp`,这个是查询windows10下面的Hyper-V的端口保留的TCP范围
 - 从命令的结果可以看出，端口2181被Hyper-V给保留了。
 - 解决方案：配置文件将zookeeper的端口改为高位端口，即可解决。
 
