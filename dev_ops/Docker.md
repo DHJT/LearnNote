@@ -12,6 +12,8 @@ Docker 本身并不是容器，它是创建容器的工具，是应用容器引�
 仓库（Repository）
 K8S，就是基于容器的集群管理平台，它的全称，是kubernetes。
 
+镜像位置vm-data
+
 ## 安装[^1]
 ```sh
 # 获取最新版本的 Docker 安装包

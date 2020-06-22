@@ -21,6 +21,7 @@ https://github.com/dbeaver/dbeaver/tree/4.1.1
 ### 升级
 - 直接替换即可，保留原来胡配置文件，与安装位置不在一起
     + `%APPDATA%\DBeaverData\`：`DBeaver 6.1+`
+    + 例`C:\Users\DHJT\AppData\Roaming\DBeaverData`
 
 [^1]: [DBeaver Workspace Location](https://github.com/dbeaver/dbeaver/wiki/Workspace-Location)
 [^2]: [Adding driver configuration in DBeaver](https://github.com/dbeaver/dbeaver/wiki/Database-drivers#Adding%20driver%20configuration%20in%20DBeaver)

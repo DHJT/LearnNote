@@ -10,5 +10,8 @@ https://kitematic.com/docs/
 
 https://github.com/docker/kitematic/releases/
 
+### 安装
+kitematic
+
 
 [docker官方文档(v1.6)中文翻译](https://www.bookstack.cn/read/dockerdocs/Kitematic-userguide.md)
