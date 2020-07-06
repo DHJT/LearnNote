@@ -123,3 +123,4 @@ SELECT * from mysql.general_log ORDER BY event_time DESC;
 [^4]: [Mysql锁详解（行锁、表锁、意向锁、Gap锁、插入意向锁）](https://blog.csdn.net/u010841296/article/details/84204701)
 
 [1]: https://www.cnblogs.com/HeiDi-BoKe/p/11531582.html 'MySQL5.7.27报错“[Warning] Using a password on the command line interface can be insecure.”在命令行使用密码不安全警告'
+[2]: https://www.cnblogs.com/baizhanshi/p/8482068.html 'mysql中tinyint、smallint、int、bigint的区别'

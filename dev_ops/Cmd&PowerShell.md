@@ -1,7 +1,18 @@
-# Cmd批处理学习
-titLe: narkdownI tA
-date: zal3laz7 :04:01
-tags:
+# Cmd&PowerShell
+<!-- @author DHJT -->
+## 设置
+
+### win10下cmd,power shell设置默认编码为UTF-8
+
+#### powershell
+注：以下内容在非Windows平台上写的，可能会有拼写错误，如果有，请指正，我会尽快修正。可以用Powershell的配置文件（PROFILE）来实现。PROFILE默认文件不存在，需要创建。`New-Item $PROFILE -ItemType File -Force`
+此时会在文档下产生一个ps1文件，该文件会在Powershell启动的时候加载。在这个配置文件里加上一句：[System.Console]::OutputEncoding=[System.Text.Encoding]::GetEncoding(65001)
+这里就涉及到了Powershell的执行策略（Execution Policy）的问题，需要设置允许 Powershell执行脚本，可以用的Unrestricted 策略：`Set-ExecutionPolicy Unrestricted`【需要管理员权限】
+
+#### cmd
+按照原来的办法 每次打开都要输入`chcp 65001`那么其实只要每次打开时让电脑自动输入这串代码即可办法win+R --> regedit --> 计算机\HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Command Processor --> 添加一个字符串值 （名称为：autorun 数据为：chcp 65001）
+
+## 批处理
 [批处理](https://www.w3cschool.cn/pclrmsc/fmytnm.html)
 [批处理](https://www.w3cschool.cn/pclrmsc/fmytnm.html)
 ``` batch

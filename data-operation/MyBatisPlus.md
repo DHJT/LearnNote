@@ -132,13 +132,16 @@ wrapper.ge("job_name", key)
 wrapper.and(
     i -> i.isNotNull("last_name").ne("last_name", "").
         or(j -> j.isNotNull("first_name").ne("first_name", "")));
-Condition.create()
+@Deprecated // 3.几版本已经过时，改为Wrappers.query
+QueryWrapper<T> qw = Condition.create()
     .setSqlSelect("sum(quantity)")
     .isNull("order_id")
     .eq("user_id", 1)
     .in("status", new Integer[]{0, 1})
     .eq("product_id", 1)
     .between("created_time", startDate, currentDate);
+wrapper.select("qy", "hwbm");// 返回指定列
+wrapper.select("distinct ckbm,qy,hwbm");// 返回指定列并去重
 ```
 
 ```java
