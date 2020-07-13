@@ -23,6 +23,12 @@ springboot中的swagger：http://localhost:8080/swagger-ui.html
     <artifactId>swagger-bootstrap-ui</artifactId>
     <version>1.9.3</version>
 </dependency>
+<!-- swagger-ui-layer 访问地址：http://localhost:8080/docs.html -->
+<dependency>
+    <groupId>com.github.caspar-chen</groupId>
+    <artifactId>swagger-ui-layer</artifactId>
+    <version>1.1.3</version>
+</dependency>
 ```
 
 ### 几个基本注解

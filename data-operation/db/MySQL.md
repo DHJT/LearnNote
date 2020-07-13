@@ -101,6 +101,9 @@ SELECT * from mysql.general_log ORDER BY event_time DESC;
 - `[Err] 1093 - You can't specify target table 'bbb_copy' for update in FROM clause`[^1]
 - MySQL—JDBC出现The server time zone value '???ú±ê×??±??' is unrecognized or represents more...的错误提示[^2]
     + 解决方法：JDBC连接的URL后面加上`serverTimezone = GMT`，如果需要使用`GMT + 8`时区，需要写成`GMT％2B8`。
+- `Every derived table must have its own alias`
+    + 一般在多表查询时，会出现此错误。因为，进行嵌套查询的时候子查询出来的的结果是作为一个派生表来进行上一级的查询的，所以子查询的结果必须要有一个别名
+    + 把MySQL语句改成：`select * from (select * from ……) as 别名;`
 
 #### mysql is not allowed to connect to this MySQL server解决方案
 在检查mysql服务开启后，3306端口也已经开放后连接数据库报"is not allowed to connect to this MySQL server"错误，

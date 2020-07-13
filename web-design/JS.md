@@ -1,8 +1,8 @@
 # JavaScript
+<!-- @author DHJT -->
+
 ## 获取页面间传值
 ```js
-
-
 function GetQueryString(name) {
     var reg = new RegExp("(^|&)" + name + "=([^&]*)(&|$)");
     var r = window.location.search.substr(1).match(reg);
@@ -37,3 +37,11 @@ var local = window.location;
 var contextPath = local.pathname.split("/")[1];
 var basePath = local.protocol + "//" + local.host + "/" + contextPath;
 ```
+
+## 问题
+js支持的最大整数是2的53次方减1,所以损失了精度;
+js能够表示整数的范围是正负数的绝对值都不能大于2^53，也就是正负数的绝对值都不能大于9007199254740992，这个数是16位，超过16位的整数就不能精确表示了：超过16位会导致后面的即为都为0；
+
+解决办法:
+1.存储到数据库为varchar
+2.取出后返回前端前转为String类型

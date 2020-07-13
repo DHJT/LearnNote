@@ -329,4 +329,6 @@ SELECT * FROM
 )
 ```
 
+因用了Insert into select语句，同事被开除了！
+
 [^1]: [truncate和delete之间有什么区别](https://zhidao.baidu.com/question/171481100.html)
