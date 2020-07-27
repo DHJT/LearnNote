@@ -5,6 +5,8 @@ https://download.jboss.org/drools/release/7.31.0.Final/drools-distribution-7.31.
 
 https://github.com/kiegroup/drools/tree/master/drools-examples
 
+【Drools Fusion (CEP) Example 和 关键概念】(https://www.cnblogs.com/zhwbqd/p/4212766.html)
+
 ### Try the examples now
 - Download the zip and unzip it
 - On Linux/Mac, run examples/runExamples.sh

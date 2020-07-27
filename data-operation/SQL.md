@@ -50,6 +50,12 @@ select Datename(YEAR, GETDATE());
 -- -- 产生的结果是AB的交集
 -- 2. 左外连接查询 left outer join
 -- -- 产生表A的完全集，而B表中匹配的则有值，没有匹配的则以null值取代。
+-- b.is_delete=0 所在位置影响结果的展示，在on后面是先过滤b表之后再与a表进行连接，在where之后是对连接之后的结果进行的过滤；
+SELECT * FROM tbl_scene_result a
+LEFT JOIN tbl_scene_info b ON a.scene_id = b.scene_id and b.is_delete=0
+WHERE a.scene_instance_id =7;
+SELECT * FROM tbl_scene_result a LEFT JOIN tbl_scene_info b ON a.scene_id = b.scene_id
+WHERE a.scene_instance_id =7 and b.is_delete=0;
 -- 3. 右外连接查询 right outer join
 -- -- 产生表B的完全集，而A表中匹配的则有值，没有匹配的则以null值取代。
 -- 4. 全连接查询 full (outer) join
