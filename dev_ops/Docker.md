@@ -276,10 +276,14 @@ docker run -it --rm --net=container:b9c8ab7ed577 --pid=container:b9c8ab7ed577 --
 ### Sqlserver
 ```sh
 docker pull exoplatform/sqlserver
+docker pull exoplatform/sqlserver:2017-CU8
 # 注意问题： 密码需要符合sql server 的安全策略，非1433 端口的连接配置
 # Microsoft SQL Server Management Studio 连接配置 服务器名称(s):ip,port 例：localhost,1444
-docker run -d -e SA_PASSWORD=<passord> -e SQLSERVER_DATABASE=<db name> -e      SQLSERVER_USER=<user> -e SQLSERVER_PASSWORD=<password> -p <local port>:1433 exoplatform/sqlserver:ctp2-1-1
+# https://hub.docker.com/r/exoplatform/sqlserver 显示各种数据库版本以及可用、过期情况 ctp2-1-1已经过期
+docker run -d -e SA_PASSWORD=<passord> -e SQLSERVER_DATABASE=<db name> -e SQLSERVER_USER=<user> -e SQLSERVER_PASSWORD=<password> -p <local port>:1433 exoplatform/sqlserver:ctp2-1-1
+docker run -d -e SA_PASSWORD='dalong!@123' -e SQLSERVER_DATABASE=demo -e SQLSERVER_USER=dalong -e SQLSERVER_PASSWORD='dalong!@123' -p 1444:1433 exoplatform/sqlserver:ctp2-1-1
 ```
+
 ### mysql
 ```sh
 docker run -p 3306:3306 --name d_dh_mysql5 -v $PWD/conf5:/etc/mysql/conf.d -v $PWD/logs5:/logs -v $PWD/data5:/var/lib/mysql -e MYSQL_ROOT_PASSWORD=123456 -d mysql:5.7.26

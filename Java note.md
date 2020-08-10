@@ -200,20 +200,27 @@ public String fileChannelCopy(String inpath) {
     return copyPdf;
 }
 ```
-- 字符串的加解密`new String(str.getBytes())`
-- `Action`中定义数组，可自动获得前台的数据。
+- `Struts2`的`Action`中定义数组，可自动获得前台的数据。
 ``` java
 private String[] archiveTypeItems;
 private String[] split;
 ```
 - return:`return`是可以往外返回的，不一定非要有变量去接收才可以继续往外层函数`return`.
 - 类的实例变量有默认值，局部变量没有默认值。
-- **反射机制**-获取类对象的函数，并调用。
+
+## 反射机制
 ``` java
+// 获取类对象的函数，并调用。
 Method method = o.getClass().getMethod("getPath", new Class[] {});
 Object value = method.invoke(o, new Object[] {});
 ```
-- 枚举中的`foreach`遍历
+
+## 枚举
+- 枚举类型对象之间的值比较，是可以使用`==`，直接来比较值，是否相等的，不是必须使用`equals`方法的哟。
+
+### 枚举集合(`java.util.EnumSet`和`java.util.EnumMap`)
+- `EnumSet`保证集合中的元素不重复；
+- `EnumMap`中的 key是enum类型，而value则可以是任意类型。
 
 ## 自定义注解[^1]
 

@@ -26,6 +26,8 @@
 ```sql
 -- 获取36位的uuid，形如：B44263B5-D715-483D-8708-0FFF69CFEDB7
 SELECT newid();
+-- 创建schema 默认的有master；
+create schema abp；
 ```
 
 ### Like特殊情况：搜索通配符字符
@@ -72,3 +74,5 @@ update qrda_gass.dbo.T_QR_FOLDER_WSDA  SET ITEM_TITLES=(select stuff((select ','
 
 ### 问题及解决方案
 - [SQL Server全文搜索](https://www.cnblogs.com/lyhabc/p/3255960.html)
+- [A network-related or instance-specific error has occurred while establishing](https://www.cnblogs.com/lstory/p/7118046.html)
+    + 无法启动应用程序域 WindowsService_0。错误: Microsoft.ReportingServices.Diagnostics.Utilities.EvaluationCopyExpiredException: 此 Microsoft SQL Server Reporting Services 实例的评估期已过。现在需要许可证。

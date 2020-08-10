@@ -23,6 +23,9 @@ select GETDATE();
 select CONVERT(nvarchar(12), GETDATE(), 112);
 -- 获取当前年份、月份、日、小时、分钟、秒、当前第几周  YEAR/YY/MM/DD/hh/MI/SECOND/WEEK/WEEKDAY
 select Datename(YEAR, GETDATE());
+
+-- COUNT 下面语句中可以统计为null时的数量为0，不需要区分统计；
+count(scene_instance_id is not null or Null)
 ```
 
 |           隔离级别           | 脏读（Dirty Read） | 不可重复读（NonRepeatable Read） | 幻读（Phantom Read） |

@@ -2,18 +2,37 @@
 <!-- @author DHJT 2019-01-18 -->
 
 ## Java差异
+### Java5
+`import static`静态导bai入是JDK1.5中的新特性。一般我们导入一个类都用 import com.....ClassName;而静态导入是这样：`import static com.....ClassName.*;`这里的多了dao个static，还有就是类名ClassName后面多了个 .* ，意思是导入这个类里的静态方法。当然，也可以只导入某个静态方法，只要把 .* 换成静态方法名就行了。然后在这个类中，就可以直接用方法名调用静态方法，而不必用ClassName.方法名 的方式来调用。
 
 ### Java7与Java8
 - [JAVA8 十大新特性详解](https://www.jb51.net/article/48304.htm)
+- [Java8的新特性：Lambda、方法引用、Stream流](https://zhuanlan.zhihu.com/p/103593275)
 ```java
+// 方法引用
 List<String> strList = abList.stream().map(ArchiveBox::getBoxNumber).collect(Collectors.toList());
 ```
 
-### 流式数据处理
-#### 并行流式数据处理
-流式处理中的很多都适合采用 分而治之 的思想，从而在处理集合较大时，极大的提高代码的性能，java8的设计者也看到了这一点，所以提供了 并行流式处理。上面的例子中我们都是调用stream()方法来启动流式处理，java8还提供了parallelStream()来启动并行流式处理，parallelStream()本质上基于java7的Fork-Join框架实现，其默认的线程数为宿主机的内核数。
+### 方法引用(method references)
+- 静态方法引用：`ClassName::methodName`
+- 实例上的实例方法引用：`instanceReference::methodName`
+- 超类上的实例方法引用：`super::methodName`
+- 类型上的实例方法引用：`ClassName::methodName`
+- 构造方法引用：`Class::new`。调用的构造方法是和函数式接口的参数类型一致的。
+- 数组构造方法引用：`TypeName[]::new`
 
-启动并行流式处理虽然简单，只需要将stream()替换成parallelStream()即可，但既然是并行，就会涉及到多线程安全问题，所以在启用之前要先确认并行是否值得（并行的效率不一定高于顺序执行），另外就是要保证线程安全。此两项无法保证，那么并行毫无意义，毕竟结果比速度更加重要，以后有时间再来详细分析一下并行流式数据处理的具体实现和最佳实践。
+### 流式数据处理
+
+#### 并行流式数据处理
+流式处理中的很多都适合采用 分而治之 的思想，从而在处理集合较大时，极大的提高代码的性能，java8的设计者也看到了这一点，所以提供了 并行流式处理。上面的例子中我们都是调用`stream()`方法来启动流式处理，java8还提供了`parallelStream()`来启动并行流式处理，`parallelStream()`本质上基于java7的`Fork-Join`框架实现，其默认的线程数为宿主机的内核数。
+
+启动并行流式处理虽然简单，只需要将`stream()`替换成`parallelStream()`即可，但既然是并行，就会涉及到多线程安全问题，所以在启用之前要先确认并行是否值得（并行的效率不一定高于顺序执行），另外就是要保证线程安全。此两项无法保证，那么并行毫无意义，毕竟结果比速度更加重要，以后有时间再来详细分析一下并行流式数据处理的具体实现和最佳实践。
+
+_安全箱、活性失败_
+
+#### 数组转为 Stream
+- 数组转为Stream：[Java –如何将数组转换为流](https://blog.csdn.net/cyan20115/article/details/106548847)
+    + 在Java 8中，可以使用`Arrays.stream`或`Stream.of`将`Array`转换为`Stream`。
 
 ## java安全沙箱
 java是一种类型安全的语言，它有四类称为安全沙箱机制的安全机制来保证语言的安全性，这四类安全沙箱分别是：
@@ -90,3 +109,8 @@ Map<Long, String> maps = uList.stream().collect(Collectors.toMap(User::getId, Us
 [^4]: [java安全沙箱（四）之安全管理器及Java API](https://www.cnblogs.com/duanxz/p/6108357.html)
 [^5]: [Java双亲委派模型及破坏](https://blog.csdn.net/zhangcanyan/article/details/78993959)
 [^6]: [Java自定义类加载器与双亲委派模型](https://www.cnblogs.com/wxd0108/p/6681618.html)
+
+## Tips
+- 枚举中的字段类型要与数据库中的一致，否则匹配不上：1与"1"；
+- LocalDateTime不能使用 pattern = "yyyy-MM-dd"
+- 注：泛型的类型参数使用大写形式，且比较短，一般一个字母，这是很常见的。在java库中，使用变量E表示集合的元素类型。K和V分别表示键与值的类型，比如：Map的键与值。T（需要时还可以用临近的字母U和S）表示“任意类型”。

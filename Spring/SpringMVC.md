@@ -12,9 +12,16 @@ Spring MVC 是 Spring 提供的一个强大而灵活的 Web 框架。Spring MVC�
 ```
 
 ### @RequestBody
-主要用来接收前端传递给后端的json字符串中的数据的(请求体中的数据的)；GET方式无请求体，所以使用@RequestBody接收数据时，前端不能使用GET方式提交数据，而是用POST方式进行提交。在后端的同一个接收方法里，@RequestBody与@RequestParam()可以同时使用，@RequestBody最多只能有一个，而@RequestParam()可以有多个。
+`@RequestBody`的含义是在当前对象获取整个http请求的body里面的所有数据，
+主要用来接收前端传递给后端的json字符串中的数据的(请求体中的数据的)；
+GET方式无请求体，所以使用@RequestBody接收数据时，前端不能使用GET方式提交数据，而是用POST方式进行提交。在后端的同一个接收方法里，@RequestBody与@RequestParam()可以同时使用，@RequestBody最多只能有一个，而@RequestParam()可以有多个。
 
-注：一个请求，只有一个RequestBody；一个请求，可以有多个RequestParam。
+- 一个请求，只有一个RequestBody；一个请求，可以有多个RequestParam。
+- 将一个`request body`中的`content`反序列化成几个Java实例是另外一个问题。有三个解决方向：
+    + 创建一个新的`entity`，将你的两个`entity`都进去。这是最简单的，但是不够“优雅”。
+    + 用`Map<String, Object>`接受`request body`，自己反序列化到各个`entity`中。
+    + 类似方法2，不过更为generic，实现自己的`HandlerMethodArgumentResolver`
+
 
 注：当同时使用@RequestParam（）和@RequestBody时，@RequestParam（）指定的参数可以是普通元素、
        数组、集合、对象等等(即:当，@RequestBody 与@RequestParam()可以同时使用时，原SpringMVC接收
