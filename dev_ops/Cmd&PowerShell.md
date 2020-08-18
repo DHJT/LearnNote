@@ -29,7 +29,7 @@ if exist c:\windows\History\*.* del c:\windows\History\*.*
     + 指定wifi的密码：`Netsh wlan show profile name=”热点名字” key=clear`
 
 ```sh
-telnet
+telnet # 该命令需要安装
 quit
 # 查看  127.0.0.1 这个IP的 80 端口是否开启，可以在打开的dos命令行中输入
 telnet 127.0.0.1 80

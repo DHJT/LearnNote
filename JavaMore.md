@@ -21,6 +21,32 @@ List<String> strList = abList.stream().map(ArchiveBox::getBoxNumber).collect(Col
 - 构造方法引用：`Class::new`。调用的构造方法是和函数式接口的参数类型一致的。
 - 数组构造方法引用：`TypeName[]::new`
 
+### BiFunction
+```java
+// BinaryOperator接受两个相同类型的参数，并返回其参数相同类型的结果。
+@FunctionalInterface
+public interface BinaryOperator<T> extends BiFunction<T,T,T> {
+}
+// BiFunction接受两个任意类型的参数，并返回任意类型的结果。
+@FunctionalInterface
+public interface BiFunction<T, U, R> {
+      R apply(T t, U u);
+}
+```
+#### BinaryOperator
+BinaryOperator是一个功能接口，它扩展了BiFunction 。
+如果数学运算涉及基本类型（如int ，请更改为IntBinaryOperator以获得更好的性能。
+```java
+// BiFunction
+BiFunction<Integer, Integer, Integer> func = (x1, x2) -> x1 + x2;
+Integer result = func.apply(2, 3);
+System.out.println(result); // 5
+// BinaryOperator
+BinaryOperator<Integer> func2 = (x1, x2) -> x1 + x2;
+Integer result2 = func.apply(2, 3);
+System.out.println(result2); // 5
+```
+
 ### 流式数据处理
 
 #### 并行流式数据处理
@@ -28,7 +54,7 @@ List<String> strList = abList.stream().map(ArchiveBox::getBoxNumber).collect(Col
 
 启动并行流式处理虽然简单，只需要将`stream()`替换成`parallelStream()`即可，但既然是并行，就会涉及到多线程安全问题，所以在启用之前要先确认并行是否值得（并行的效率不一定高于顺序执行），另外就是要保证线程安全。此两项无法保证，那么并行毫无意义，毕竟结果比速度更加重要，以后有时间再来详细分析一下并行流式数据处理的具体实现和最佳实践。
 
-_安全箱、活性失败_
+_安全性、活性失败_
 
 #### 数组转为 Stream
 - 数组转为Stream：[Java –如何将数组转换为流](https://blog.csdn.net/cyan20115/article/details/106548847)
@@ -38,7 +64,7 @@ _安全箱、活性失败_
 java是一种类型安全的语言，它有四类称为安全沙箱机制的安全机制来保证语言的安全性，这四类安全沙箱分别是：
 
 1. 类加载体系[^1]
-2. .class文件检验器[^2]
+2. `.class`文件检验器[^2]
 3. 内置于Java虚拟机（及语言）的安全特性[^3]
 4. 安全管理器及Java API[^4]
 

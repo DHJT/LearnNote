@@ -67,7 +67,7 @@ spring.datasource.hikari.connection-test-query=SELECT 1
 - `@RestController`和`@Controller`的区别在`@RestController`返回JSON数据时，不需要指定@ResponseBody
 
 ## SpringBoot 配置文件存放位置及读取顺序
-
+可以分为项目内配置文件以及`jar`同级目录下配置文件；
 `SpringBoot`配置文件可以使用`yml`格式和`properties`格式
 分别的默认命名为：`application.yml`、`application.properties`
 
@@ -94,20 +94,26 @@ SpringBoot配置文件默认可以放到以下目录中，可以自动读取到�
 - [SpringBoot配置文件放在jar外部](https://blog.csdn.net/weixin_38405253/article/details/92802591)
 
 ### spring-boot的三种启动方式
-运行带有main方法类
-
-    2. 通过命令行 java -jar 的方式
+1. 运行带有main方法类
+2. 通过命令行 java -jar 的方式
 ```sh
 java -jar emample.jar --server.port=8081
 # 该命令通过在启动行指定了项目启动后绑定的端口号，因为该命令行参数，将会覆盖application.properties中的端口配置
 ```
-    3. 通过spring-boot-plugin的方式
-    我们需要进入项目的根目录，执行
+3. 通过spring-boot-plugin的方式
 ```sh
+# 需要进入项目的根目录，执行
 mvn sprint-boot:run
 mvn spring-boot:help -Ddetail
 mvn spring-boot:run -Drun.arguments="--server.port=8888"
 ```
+
+#### SpringBoot进入debug模式
+1. 命令行
+```java –jar  xxx.jar   --debug```
+2. 在`application.properties`中设置属性`debug=true`
+3.在启动上面设置`Run Configurations…`
+在`VM arguments`中添加 `–Ddebug`
 
 ### 常用的 starter 启动器：
 - 单元测试: spring-boot-starter-web;

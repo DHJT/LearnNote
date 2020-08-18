@@ -217,6 +217,7 @@ Object value = method.invoke(o, new Object[] {});
 
 ## 枚举
 - 枚举类型对象之间的值比较，是可以使用`==`，直接来比较值，是否相等的，不是必须使用`equals`方法的哟。
+    + https://stackoverflow.com/questions/1750435/comparing-java-enum-members-or-equals
 
 ### 枚举集合(`java.util.EnumSet`和`java.util.EnumMap`)
 - `EnumSet`保证集合中的元素不重复；

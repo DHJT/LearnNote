@@ -18,29 +18,24 @@ public MethodValidationPostProcessor methodValidationPostProcessor() {
 @Pattern(regexp="^1[3|4|5|7|8][0-9]{9}$",message="请填写合法的手机号")
 ```
 
-@Validated和@Valid区别：Spring validation验证框架对入参实体进行嵌套验证必须在相应属性（字段）加上@Valid而不是@Validated
-原创 花郎徒结 最后发布于2018-04-17 10:57:15 阅读数 39449 收藏
-展开
+### @Validated和@Valid区别
+`Spring validation`验证框架对入参实体进行嵌套验证必须在相应属性（字段）加上`@Valid`而不是`@Validated`
 
-Spring Validation验证框架对参数的验证机制提供了@Validated（Spring's JSR-303规范，是标准JSR-303的一个变种），javax提供了@Valid（标准JSR-303规范），配合BindingResult可以直接提供参数验证结果。其中对于字段的特定验证注解比如@NotNull等网上到处都有，这里不详述
+`Spring Validation`验证框架对参数的验证机制提供了@Validated（Spring's JSR-303规范，是标准JSR-303的一个变种），javax提供了@Valid（标准JSR-303规范），配合`BindingResult`可以直接提供参数验证结果。其中对于字段的特定验证注解比如`@NotNull`等
 
-在检验Controller的入参是否符合规范时，使用@Validated或者@Valid在基本验证功能上没有太多区别。但是在分组、注解地方、嵌套验证等功能上两个有所不同：
+在检验`Controller`的入参是否符合规范时，使用`@Validated`或者`@Valid`在基本验证功能上没有太多区别。但是在分组、注解地方、嵌套验证等功能上两个有所不同：
 
 1. 分组
-
-@Validated：提供了一个分组功能，可以在入参验证时，根据不同的分组采用不同的验证机制，这个网上也有资料，不详述。@Valid：作为标准JSR-303规范，还没有吸收分组的功能。
+@Validated：提供了一个分组功能，可以在入参验证时，根据不同的分组采用不同的验证机制。
+@Valid：作为标准JSR-303规范，还没有吸收分组的功能。
 
 2. 注解地方
-
 @Validated：可以用在类型、方法和方法参数上。但是不能用在成员属性（字段）上
 @Valid：可以用在方法、构造函数、方法参数和成员属性（字段）上
 
 两者是否能用于成员属性（字段）上直接影响能否提供嵌套验证的功能。
 
-
 3. 嵌套验证
-
-在比较两者嵌套验证时，先说明下什么叫做嵌套验证。比如我们现在有个实体叫做Item：
 ```java
 public class Item {
 
@@ -74,7 +69,7 @@ public class Prop {
 ```
 属性这个实体也有自己的验证机制，比如属性和属性值id不能为空，属性名和属性值不能为空等。
 
-现在我们有个ItemController接受一个Item的入参，想要对Item进行验证，如下所示：
+ItemController接受一个Item的入参，想要对Item进行验证，如下所示：
 ```java
 @RestController
 public class ItemController {
@@ -85,9 +80,9 @@ public class ItemController {
     }
 }
 ```
-在上图中，如果Item实体的props属性不额外加注释，只有@NotNull和@Size，无论入参采用@Validated还是@Valid验证，Spring Validation框架只会对Item的id和props做非空和数量验证，不会对props字段里的Prop实体进行字段验证，也就是@Validated和@Valid加在方法参数前，都不会自动对参数进行嵌套验证。也就是说如果传的List<Prop>中有Prop的pid为空或者是负数，入参验证不会检测出来。
+如果Item实体的props属性不额外加注释，只有@NotNull和@Size，无论入参采用@Validated还是@Valid验证，Spring Validation框架只会对Item的id和props做非空和数量验证，不会对props字段里的Prop实体进行字段验证，也就是@Validated和@Valid加在方法参数前，都不会自动对参数进行嵌套验证。也就是说如果传的List<Prop>中有Prop的pid为空或者是负数，入参验证不会检测出来。
 
-为了能够进行嵌套验证，必须手动在Item实体的props字段上明确指出这个字段里面的实体也要进行验证。由于@Validated不能用在成员属性（字段）上，但是@Valid能加在成员属性（字段）上，而且@Valid类注解上也说明了它支持嵌套验证功能，那么我们能够推断出：@Valid加在方法参数时并不能够自动进行嵌套验证，而是用在需要嵌套验证类的相应字段上，来配合方法参数上@Validated或@Valid来进行嵌套验证。
+为了能够进行嵌套验证，必须手动在Item实体的props字段上明确指出这个字段里面的实体也要进行验证。@Valid加在方法参数时并不能够自动进行嵌套验证，而是用在需要嵌套验证类的相应字段上，来配合方法参数上@Validated或@Valid来进行嵌套验证。
 
 我们修改Item类如下所示：
 ```java
@@ -111,7 +106,17 @@ public class Item {
 
 @Valid：用在方法入参上无法单独提供嵌套验证功能。能够用在成员属性（字段）上，提示验证框架进行嵌套验证。能配合嵌套验证注解@Valid进行嵌套验证。
 
-
+### @ValidateOnExecution
+According to Bean Validation specification, validation is enabled by default only for the so called constrained methods. Getter methods as defined by the Java Beans specification are not constrained methods, so they will not be validated by default. The special annotation @ValidateOnExecution can be used to selectively enable and disable validation. For example, you can enable validation on method getEmail shown in Example
+```java
+class MyResourceClass {
+    @Email
+    @ValidateOnExecution
+    public String getEmail() {
+        return email;
+    }
+}
+```
 
 ### 附上常用标签及含义
 
@@ -162,8 +167,6 @@ public class Item {
 @SafeHtml  // 被注释的元素必须是安全Html
 @URL   // 被注释的元素必须是有效URL
 ```
-
-
 
 [1]: https://blog.csdn.net/justry_deng/article/details/86571671 'SpringBoot使用Validation校验参数'
 [2]: https://blog.csdn.net/weixin_38118016/article/details/80977207 '@Valid注解是什么'

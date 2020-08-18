@@ -148,13 +148,25 @@ AS
 SELECT    *
 FROM         [qrdazyfwq].dbo.T_QR_ORGINIZATION
 ```
+
 ### 索引
 ``` sql
+-- 使用CREATE 语句创建索引
+CREATE INDEX index_name ON table_name(column_name,column_name) include(score)
+-- 普通索引
+CREATE UNIQUE INDEX index_name ON table_name (column_name);
+-- 非空索引
+CREATE PRIMARY KEY INDEX index_name ON table_name (column_name);
 --ALTER TABLE用来创建普通索引、UNIQUE索引或PRIMARY KEY索引。
 ALTER TABLE table_name ADD INDEX index_name (column_list)
 ALTER TABLE table_name ADD UNIQUE (column_list)
 ALTER TABLE table_name ADD PRIMARY KEY (column_list)
+-- 删除索引
+drop index index_name on table_name;
+alter table table_name drop index index_name;
+alter table table_name drop primary key;
 ```
+- 普通索引、唯一索引、主键索引
 - 聚簇索引/非聚簇索引
 - [视图创建索引](http://www.cnblogs.com/anncesky/articles/2441583.html)
     + 会有数据更新不及时的问题（实际就是建立表）

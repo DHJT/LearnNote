@@ -1,6 +1,16 @@
 # Java Bean
 <!-- @author DHJT 2019-05-20 -->
 
+阿里巴巴开发手册
+六、【参考】分层领域模型规约：
+- DO（Data Object） ： 此对象与数据库表结构一一对应，通过 DAO 层向上传输数据源对象。
+- DTO（Data Transfer Object） ：数据传输对象， Service 或 Manager 向外传输的对象。
+- BO（Business Object） ：业务对象， 由 Service 层输出的封装业务逻辑的对象。
+- AO（Application Object）： 应用对象， 在 Web 层与 Service 层之间抽象的复用对象模型，极为贴近展示层，复用度不高。
+- VO（View Object） ： 显示层对象，通常是 Web 向模板渲染引擎层传输的对象。
+- Query：数据查询对象，各层接收上层的查询请求。 注意超过 2 个参数的查询封装，禁止
+使用 Map 类来传输。
+
 Java中PO、DO、TO、DTO、 VO、 BO、POJO 、DAO的概念
 1.PO(persistant object) 持久对象
   在 o/r 映射的时候出现的概念，如果没有 o/r 映射，没有这个概念存在了。通常对应数据模型 ( 数据库 ), 本身还有部分业务逻辑的处理。可以看成是与数据库中的表相映射的 Java 对象。最简单的 PO 就是对应数据库中某个表中的一条记录，多个记录可以用 PO 的集合。 PO 中应该不包含任何对数据库的操作。
