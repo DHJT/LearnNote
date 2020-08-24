@@ -16,6 +16,8 @@ SELECT * from tbl_condi_atom_cfg r where rec_id in ('2,1');
 SELECT * from tbl_condi_atom_cfg r where rec_id in (1,2);
 SELECT * from tbl_condi_atom_cfg r where rec_id in ('2','1');
 SELECT * from tbl_condi_atom_cfg r where rec_id in (Replace('\'1,2\'','\'',''));
+-- scene_instance_id字段为 bigint(11) 下例中会匹配上记录id为'1'的数据（仅一条，不会匹配id为11的记录）
+SELECT * FROM tbl_scene_result WHERE scene_instance_id='1bak';
 ```
 
 ### 连接sql

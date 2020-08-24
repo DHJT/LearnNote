@@ -16,6 +16,13 @@ When features and plug-ins are manually installed on top of an Eclipse-based pro
 
     eclipse.exe -clean
 
+### 显示行数、竖线
+竖线：代码最好不要超过一定的长度;[window-preferences]->[general-editors--text editors]->[show print margin] 中勾选后可以输入自己的限制长度，我这里是100。不是强制换行的意思，只是提醒我们代码不易过长，起到一个提示的作用。
+行数：在代码左侧右击，选择`show line numbers`；
+
+### 缩进线（结构辅助线）
+IndentGuide这个缩进插件
+
 ### 如何在 Eclipse 的配置文件里指定 jdk 路径（即配置启动 Eclipse 的JDK）
 在eclipse的配置文件里指定jdk路径，只需在eclipse的配置文件里增加-vm参数即可。
 打开eclipse目录下的eclipse.ini配置文件，增加-vm配置，需要注意的是该参数要加在-vmargs之前

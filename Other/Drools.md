@@ -227,12 +227,43 @@ agendaGroupPushed
 beforeActivationFired 在规则执行前触发这个事件
 
 ### 规则模板
+```java
+template header
+age
+log
+
+package rules.testdrt;
+import tech.dhjt.drools.simple.entity.Person;
+global java.util.List list;
+
+template "cheesefans"
+rule "Cheese fans_@{row.rowNumber}"// 此处中的 row.rowNumber 为xls中的行数，如果使用bean对象，该值不能为NULL或者"" drools.version->7.32.0.Final
+    when
+        Person(age==@{age})
+    then
+        list.add("@{log}");
+        System.out.println("121");
+end
+end template
+
+KieHelper helper = new KieHelper();
+ObjectDataCompiler converter = new ObjectDataCompiler();
+KieBaseConfiguration kbc = KieServices.Factory.get().newKieBaseConfiguration();
+// Multithreaded rule engine，在官方文档2.3.1.2中
+kbc.setOption(MultithreadEvaluationOption.YES);
+kbc.setOption(EventProcessingOption.STREAM);
+InputStream dis = ResourceFactory.newClassPathResource("templates/SceneMultiOrg.drt").getInputStream();
+String drl = converter.compile(list, dis);
+dis.close();
+helper.addContent(drl, ResourceType.DRL);
+KieBase kieBase = helper.build(kbc);
+```
 
 ### 决策表(decision tables)
 决策表是一个“精确而紧凑的”表示条件逻辑的方式，非常适合商业级别的规则。
 目前决策表支持xls格式和csv格式。决策表与现有的drools drl文件使用可以无缝替换。
 
-### 什么时候使用决策表
+#### 什么时候使用决策表
 - 规则能够被表达为模板+数据的格式，考虑使用决策表
 - 很少量的规则不建议使用决策表
 - 不是遵循一组规则模板的规则也不建议使用决策表

@@ -48,6 +48,15 @@ System.out.println(result2); // 5
 ```
 
 ### 流式数据处理
+- 中间操作：返回值仍为 Stream；
+    + map、flatMap、filter、sorted；
+- 终端操作：返回值为具体的数据；
+    + collector、reduce、max、min、forEach；
+- 中间操作只有写有终端操作才会触发，单纯只写中间操作不会触发；
+```java
+// 将list 排序，并按照排序后的结果进行有序分组:分组groupingBy后排序不变
+LinkedHashMap<Integer, List<Person>> ageMap = personsSort.stream().sorted(Comparator.comparingInt(Person::getAge)).collect(Collectors.groupingBy(Person::getAge, LinkedHashMap::new, Collectors.toList()));
+```
 
 #### 并行流式数据处理
 流式处理中的很多都适合采用 分而治之 的思想，从而在处理集合较大时，极大的提高代码的性能，java8的设计者也看到了这一点，所以提供了 并行流式处理。上面的例子中我们都是调用`stream()`方法来启动流式处理，java8还提供了`parallelStream()`来启动并行流式处理，`parallelStream()`本质上基于java7的`Fork-Join`框架实现，其默认的线程数为宿主机的内核数。
