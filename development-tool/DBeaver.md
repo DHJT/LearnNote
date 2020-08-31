@@ -23,5 +23,20 @@ https://github.com/dbeaver/dbeaver/tree/4.1.1
     + `%APPDATA%\DBeaverData\`：`DBeaver 6.1+`
     + 例`C:\Users\DHJT\AppData\Roaming\DBeaverData`
 
+### 配置优先使用IPV4
+需要在配置文件中进行，位置：软件安装路径下的`dbeaver.ini`文件；
+```ini
+-startup
+plugins/org.eclipse.equinox.launcher_1.5.700.v20200207-2156.jar
+--launcher.library
+plugins/org.eclipse.equinox.launcher.win32.win32.x86_64_1.1.1100.v20190907-0426
+-vmargs
+-Djava.net.preferIPv4Stack=true
+-XX:+IgnoreUnrecognizedVMOptions
+--add-modules=ALL-SYSTEM
+-Xms64m
+-Xmx1024m
+```
+
 [^1]: [DBeaver Workspace Location](https://github.com/dbeaver/dbeaver/wiki/Workspace-Location)
 [^2]: [Adding driver configuration in DBeaver](https://github.com/dbeaver/dbeaver/wiki/Database-drivers#Adding%20driver%20configuration%20in%20DBeaver)

@@ -103,7 +103,7 @@ spring的核心接口及核类配置文件是什么?
 </bean>
 ```
 ``` java
-public class TimedTask  extends QuartzJobBean{
+public class TimedTask extends QuartzJobBean {
     private int timeout;
     private static int i = 0;
     //调度工厂实例化后，经过timeout时间开始执行调度

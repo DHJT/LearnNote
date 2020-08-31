@@ -34,6 +34,24 @@ IndentGuide这个缩进插件
 Window--Preferences--JAVA--Installed JREs--选中JDK--EDIT
 Deault VM Arguments:-Djava.net.preferIPv4Stack=true
 
+java.net.preferIPv4Stack=<true|false> 
+java.net.preferIPv6Addresses=<true|false>
+
+#### DBeaver中设置该参数的话，需要在配置文件中进行
+位置：软件安装路径下的`dbeaver.ini`文件；
+```ini
+-startup
+plugins/org.eclipse.equinox.launcher_1.5.700.v20200207-2156.jar
+--launcher.library
+plugins/org.eclipse.equinox.launcher.win32.win32.x86_64_1.1.1100.v20190907-0426
+-vmargs
+-Djava.net.preferIPv4Stack=true
+-XX:+IgnoreUnrecognizedVMOptions
+--add-modules=ALL-SYSTEM
+-Xms64m
+-Xmx1024m
+```
+
 ### 代码模板
 - 在Preferences”对话框中点击“Java”->“Editor”->“Templates”
 ```ini

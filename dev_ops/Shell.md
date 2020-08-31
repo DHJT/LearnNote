@@ -7,6 +7,14 @@ netstat -nlpt| grep 80
 ps aux|grep main
 ```
 
+### 文件内容操作相关
+```sh
+# 查找指定文件中的指定字符串啊
+more log_error.log |grep '多机构异常场景识别成功'
+# 查看指定文件最后 n 行内容
+tail -150f log_error.log
+```
+
 ## Shell输入输出功能和字符颜色设置
 ``` sh
 #!/bin/bash
@@ -76,7 +84,13 @@ unzip test.zip
 unzip -l test.zip
 
 curl -L http://*.*.*.*:web/test.zip -o /usr/local/test2.zip
-
+# 查看文件夹大小
+du -h --max-depth=1 *
+du -sh
+du -sh <指定目录>
+# 对于指定文件夹也可以指定显示层次深度，如
+du -h --max-depth=0 software/
+du -h --max-depth=1 software/
 ```
 
 ## Shell脚本
