@@ -20,6 +20,11 @@ When features and plug-ins are manually installed on top of an Eclipse-based pro
 竖线：代码最好不要超过一定的长度;[window-preferences]->[general-editors--text editors]->[show print margin] 中勾选后可以输入自己的限制长度，我这里是100。不是强制换行的意思，只是提醒我们代码不易过长，起到一个提示的作用。
 行数：在代码左侧右击，选择`show line numbers`；
 
+### 实用快捷键、功能
+- 选中代码的注释：<kbd>Ctrl</kbd>+<kbd>Shift</kbd>+<kbd>/</kbd>
+- 去除选中代码的注释：<kbd>Ctrl</kbd>+<kbd>Shift</kbd>+<kbd>\</kbd>
+- 生成变量：方法或函数的返回值，<kbd>Ctrl</kbd>+<kbd>1</kbd>
+
 ### 缩进线（结构辅助线）
 IndentGuide这个缩进插件
 

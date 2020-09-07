@@ -1,6 +1,6 @@
-# MyBatis-Plus
+# MyBatis-Plus(简称：MP)
 <!-- @author DHJT 2019-06-18 -->
-简称：MP
+[Mybatis-Plus 官方指导文档](https://mybatis.plus/guide/page.html)
 
 ## 特性
 无侵入
@@ -55,39 +55,38 @@ mybatis-plus:
 
 # Mybatis 配置
 mybatis-plus:
-    # 如果是放在src/main/java目录下
-    mapper-locations: classpath*:/com/chilin/*/dao/mapper/*Mapper.xml
-    # 实体扫描，多个package用逗号或者分号分隔
-    typeAliasesPackage: com.chilin.*.entity
-    global-config:
-        db-config:
-            # 主键类型  0:"数据库ID自增", 1:"用户输入ID",2:"全局唯一ID (ID_WORKER,数字类型唯一ID)", 3:"全局唯一ID UUID";
-            id-type: 2
-            # 字段策略 0:"忽略判断",1:"非 NULL 判断"),2:"非空判断"
-            field-strategy: 2
-            # mp2.3+ 全局表前缀 mp_
-            # table-prefix: mp_
-            #驼峰下划线转换
-            db-column-underline: true
-            #刷新mapper 调试神器
-            #refresh-dao: true
-            #数据库大写下划线转换
-            #capital-mode: true
-            # oracle主键策略配置Sequence 序列接口实现类配置
-            # key-generator: com.baomidou.mybatisplus.incrementer.OracleKeyGenerator
-            #逻辑删除配置
-            logic-delete-value: 1                                            # 设置字段值为1，标识已经删除
-            logic-not-delete-value: 0                                        # 默认状态，表示该数据项状态正常
-            sql-injector: com.baomidou.mybatisplus.mapper.LogicSqlInjector   # 自定义 SQL 注入器
-            # 自定义 公共字段 自动填充策略接口实现，参考：http://mp.baomidou.com/#/auto-fill
-            meta-object-handler: com.chilin.common.config.mybatisplus.MyMetaObjectHandler
-    configuration:
-        #配置返回数据库(column下划线命名&&返回java实体是驼峰命名)，自动匹配无需as（没开启这个，SQL需要写as： select user_id as userId）
-        map-underscore-to-camel-case: true
-        cache-enabled: false
-        #配置JdbcTypeForNull, oracle数据库必须配置
-        jdbc-type-for-null: 'null'
-
+  # 如果是放在src/main/java目录下
+  mapper-locations: classpath*:/com/chilin/*/dao/mapper/*Mapper.xml
+  # 实体扫描，多个package用逗号或者分号分隔
+  typeAliasesPackage: com.chilin.*.entity
+  global-config:
+    db-config:
+      # 主键类型  0:"数据库ID自增", 1:"用户输入ID",2:"全局唯一ID (ID_WORKER,数字类型唯一ID)", 3:"全局唯一ID UUID";
+      id-type: 2
+      # 字段策略 0:"忽略判断",1:"非 NULL 判断"),2:"非空判断"
+      field-strategy: 2
+      # mp2.3+ 全局表前缀 mp_
+      # table-prefix: mp_
+      #驼峰下划线转换
+      db-column-underline: true
+      #刷新mapper 调试神器
+      #refresh-dao: true
+      #数据库大写下划线转换
+      #capital-mode: true
+      # oracle主键策略配置Sequence 序列接口实现类配置
+      # key-generator: com.baomidou.mybatisplus.incrementer.OracleKeyGenerator
+      #逻辑删除配置
+      logic-delete-value: 1                                            # 设置字段值为1，标识已经删除
+      logic-not-delete-value: 0                                        # 默认状态，表示该数据项状态正常
+      sql-injector: com.baomidou.mybatisplus.mapper.LogicSqlInjector   # 自定义 SQL 注入器
+      # 自定义 公共字段 自动填充策略接口实现，参考：http://mp.baomidou.com/#/auto-fill
+      meta-object-handler: com.chilin.common.config.mybatisplus.MyMetaObjectHandler
+  configuration:
+    #配置返回数据库(column下划线命名&&返回java实体是驼峰命名)，自动匹配无需as（没开启这个，SQL需要写as： select user_id as userId）
+    map-underscore-to-camel-case: true
+    cache-enabled: false
+    #配置JdbcTypeForNull, oracle数据库必须配置
+    jdbc-type-for-null: 'null'
 ```
 
 #### mybatis-config.xml
@@ -195,5 +194,7 @@ public List<User>vip(Page page) {
 
 [^1]: [通用枚举](https://mp.baomidou.com/guide/enum.html)
 
-
-[Mybatis-Plus 官方指导文档](https://mybatis.plus/guide/page.html)
+## 异常
+- `3.0.7`、`3.0.7.1`版本依赖的`jsqlparser:1.3`，此版本解析SQL语句`rule_type not like '【查询忽略】%'`时，会错误解析为`NOT rule_type not like '【查询忽略】%'`，导致分页或者查询时数据不正确；
+    + 修改依赖为`jsqlparser:1.2`；
+    + [issue-I163IJ](https://gitee.com/baomidou/mybatis-plus/issues/I163IJ)

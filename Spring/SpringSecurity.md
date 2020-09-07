@@ -167,4 +167,5 @@ Pragma: no-cache
 ### 问题
 - Could not fetch user details: class org.springframework.security.oauth2.common.exceptions.InvalidRequestException, Possible CSRF detected - state parameter was required but no state could be found
     + clientAuthenticationScheme: form 被注释了导致的，把注释去掉就不在有这个警告信息了，不知道是什么原理
+- [Spring Boot与Spring Security整合后post数据不了，403拒绝访问](https://blog.csdn.net/sinat_28454173/article/details/52251004)
 

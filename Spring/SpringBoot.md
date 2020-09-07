@@ -12,7 +12,7 @@ SpringBoot的主要优点：
 
 ```java
 @EnableTransactionManagement // 开启事务支持后 service方法上添加 @Transactional
-@SpringBootApplication(scanBasePackages = {"com.hoperun"})
+@SpringBootApplication(scanBasePackages = {"com.engine"})
 @EnableScheduling
 @EnableAsync
 //实现跨域注解
@@ -23,7 +23,7 @@ SpringBoot的主要优点：
 // 使用定义的properties或者自定义的属性配置，@Autowired自动导入bean使用配置；
 @ConfigurationProperties(prefix = "wisely2")
 @ConfigurationProperties(prefix = "wisely", locations = "classpath:config/wisely.properties")
-@EnableConfigurationProperties({WiselySettings.class, Wisely2Settings.class})
+@EnableConfigurationProperties({ WiselySettings.class, Wisely2Settings.class })
 ```
 
 ## 功能列表
@@ -37,22 +37,30 @@ SpringBoot的主要优点：
 [rest-service](https://spring.io/guides/gs/rest-service/)
 
 springboot 2.0 默认连接池就是Hikari了，所以引用parents后不用专门加依赖
-```java
+```yaml
+spring:
+  datasource:
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: jdbc:mysql://localhost:3306/decision_20200828?useUnicode=true&serverTimezone=UTC&useSSL=false&characterEncoding=utf-8&zeroDateTimeBehavior=convertToNull
+    # 与上一种不一样
+    driver-class-name: com.mysql.jdbc.Driver
+    url: jdbc:mysql://localhost:3306/decision_20200828?useSSL=false&characterEncoding=utf-8&zeroDateTimeBehavior=convertToNull
+
 # jdbc_config   datasource
-spring.datasource.driver-class-name=com.mysql.jdbc.Driver
-spring.datasource.url=jdbc:mysql://127.0.0.1:3306/datebook?useUnicode=true&characterEncoding=UTF-8&autoReconnect=true&useSSL=false&zeroDateTimeBehavior=convertToNull
-spring.datasource.username=root
-spring.datasource.password=root
+spring.datasource.driver-class-name: com.mysql.jdbc.Driver
+spring.datasource.url: jdbc:mysql://127.0.0.1:3306/datebook?useUnicode=true&characterEncoding=UTF-8&autoReconnect=true&useSSL=false&zeroDateTimeBehavior=convertToNull
+spring.datasource.username: root
+spring.datasource.password: root
 # Hikari will use the above plus the following to setup connection pooling
-spring.datasource.type=com.zaxxer.hikari.HikariDataSource
-spring.datasource.hikari.minimum-idle=5
-spring.datasource.hikari.maximum-pool-size=15
-spring.datasource.hikari.auto-commit=true
-spring.datasource.hikari.idle-timeout=30000
-spring.datasource.hikari.pool-name=DatebookHikariCP
-spring.datasource.hikari.max-lifetime=1800000
-spring.datasource.hikari.connection-timeout=30000
-spring.datasource.hikari.connection-test-query=SELECT 1
+spring.datasource.type: com.zaxxer.hikari.HikariDataSource
+spring.datasource.hikari.minimum-idle: 5
+spring.datasource.hikari.maximum-pool-size: 15
+spring.datasource.hikari.auto-commit: true
+spring.datasource.hikari.idle-timeout: 30000
+spring.datasource.hikari.pool-name: DatebookHikariCP
+spring.datasource.hikari.max-lifetime: 1800000
+spring.datasource.hikari.connection-timeout: 30000
+spring.datasource.hikari.connection-test-query: SELECT 1
 ```
 
 ## 扩展

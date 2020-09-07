@@ -13,6 +13,13 @@ ps aux|grep main
 more log_error.log |grep '多机构异常场景识别成功'
 # 查看指定文件最后 n 行内容
 tail -150f log_error.log
+# ps查看进程信息并通过less分页显示
+ps -ef |less
+# 查看文件
+less log2013.log
+
+# 清空 /etc/test.txt 文档内容：
+cat /dev/null > /etc/test.txt
 ```
 
 ## Shell输入输出功能和字符颜色设置
