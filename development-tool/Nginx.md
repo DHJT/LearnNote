@@ -42,6 +42,10 @@ server {
     error_log  logs/quancha.error.log;
     root   html;
     index  index.html index.htm index.php;
+    # 【Web安全漏洞 之 X-Frame-Options,X-XSS-Protection,X-Content-Type-Options 响应头配置】(https://blog.csdn.net/zhwxl_zyx/article/details/102717941)
+    add_header X-Frame-Options "SAMEORIGIN";
+    add_header X-XSS-Protection "1; mode=block";
+    add_header X-Content-Type-Options "nosniff";
 
     ## send request back to apache ##
     location / {
@@ -69,6 +73,14 @@ server {
 ### Nginx代理proxy pass配置去除前缀
 设置proxy_pass即可。请求只会替换域名。
 根据url的前缀转发到不同的服务。
+
+### 转发的路径样例
+- `^~/user/`  `proxy_pass http://ip:port/`
+    + `**/user/scene/list`->`http://ip:port/scene/list`
+- `^~/user`  `proxy_pass http://ip:port/`
+    + `**/user/scene/list`->`http://ip:port/scene/list`
+- `^~/user/`  `proxy_pass http://ip:port`
+    + `**/user/scene/list`->`http://ip:port/user/scene/list`
 
 #### 一个种方案是proxy_pass后面加根路径/.
 ```

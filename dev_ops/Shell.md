@@ -36,7 +36,7 @@ read name
 echo "my name is $name"
 
 read -p 'please input your name :' name
-echo $name 
+echo $name
 
 echo -e "httpd processs  \033[32;47m[OK]\033[0m"
 #\033[前景颜色;背景颜色m
@@ -50,7 +50,7 @@ cat<<x
  please check:
      1) user1
      2) user2
-     3) user3 
+     3) user3
 x
 #tee 边输出边保存
 cat /etc/passwd|tee
@@ -67,11 +67,11 @@ while [ $i -le $MAX_INSERT_ROW_COUNT ]
 do
   mysql -uroot -proot dbname -e "insert into tablename (name,age,createTime) values ('HELLO$i',$i % 99,NOW());"
   d=$(date +%M-%d\ %H\:%m\:%S)
-  echo "INSERT HELLO $i @@ $d" 
+  echo "INSERT HELLO $i @@ $d"
   i=$(($i+1))
   sleep 0.05
 done
- 
+
 exit 0
 ```
 
@@ -98,6 +98,8 @@ du -sh <指定目录>
 # 对于指定文件夹也可以指定显示层次深度，如
 du -h --max-depth=0 software/
 du -h --max-depth=1 software/
+# 查看文件属性：创建日期、修改日期
+stat log_xxx_error.log
 ```
 
 ## Shell脚本

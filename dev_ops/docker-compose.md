@@ -175,6 +175,38 @@ volumes:
     external: true
 ```
 
+### 查看指定容器使用的docker-compose.yml文件位置
+```json
+// docker inspect 《容器id、名称》
+[
+    {
+        "Id": "9a91a60725fa4909fe20e8c4a1cf7599134aed9141c073446b31faaee51b1643",
+        "Created": "2020-05-13T00:18:04.294626345Z",
+        "Config": {
+            "Labels": {
+                "com.docker.compose.config-hash": "4cc0d3c3c6eb860b85bcd9632f346cae6d22a3d80e2d70ee1301aa428a7d1e41",
+                "com.docker.compose.container-number": "1",
+                "com.docker.compose.oneoff": "False",
+                "com.docker.compose.project": "decision",
+                "com.docker.compose.project.config_files": "docker-compose.yml",
+                "com.docker.compose.project.working_dir": "/data3/decision",
+                "com.docker.compose.service": "kafka",
+                "com.docker.compose.version": "1.25.5",
+                "maintainer": "wurstmeister",
+                "org.label-schema.build-date": "2020-05-06T20:13:37Z",
+                "org.label-schema.description": "Apache Kafka",
+                "org.label-schema.name": "kafka",
+                "org.label-schema.schema-version": "1.0",
+                "org.label-schema.vcs-ref": "a4558045abc821f5e87f946b024483bf422fbfed",
+                "org.label-schema.vcs-url": "https://github.com/wurstmeister/kafka-docker",
+                "org.label-schema.version": "2.12_2.5.0"
+            }
+        }
+    }
+]
+
+```
+
 ## 相关案例
 - [docker-compose部署zk集群、kafka集群以及kafka-manager，及其遇到的问题和解决](https://www.cnblogs.com/jay763190097/p/10292227.html)
 - [docker-compose 部署kafka](https://blog.csdn.net/Crystalqy/article/details/94006936)

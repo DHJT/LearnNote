@@ -131,6 +131,10 @@ stringRedisTemplate.keys() 这个线上用会导致redis 耗时很久，redis又
 ### RedisDesktopManager
 Cross-platform GUI management tool for Redis https://redisdesktop.com
 https://github.com/uglide/RedisDesktopManager
+0.9.3最后一版不收费的版本。
+
+### QuickRedis
+[QuickRedis](https://github.com/quick123official/quick_redis_blog)
 
 [1]: https://blog.csdn.net/weixin_30301449/article/details/101239123 '在RedisTemplate中使用scan代替keys指令'
 

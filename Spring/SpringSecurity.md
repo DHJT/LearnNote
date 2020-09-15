@@ -92,7 +92,6 @@ Spring Security默认是禁用注解的，要想开启注解，需要在继承`W
 @PreAuthorize("hasRole('admin')") // 用户具有admin角色，就能访问listAllUsers方法
 ```
 
-
 ### 
 - CSRF防御:Spring Security默认启用CSRF防御，要求每个POST请求都要都要带上CSRF token参数，如果感觉比较麻烦或者网站安全性要求不高，可以配置禁用：
 - 默认账户为`user`，密码会在控制太打印
@@ -103,6 +102,9 @@ Spring Security默认是禁用注解的，要想开启注解，需要在继承`W
 
 [1]: https://blog.csdn.net/toocruel/article/details/79900697 'Spring Security 视频教程'
 [2]: http://www.toocruel.net/spring-security-video/ 'Spring Security 视频教程'
+
+## 问题
+- [The request was rejected because the URL was not normalized](https://blog.csdn.net/hongfu951/article/details/84035706)
 
 
 ## SpringSecurity OAuth 2

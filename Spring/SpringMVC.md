@@ -11,6 +11,8 @@ Spring MVC 是 Spring 提供的一个强大而灵活的 Web 框架。Spring MVC�
 
 ```
 
+### @RequestParam
+
 ### @RequestBody
 `@RequestBody`的含义是在当前对象获取整个http请求的body里面的所有数据，
 主要用来接收前端传递给后端的json字符串中的数据的(请求体中的数据的)；
@@ -92,4 +94,5 @@ HttpServletRequest request = ((ServletRequestAttributes)RequestContextHolder.get
 </mvc:interceptor>
 ```
 
-
+## 问题
+- [springboot No primary or default constructor found for interface java.util.List](https://blog.csdn.net/qq_39723363/article/details/84379685)

@@ -3,7 +3,7 @@
 [Kafka](http://kafka.apache.org/)是一种高吞吐量的分布式发布订阅消息系统。Kafka建立在ZooKeeper同步服务之上
 Apache Kafka 是一个分布式高吞吐量的流消息系统，Kafka 建立在 ZooKeeper 同步服务之上。它与 Apache Storm 和 Spark 完美集成，用于实时流数据分析，与其他消息传递系统相比，Kafka具有更好的吞吐量，内置分区，数据副本和高度容错功能，因此非常适合大型消息处理应用场景。
 
-不支持严格的消息有序。仅仅保证在一个topic分区(队列）中是有序的。
+不支持严格的消息有序。仅仅保证在一个topic分区（队列）中是有序的。
 
 - [kafka实战][kafka实战]
 
@@ -73,14 +73,56 @@ bin/windows/kafka-console-producer.bat --broker-list localhost:9092 --topic myto
 bin/windows/kafka-console-consumer.bat --bootstrap-server localhost:9092 --topic mytopic --from-beginning
 ```
 
-### 创建第一个消息
-创建一个topic
-创建一个消息消费者
-创建一个消息生产者
+### 管理
+```sh
+## 创建主题（4个分区，2个副本）
+bin/kafka-topics.sh --create --zookeeper localhost:2181 --replication-factor 2 --partitions 4 --topic test
+```
+
+### 查询
+```sh
+## 查询集群描述
+bin/kafka-topics.sh --describe --zookeeper
+## topic列表查询
+bin/kafka-topics.sh --zookeeper 127.0.0.1:2181 --list
+## topic列表查询（支持0.9版本+）
+bin/kafka-topics.sh --list --bootstrap-server localhost:9092
+## 新消费者列表查询（支持0.9版本+）
+bin/kafka-consumer-groups.sh --new-consumer --bootstrap-server localhost:9092 --list
+## 新消费者列表查询（支持0.10版本+）
+bin/kafka-consumer-groups.sh --bootstrap-server localhost:9092 --list
+## 显示某个消费组的消费详情（仅支持offset存储在zookeeper上的）
+bin/kafka-run-class.sh kafka.tools.ConsumerOffsetChecker --zookeeper localhost:2181 --group test
+## 显示某个消费组的消费详情（0.9版本 - 0.10.1.0 之前）
+bin/kafka-consumer-groups.sh --new-consumer --bootstrap-server localhost:9092 --describe --group test-consumer-group
+## 显示某个消费组的消费详情（0.10.1.0版本+）
+bin/kafka-consumer-groups.sh --bootstrap-server localhost:9092 --describe --group my-group
+```
+
+### 发送和消费
+```sh
+## 生产者
+bin/kafka-console-producer.sh --broker-list localhost:9092 --topic test
+## 消费者
+bin/kafka-console-consumer.sh --zookeeper localhost:2181 --topic test
+## 新生产者（支持0.9版本+）
+bin/kafka-console-producer.sh --broker-list localhost:9092 --topic test --producer.config config/producer.properties
+## 新消费者（支持0.9版本+）
+bin/kafka-console-consumer.sh --bootstrap-server localhost:9092 --topic test --new-consumer --from-beginning --consumer.config config/consumer.properties
+## 高级点的用法
+bin/kafka-simple-consumer-shell.sh --brist localhost:9092 --topic test --partition 0 --offset 1234  --max-messages 10
+```
+
+### kafka自带压测命令
+```sh
+bin/kafka-producer-perf-test.sh --topic test --num-records 100 --record-size 1 --throughput 100  --producer-props bootstrap.servers=localhost:9092
+```
 
 ### Kafka Tool 2
 - Kafka Tool 2是一款Kafka的可视化客户端工具，可以非常方便的查看Topic的队列信息以及消费者信息以及kafka节点信息。
-- 直接丢下载地址：http://www.kafkatool.com/download.html
+- 下载地址：http://www.kafkatool.com/download.html
+- [kafka可视化客户端工具（Kafka Tool）的基本使用](https://www.cnblogs.com/frankdeng/p/9452982.html)
+    + 包含了kafka内容的查看：json内容查看等；
 
 ### 跨网络访问设置[^1][^2]
 ```
@@ -99,6 +141,8 @@ kafka 0.9.x以后的版本不要使用 advertised.host.name 和 advertised.host.
 
 [kafka实战]: https://www.cnblogs.com/hei12138/p/7805475.html 'kafka实战'
 [kafka-0.10-demo]: https://gitee.com/wsmd/kafka-0.10-demo '王思密达/kafka-0.10-demo'
+[命令行查看Kafka版本，快速docker安装Kafka版本命令](https://www.it610.com/article/1296353427802103808.htm)
+
 [1]: https://blog.csdn.net/u010513487/article/details/79483860 'kafka运行错误：找不到或者无法加载主类等错误解决方法'
 [2]: http://www.kafka.cc/ 'Kafka网站——趣谈kafka'
 [3]: https://www.jianshu.com/c/0c9d83802b0c 'Spring-Kafka史上最强入门教程'

@@ -3,17 +3,17 @@
 
 ### 转义正则中的使用的符号
 ``` java
-    // 判断String 串 是否为只包含字母数字
-    public static boolean isLetterDigit(String str) {
-        String regex = "^[a-z0-9A-Z]+$";
-        return str.matches(regex);
-    }
+// 判断String 串 是否为只包含字母数字
+public static boolean isLetterDigit(String str) {
+    String regex = "^[a-z0-9A-Z]+$";
+    return str.matches(regex);
+}
 
-    String content = "I am (noob) from runoob.com.";
-    String pattern = ".*runoob.*";
-    pattern = ".*\\(noob\\).*"; // 匹配字符串中的小括号，需要对小括号进行转义；
-    boolean isMatch = Pattern.matches(pattern, content);
-    System.out.println("字符串中是否包含了 'runoob' 子字符串? " + isMatch);
+String content = "I am (noob) from runoob.com.";
+String pattern = ".*runoob.*";
+pattern = ".*\\(noob\\).*"; // 匹配字符串中的小括号，需要对小括号进行转义；
+boolean isMatch = Pattern.matches(pattern, content);
+System.out.println("字符串中是否包含了 'runoob' 子字符串? " + isMatch);
 ```
 
 ```regex
@@ -61,3 +61,7 @@ $ 匹配字符串的结束
 ``/((?!0000)[0-9]{4}-((0[1-9]|1[0-2])-(0[1-9]|1[0-9]|2[0-8])|(0[13-9]|1[0-2])-(29|30)|(0[13578]|1[02])-31)|([0-9]{2}(0[48]|[2468][048]|[13579][26])|(0[48]|[2468][048]|[13579][26])00)-02-29)/``
 日期6位：``/^[1-2]\d{3}-(0[1-9]|1[0-2])$/``
 /(^[1-2]\d{3}((0[1-9]|1[0-2])(0[1-9]|1[0-9]|2[0-8])|(0[13-9]|1[0-2])(29|30)|(0[13578]|1[02])31)|([0-9]{2}(0[48]|[2468][048]|[13579][26])|(0[48]|[2468][048]|[13579][26])00)0229)|(^[1-2]\d{3}(0[1-9]|1[0-2]))/
+
+## 问题
+- `CUPS_01030000_R||CUPS_01039200_R`匹配上空值问题；
+    + `||`中间的为空值，可以匹配上；

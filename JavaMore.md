@@ -47,6 +47,20 @@ Integer result2 = func.apply(2, 3);
 System.out.println(result2); // 5
 ```
 
+### computeIfAbsent
+```java
+// 方法定义
+default V computeIfAbsent(K key, Function<? super K, ? extends V> mappingFunction) { ... }
+// java8之前。从map中根据key获取value操作可能会有下面的操作
+Object key = map.get("key");
+if (key == null) {
+    key = new Object();
+    map.put("key", key);
+}
+// java8之后。上面的操作可以简化为一行，若key对应的value为空，会将第二个参数的返回值存入并返回
+Object key2 = map.computeIfAbsent("key", k -> new Object());
+```
+
 ### 流式数据处理
 - 中间操作：返回值仍为 Stream；
     + map、flatMap、filter、sorted；
@@ -116,7 +130,6 @@ ThreadLocal 的使用场景:用来解决数据库连接、Session 管理等。
 如果是可变参数的方法，那么必须是static和final的
 ```java
 public class VarargsWaring {
-
     @SafeVarargs
     private static List<String> useVarargs(List<String>... args) {
         return args.length > 0 ? args[0] : null;
