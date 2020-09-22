@@ -75,4 +75,23 @@ int insertSysRole2(SysRole sysRole);
 int insertSysRole3(SysRole sysRole);
 ```
 
+### 代码生成器
+```xml
+<dependency>
+    <groupId>org.mybatis.generator</groupId>
+    <artifactId>mybatis-generator-core</artifactId>
+    <version>1.3.6</version>
+</dependency>
+    <!-- mybatis-generator自动生成代码插件 -->
+<plugin>
+    <groupId>org.mybatis.generator</groupId>
+    <artifactId>mybatis-generator-maven-plugin</artifactId>
+    <version>1.3.6</version>
+    <configuration>
+        <verbose>true</verbose>
+        <overwrite>true</overwrite>
+    </configuration>
+</plugin>
+```
+
 [1]: https://blog.csdn.net/Xu_JL1997/article/details/90934359 'Spring 与 Mybatis 中的 @Repository 与 @Mapper'

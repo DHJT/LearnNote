@@ -63,16 +63,23 @@ spring.datasource.hikari.connection-timeout: 30000
 spring.datasource.hikari.connection-test-query: SELECT 1
 ```
 
+### @Async
+- 必须要加@EnableAsync注解：开启异步功能
+- 不能在同一类下调用@Async注解的方法,比如A类下有a和b方法,b方法有@Async注解,不能直接这样a调用b,要把b放到其他类中
+- @Async也可以打在类上,这样类下面的所有方法都是异步的(被其他类调用的时候)
+- [because it is a JDK dynamic proxy that implements问题 看这一篇就够了](https://blog.csdn.net/w605283073/article/details/90454057)
+- [SpringCloud 微服务中 @Async 注解自定义线程池 引发的aop 问题](https://www.cnblogs.com/tianciliangen/p/11840717.html)
+
 ## 扩展
-- Spring Cache添加Redis支持
+- `Spring Cache`添加`Redis`支持
 
 ## 功能小点
-- application.yml是用户级的资源配置项；
-- bootstrap.yml是系统级的，优先级更加高；
+- `application.yml`是用户级的资源配置项；
+- `bootstrap.yml`是系统级的，优先级更加高；
 
 ### 性能优化
 - 更改默认的Tomcat插件，使用更加小巧的Jetty；
-- `@RestController`和`@Controller`的区别在`@RestController`返回JSON数据时，不需要指定@ResponseBody
+- `@RestController`和`@Controller`的区别在`@RestController`返回JSON数据时，不需要指定`@ResponseBody`
 
 ## SpringBoot 配置文件存放位置及读取顺序
 可以分为项目内配置文件以及`jar`同级目录下配置文件；
@@ -118,7 +125,7 @@ mvn spring-boot:run -Drun.arguments="--server.port=8888"
 
 #### SpringBoot进入debug模式
 1. 命令行
-```java –jar  xxx.jar   --debug```
+```java –jar xxx.jar --debug```
 2. 在`application.properties`中设置属性`debug=true`
 3.在启动上面设置`Run Configurations…`
 在`VM arguments`中添加 `–Ddebug`
