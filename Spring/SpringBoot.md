@@ -63,6 +63,20 @@ spring.datasource.hikari.connection-timeout: 30000
 spring.datasource.hikari.connection-test-query: SELECT 1
 ```
 
+### @Value
+```java
+@Value("${name:zch}")
+public String name;// 此时，若配置文件中没有name这个key，变量name的值为zch
+@Value("${id}")
+public int[] idArray;// 当yml中id没有对应值时，数组idArray为非null空数组，长度为0
+@Value("#{'${id}'.split(',')}")
+public List<String> idList;// 当yml中id没有对应值时，集合idList长度为1，存在值""  (原本以为是空集合，造成bug，特记录)
+@Value("#{${user}}")// user: "{name: 'zs',age: '23'}" #注意此值用双引号包裹
+public Map<String,String> userInfo;
+// 当yml中user没有对应值是，启动报错
+//#{}表示使用SpEL表达式，（此处是来自未来的文章超链接，正在路上）
+```
+
 ### @Async
 - 必须要加@EnableAsync注解：开启异步功能
 - 不能在同一类下调用@Async注解的方法,比如A类下有a和b方法,b方法有@Async注解,不能直接这样a调用b,要把b放到其他类中

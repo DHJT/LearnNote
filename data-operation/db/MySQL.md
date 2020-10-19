@@ -5,11 +5,23 @@
 - Mysql 5.7 windows安装 zip安装[^3]
 
 ### 注意
+MySQL 8.0后版本驱动类名称为："com.mysql.cj.jdbc.Driver"
+如果用于配置JDBC URL的机制是基于XML来配置的，请使用XML字符文字&amp；分隔配置参数，因为符号（&）是XML的保留字
 - mysql 不支持全连接查询，即`表1 full (outer) join 表2 on [condition]`
 - zeroDateTimeBehavior=convertToNull
 - useUnicode=true
 - characterEncoding=utf-8
 - allowMultiQueries=true
+- serverTimezone=UTC
+    + servertime=UTC导致时间差8个小时（MySQL jdbc 6.0 版本以上必须配置此参数）
+    + UTC代表的是全球标准时间 ，但是我们使用的时间是北京时区也就是东八区，领先UTC八个小时。UTC + (＋0800) = 本地（北京）时间
+    + url的时区使用中国标准时间。也是就 serverTimezone=Asia/Shanghai
+    + 当数据库时区未映射到Java时区时可能导致Java代码中Date类型插入到mysql中datetime类型出现时间不一致的问题。例如：
+    + 上海：serverTimezone=Asia/Shanghai
+    + 简写：serverTimezone=CTT
+    + 北京：serverTimezone=UTC+8
+    + 或者：serverTimezone=GMT+8
+    + 关于时区UTC和GMT
 ```sql
 -- ('2,1')形式仅仅会匹配出一个结果，即第一个逗号匹配的数据
 SELECT * from tbl_condi_atom_cfg r where rec_id in ('2,1');
@@ -129,3 +141,4 @@ SELECT * from mysql.general_log ORDER BY event_time DESC;
 
 [1]: https://www.cnblogs.com/HeiDi-BoKe/p/11531582.html 'MySQL5.7.27报错“[Warning] Using a password on the command line interface can be insecure.”在命令行使用密码不安全警告'
 [2]: https://www.cnblogs.com/baizhanshi/p/8482068.html 'mysql中tinyint、smallint、int、bigint的区别'
+[3]: https://blog.csdn.net/yinzitun7947/article/details/89917611 '[ERR] 1273 - Unknown collation: utf8mb4_0900_ai_ci'

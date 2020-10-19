@@ -404,4 +404,5 @@ public static void doAsyncSendHtmlEmail(String headName, String sendHtml, String
 ```
 
 [1]: https://www.zhihu.com/question/31429113 'List<?>和List<T>的区别？'
+[2]: https://blog.csdn.net/Kevin___________/article/details/108681594 'Java集合中，isEmpty()与size()==0的区别(时间复杂度)'
 [^1]: [自定义注解之运行时注解(RetentionPolicy.RUNTIME)](https://blog.csdn.net/github_35180164/article/details/52118286)

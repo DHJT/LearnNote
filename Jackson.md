@@ -85,3 +85,17 @@ public testJackson(String[] args) {
         }
     }
 ```
+
+## 问题
+
+### TypeReference 进行字符串转为List时遇到的问题
+[如何使用Jackson的TypeReference和泛型？(How to use Jackson&#39;s TypeReference with generics?)](https://www.it1352.com/788119.html)
+[Java: 泛型与TypeReference](https://segmentfault.com/q/1010000019170109)
+[jackson的泛型之坑](https://blog.csdn.net/cy921107/article/details/94559190)
+```java
+public static <T> List<T> json2BeanList(String jsonStr, Class<T> clazz)
+            throws JsonMappingException, JsonProcessingException {
+//  return mapper.readValue(jsonStr, new TypeReference<List<T>>() {});
+    return mapper.readValue(jsonStr, mapper.getTypeFactory().constructParametricType(List.class, clazz));
+}
+```
