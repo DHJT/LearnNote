@@ -129,6 +129,8 @@ org.quartz.jobStore.useProperties:true
 </details>
 
 
+[Quartz动态添加，修改，删除任务(暂停，任务状态，恢复，最近触发时间)](https://blog.csdn.net/loveLifeLoveCoding/article/details/80449077)
+
 [1]: https://www.jianshu.com/p/056281e057b3 '第四十七章：SpringBoot2.0新特性 - Quartz自动化配置集成'
 [2]: https://blog.csdn.net/sx1119183530/article/details/85623937 'spring的task和quartz的区别'
 [3]: https://www.jianshu.com/p/544daba1f7f6 'spring 定时任务不能并发执行问题'

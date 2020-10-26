@@ -8,6 +8,6 @@ HTTP、gRPC、WebSocket 和 TCP 流量的自动负载均衡。
 istio 通过丰富的路由规则、重试、故障转移和故障注入，可以对流量行为进行细粒度控制；支持访问控制、速率限制和配额。
 istio 对出入集群入口和出口中所有流量的自动度量指标、日志记录和跟踪。
 
-Pliot Wixer
+Pliot Wixer Citadel
 
 数据平面、控制平面、安全机制

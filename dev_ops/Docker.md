@@ -225,6 +225,10 @@ RUN ["/usr/lib/jvm/java-9-openjdk-amd64/bin/javac","Hello.java"]
 # 运行
 ENTRYPOINT ["/usr/lib/jvm/java-9-openjdk-amd64/bin/java", "Hello"]
 ```
+
+## Notary
+Docker对安全模块进行了重构，剥离出了名为Notary的独立项目。Notary的目标是保证server和client之间的交互使用可信任的连接，用于解决互联网的内容发布的安全性。该项目并未局限于容器应用，在容器场景下可以对镜像源认证、镜像完整性等安全需求提供更好的支持。
+
 ### 容器启动后即退出
 一般来说，使用`java -jar ***.jar`就可以了，但是如果项目没有配置日志输出，导致控制台在一段时间后没有任何输出，在此种情况下是可能导致容器退出的。
 
@@ -233,7 +237,7 @@ ENTRYPOINT ["/usr/lib/jvm/java-9-openjdk-amd64/bin/java", "Hello"]
 
 ## 优雅的容器调试方式[^2]
 与目标容器共享命名空间，即通过`--ipc --net --pid`三个参数来共享资源，以此注入排查工具。
-借鉴之 Itio 的 istio-proxy ：将Pod中的流量都代理到自己的容器中。
+借鉴之 Istio 的 istio-proxy ：将Pod中的流量都代理到自己的容器中。
 
 可以使用`alpine linux`作为基础镜像，经过特别优化，体积比较小，拥有完全的包管理工具`apk`，可以随意添加工具或功能；
 `busybox`已经集成了多个常见的UNIX工具，非常小巧且适配广泛，但问题在于不能方便地动态添加新的功能或者工具；
@@ -249,6 +253,9 @@ docker run -it --rm --net=container:b9c8ab7ed577 --pid=container:b9c8ab7ed577 --
 - 使用命令`netsh interface ipv4 show excludedportrange protocol=tcp`,这个是查询windows10下面的Hyper-V的端口保留的TCP范围
 - 从命令的结果可以看出，端口2181被Hyper-V给保留了。
 - 解决方案：配置文件将zookeeper的端口改为高位端口，即可解决。
+
+## 基于WSL2 的 Docker Desktop 启动时 Failed to set version to docker-desktop: exit code: -1的解决方法
+[基于WSL2 的 Docker Desktop 启动时 Failed to set version to docker-desktop: exit code: -1的解决方法](https://blog.csdn.net/mysticboy/article/details/106632922)
 
 ## Docker 镜像仓库为什么要分库分权限？[^3]
 

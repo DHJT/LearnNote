@@ -13,6 +13,38 @@
 List<String> strList = abList.stream().map(ArchiveBox::getBoxNumber).collect(Collectors.toList());
 ```
 
+### @FunctionalInterface
+1. 该注解只能标记在"有且仅有一个抽象方法"的接口上。
+2. JDK8接口中的静态方法和默认方法，都不算是抽象方法。
+3. 接口默认继承`java.lang.Object`，所以如果接口显示声明覆盖了`Object`中方法，那么也不算抽象方法。
+4. 该注解不是必须的，如果一个接口符合"函数式接口"定义，那么加不加该注解都没有影响。加上该注解能够更好地让编译器进行检查。如果编写的不是函数式接口，但是加上了`@FunctionInterface`，那么编译器会报错。
+```java
+// 正确的函数式接口
+@FunctionalInterface
+public interface TestInterface {
+    // 抽象方法
+    public void sub();
+    // java.lang.Object中的public方法
+    public boolean equals(Object var1);
+    // 默认方法
+    /**
+    在java8中接口中的函数可以有默认的实现了，这样是接口更加的灵活。可以在接口中写一个通用默认的实现，减少实现类实现代码；
+    如果默认的实现方法不能满足需求，显示类也可以重写。
+
+    2.前提：
+        默认实现的前提是方法名称必须使用default关键字修饰
+    */
+    public default void defaultMethod() {
+        System.out.println("haha");
+    }
+    // java.lang.Object中的方法不是抽象方法
+    public boolean equals(Object var1);
+    // 静态方法
+    public static void staticMethod() {
+    }
+}
+```
+
 ### 方法引用(method references)
 - 静态方法引用：`ClassName::methodName`
 - 实例上的实例方法引用：`instanceReference::methodName`
@@ -125,9 +157,14 @@ ThreadLocal 的使用场景:用来解决数据库连接、Session 管理等。
 
 ## Java之四大内置注解 @Override、 @Deprecated、 @SuppressWarnings、 @SafeVarargs
 
+### @SuppressWarnings
+方法未声明为`static`或`final`方法，如果要抑制`unchecked`警告，可以使用`@SuppressWarnings`注解
+
 ### @SafeVarargs
-必须是可变参数方法和构造器
-如果是可变参数的方法，那么必须是static和final的
+在声明具有模糊类型（比如：泛型）的可变参数的构造函数或方法时，Java编译器会报unchecked警告。鉴于这些情况，如果程序员断定声明的构造函数和方法的主体不会对其varargs参数执行潜在的不安全的操作，可使用@SafeVarargs进行标记，这样的话，Java编译器就不会报unchecked警告。
+
+1. 必须是可变参数方法和构造器
+2. 如果是可变参数的方法，那么必须是static或final的
 ```java
 public class VarargsWaring {
     @SafeVarargs

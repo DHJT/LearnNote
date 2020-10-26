@@ -41,4 +41,22 @@ rs0:SECONDARY> rs.add('localhost:27018')
 
 mongod --bind_ip yourIPadress --logpath "C:\data\dbConf\mongodb.log" --logappend --dbpath "C:\data\db" --port yourPortNumber --serviceName "YourServiceName" --serviceDisplayName "YourServiceName" --install
 
+## Docker启动
+```sh
+docker pull mongo:latest
+# -p 27017:27017 ：映射容器服务的 27017 端口到宿主机的 27017 端口。外部可以直接通过 宿主机 ip:27017 访问到 mongo 的服务。
+# --auth：需要密码才能访问容器服务。
+docker run -itd --name mongo -p 27017:27017 mongo --auth
+
+# 接着使用以下命令添加用户和设置密码，并且尝试连接。
+docker exec -it mongo mongo admin
+# 创建一个名为 admin，密码为 123456 的用户。
+>  db.createUser({ user:'admin',pwd:'123456',roles:[ { role:'userAdminAnyDatabase', db: 'admin'},"readWriteAnyDatabase"]});
+# 尝试使用上面创建的用户信息进行连接。
+> db.auth('admin', '123456')
+```
+
+## 问题
+[Cannot autogenerate id of type java.lang.Integer for entity](https://blog.csdn.net/zhangvalue/article/details/89706138)
+
 [1]: https://www.cnblogs.com/liuyanpeng/p/7735698.html 'MongoDB 安装和可视化工具'

@@ -11,6 +11,7 @@ private EntityManager em;
 可以理解为资源->数据源->也就是数据连接，基本上就是告诉程序数据库在哪里
 
 ### JPA Audit
+在Spring boot启动类增加注解 `@EnableJpaAuditing`启用JPA审计(自动填充默认值)
 Jpa配置实体类创建时间更新时间自动赋值，@CreateDate，@LastModifiedDate
 Springboot jpa提供了自动填充这两个字段的功能，简单配置一下即可。@CreatedDate、@LastModifiedDate、@CreatedBy、@LastModifiedBy前两个注解就是起这个作用的，后两个是设置修改人和创建人的，这里先不讨论。
 然后还需要在启动类加上@EnableJpaAuditing注解。

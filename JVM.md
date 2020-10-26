@@ -39,6 +39,17 @@ CMS（Concurrent Mark Sweep）
 
 #### 垃圾回收现象，minor GC、major GC和full GC。
 
+### Class热替换与卸载
+运行的时候配置VM参数: `-verbose:class`；用于查看class的加载与卸载情况。 输出结果
+```sh
+[Loaded java.net.URI$Parser from E:\java\jdk1.7.0_03\jre\lib\rt.jar] [Loaded testjvm.testclassloader.A from file:/E:/IDE/work_place/ZJob-Note/bin/] [Unloading class testjvm.testclassloader.A] GC over [Loaded sun.misc.Cleaner from E:\java\jdk1.7.0_03\jre\lib\rt.jar] [Loaded java.lang.Shutdown from E:\java\jdk1.7.0_03\jre\lib\rt.jar]
+```
+(1) 启动类加载器加载的类型在整个运行期间是不可能被卸载的(jvm和jls规范).
+(2) 被系统类加载器和标准扩展类加载器加载的类型在运行期间不太可能被卸载，因为系统类加载器实例或者标准扩展类的实例基本上在整个运行期间总能直接或者间接的访问的到，其达到unreachable的可能性极小.(当然，在虚拟机快退出的时候可以，因为不管ClassLoader实例或者Class(java.lang.Class)实例也都是在堆中存在，同样遵循垃圾收集的规则).
+(3) 被开发者自定义的类加载器实例加载的类型只有在很简单的上下文环境中才能被卸载，而且一般还要借助于强制调用虚拟机的垃圾收集功能才可以做到.可以预想，稍微复杂点的应用场景中(尤其很多时候，用户在开发自定义类加载器实例的时候采用缓存的策略以提高系统性能)，被加载的类型在运行期间也是几乎不太可能被卸载的(至少卸载的时间是不确定的).
+
+综合以上三点， 一个已经加载的类型被卸载的几率很小至少被卸载的时间是不确定的.可以看的出来，在开发代码时候，不应该对虚拟机的类型卸载做任何假设的前提下来实现系统中的特定功能.
+
 ### 对象池（object pool）
 在Java 5.0之前，分配对象的代价很大，以至于大家都使用内存池。但是从5.0开始，对象分配和垃圾回收变得快多了，研发人员发现了性能的提升，纷纷简化他们的代码，不再使用内存池，而直接用new来分配对象。从5.0开始，只有一些分配代价较大的对象，比如线程、套接字和数据库链接，用内存池才会有明显的性能提升。
 主要用于两类对象。第一类是生命周期较短，且结构简单的对象，在内存池中重复利用这些对象能增加CPU缓存的命中率，从而提高性能。第二种情况是加载含有大量重复对象的大片数据，此时使用内存池能减少垃圾回收的时间。
@@ -63,7 +74,6 @@ CMS（Concurrent Mark Sweep）
 ByteBuffer buffer = ByteBuffer.allocateDirect(10 * 1024 * 1024);
 ```
 
-
 ### 方法区
 在Java虚拟机中，方法区是可供各线程共享的运行时内存区域。
 在不同的JDK版本中，方法区中存储的数据是不一样的。
@@ -72,10 +82,9 @@ ByteBuffer buffer = ByteBuffer.allocateDirect(10 * 1024 * 1024);
 
 - JDK1.8以前的HotSpot JVM有方法区，也叫永久代(permanent generation)。
 - 方法区用于存放已被虚拟机加载的类信息、常量、静态变量，即编译器编译后的代码。
-- 方法区是一片连续的堆空间，通过-XX:MaxPermSize来设定永久代最大可分配空间，当JVM加载的类信息容量超过了这个值，会报OOM:PermGen错误。
+- 方法区是一片连续的堆空间，通过`-XX:MaxPermSize`来设定永久代最大可分配空间，当JVM加载的类信息容量超过了这个值，会报`OOM:PermGen`错误。
 - 永久代的GC是和老年代(old generation)捆绑在一起的，无论谁满了，都会触发永久代和老年代的垃圾收集。
 - JDK1.7开始了方法区的部分移除：符号引用(Symbols)移至native heap，字面量(interned strings)和静态变量(class statics)移至java heap。
-
 
 #### 方法区和永久代的关系
 在Java虚拟机规范中，方法区在虚拟机启动的时候创建，虽然方法区是堆的逻辑组成部分，但是简单的虚拟机实现可以选择不在方法区实现垃圾回收与压缩。这个版本的虚拟机规范也不限定实现方法区的内存位置和编译代码的管理策略。所以不同的JVM厂商，针对自己的JVM可能有不同的方法区实现方式。
@@ -86,7 +95,6 @@ ByteBuffer buffer = ByteBuffer.allocateDirect(10 * 1024 * 1024);
 
 ### 元空间(Metaspace)
 HotSpot虚拟机在1.8之后已经取消了永久代，改为元空间，类的元信息被存储在元空间中。元空间没有使用堆内存，而是与堆不相连的本地内存区域。所以，理论上系统可以使用的内存有多大，元空间就有多大，所以不会出现永久代存在时的内存溢出问题。
-
 
 ## 高级
 
