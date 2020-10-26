@@ -257,6 +257,8 @@ mvn spring-boot:run -Drun.arguments="--server.port=8888"
 ```
 ```yaml
 management:
+  server:
+    port: 8011 # 可以跟项目端口一致，不配置即默认跟项目端口一致，访问路径：/actuator
   endpoints:
     web:
       exposure:
