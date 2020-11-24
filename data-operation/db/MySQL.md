@@ -142,3 +142,4 @@ SELECT * from mysql.general_log ORDER BY event_time DESC;
 [1]: https://www.cnblogs.com/HeiDi-BoKe/p/11531582.html 'MySQL5.7.27报错“[Warning] Using a password on the command line interface can be insecure.”在命令行使用密码不安全警告'
 [2]: https://www.cnblogs.com/baizhanshi/p/8482068.html 'mysql中tinyint、smallint、int、bigint的区别'
 [3]: https://blog.csdn.net/yinzitun7947/article/details/89917611 '[ERR] 1273 - Unknown collation: utf8mb4_0900_ai_ci'
+[4]: https://www.cnblogs.com/baizhanshi/p/8482068.html 'mysql中tinyint、smallint、int、bigint的区别'

@@ -6,7 +6,16 @@ Jenkins是一个跨平台，持续集成和交付应用程序的工具，可以�
   https://jenkins.io/ 官网下载，安装包多种，最简单的方式是下载war包，然后执行
 ```sh
 java -jar jenkins.war
+
+# docker 方式
+docker run -d -p 8000:8080 -p 50000:50000 -v /home/jenkins:/var/jenkins_home --name jenkins --restart always --privileged=true  -u root jenkins
+# 初始密码
+cd /var/jenkins_home/secrets
+cat initialAdminPassword
 ```
 jenkins启动成功，命令面板上有一串密码，浏览器输入http://localhost:8080（建议使用chrome，其他浏览器样式兼容不太好），登录时候复制进去。开启jenkins之旅。
 
 [1]: https://blog.csdn.net/wshl1234567/article/details/78999920 'Jenkins 持续集成——SpringCloud项目一键打包发布'
+[2]: https://www.cnblogs.com/nhdlb/p/12576273.html 'Docker：docker安装部署jenkins'
+[3]: https://www.cnblogs.com/yoyoketang/p/12115569.html 'jenkins学习3-Jenkins插件下载速度慢、安装失败'
+[4]: https://www.cnblogs.com/yueminghai/p/12929048.html ' jenkins+gitlab实现自动部署'

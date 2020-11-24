@@ -95,6 +95,7 @@ kafkaTemplate.executeInTransaction(new KafkaOperations.OperationsCallback() {
         return factory;
     }
 
+    // @KafkaListener(topics={"xxx-mq","xxx-xxx","xxx-xxxx"})
     @KafkaListener(id = "filterCons", topics = "topic.quick.filter", containerFactory = "filterContainerFactory")
     public void filterListener(String data) {
         //这里做数据持久化的操作
@@ -165,6 +166,56 @@ public class TaskListener {
 ### Kafka动态topic消费方式
 - [CDC场景下Kafka动态topic消费方式](http://cache.baiducontent.com/c?m=9d78d513d9d431ab4f9ee0697c67c015684381132ba6a4020ba4843896732d42506793e274764957c7823c390ef50f1aa8b12173441e3df2de8d9f4aaae3c97b73c97d73671cf1104f8c04edd642239176c60be3a94de5e9a1&p=ce6f8315d9c541e001be9b7c174c&newp=9c759a43d6d018fc57efd2601b5692695d0fc20e3bddd201298ffe0cc4241a1a1a3aecbf2d211b0fd5c57a6c02ab4b5beefb32743d0034f1f689df08d2ecce7e3cd1&user=baidu&fm=sc&query=%B6%AF%CC%AC%CF%FB%B7%D1kafka&qid=d7060038000068f2&p1=1)
 - [Spring集成kafka态订阅消费消息](https://www.jianshu.com/p/5ea2de323e18)
+
+```yaml
+spring:
+    kafka:
+        #kafak服务器
+        bootstrapServers:
+            - 10.63.xxx.xxx:9092
+        #连接到kafka服务器的客户端标识
+        clientId: xxxx-mq
+        producer:
+            #同步到follower的数量,all的话就是所有的follower都同步成功了才返回给客户端
+            acks: all
+            #发送失败后的重试次数
+            retries: 3
+            #每批次发送的字节大小
+            batchSize: 6144
+            #划分给生产者使用的内存空间,指定的内存空间塞满后，发送方法会阻塞等待
+            bufferMemory: 33554432
+            #消息压缩格式
+            compressionType: gzip
+            key-serializer: org.apache.kafka.common.serialization.StringSerializer
+            value-serializer: org.apache.kafka.common.serialization.StringSerializer
+
+        consumer:
+            #消费组id,按微服务名规范
+            groupId: xxxxx-mq
+            #当Kafka中没有初始offset或如果当前的offset不存在时,自动将偏移重置为最新偏移
+            autoOffsetReset: latest
+            #设置手动提交
+            enableAutoCommit: true
+            #如果enable.auto.commit设置为true，则消费者偏移量自动提交给Kafka的频率（以毫秒为单位）
+            autoCommitInterval: 5000
+            #如果没有足够的数据满足fetch.min.bytes，服务器将在接收到提取请求之前阻止的最大时间
+            fetchMaxWait: 500
+            #kafka服务器拉取请求返回的最小数据量，如果数据不足，请求将等待数据积累.
+            fetchMinSize: 1
+            #当使用Kafka的分组管理功能时，心跳到消费者协调器之间的预计时间。
+            #心跳用于确保消费者的会话保持活动状态，并当有新消费者加入或离开组时方便重新平衡。
+            #该值必须必比session.timeout.ms小，通常不高于1/3。
+            #它可以调整的更低，以控制正常重新平衡的预期时间。
+            heartbeatInterval: 3000
+            #在单次调用poll()中返回的最大记录数
+            maxPollRecords: 100
+          #  key-deserializer: org.apache.kafka.common.serialization.StringSerializer
+          #  value-deserializer: org.apache.kafka.common.serialization.StringSerializer
+
+        template:
+            #默认使用的Topic
+            defaultTopic: xxxxx-mq-default-topic
+```
 
 [1]: https://blog.csdn.net/jpfjdmm/article/details/100709256 'kafka介绍及使用'
 [2]: https://www.jianshu.com/p/13589c6839ec 'Spring-Kafka（七）—— 实现消息转发以及ReplyTemplate'

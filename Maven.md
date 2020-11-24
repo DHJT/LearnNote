@@ -254,18 +254,18 @@ dependencyManagement适用于父pom文件中管理依赖
 ```xml
 <!-- 跳过测试用例 -->
 <plugin>
-		<groupId>org.apache.maven.plugins</groupId>
-		<artifactId>maven-surefire-plugin</artifactId>
-		<version>2.16</version>
-		<configuration>
-				<skipTests>true</skipTests>
-		</configuration>
+	<groupId>org.apache.maven.plugins</groupId>
+	<artifactId>maven-surefire-plugin</artifactId>
+	<version>2.16</version>
+	<configuration>
+		<skipTests>true</skipTests>
+	</configuration>
 </plugin>
 <parent>
-		<artifactId>engine-feature-parent</artifactId>
-		<groupId>com.hoperun.engine</groupId>
-		<version>0.0.1-SNAPSHOT</version>
-		<relativePath>../engine-feature-parent/POM.xml</relativePath>
+	<artifactId>engine-feature-parent</artifactId>
+	<groupId>tech.dhjt.engine</groupId>
+	<version>0.0.1-SNAPSHOT</version>
+	<relativePath>../engine-feature-parent/POM.xml</relativePath>
 </parent>
 ```
 
@@ -277,9 +277,6 @@ dependencyManagement适用于父pom文件中管理依赖
 [6]: https://blog.csdn.net/She_lock/article/details/79557022 '使用docker-maven-plugin插件构建和推送Docker映像'
 [7]: https://blog.csdn.net/moneyshi/article/details/67637563 'maven异常：Updating Maven Project 的统一解决方案'
 [8]: https://blog.csdn.net/z410970953/article/details/50680603 'maven打包加时间戳'
-
-[^1]: [Maven编译打包时如何忽略测试用例](https://www.cnblogs.com/gscq073240/articles/9231897.html)
-
 
 ## 打包样例
 
@@ -373,6 +370,7 @@ dependencyManagement适用于父pom文件中管理依赖
         </plugin>
     </plugins>
     <!-- springboot jar中没有资源文件 -->
-
 </build>
 ```
+
+[^1]: [Maven编译打包时如何忽略测试用例](https://www.cnblogs.com/gscq073240/articles/9231897.html)

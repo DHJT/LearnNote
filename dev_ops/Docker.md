@@ -58,6 +58,8 @@ sudo rm -rf /var/lib/docker
 
 ## 使用
 ```sh
+docker --version
+docker info
 # 运行交互式的容器
 docker run -i -t ubuntu:15.10 /bin/bash
 # 启动容器（后台模式）
@@ -151,6 +153,18 @@ docker rmi `docker images | grep xxxxx | awk '{print $3}'`
 docker rm `docker ps -a | grep xxxxx | awk '{print $1}'`
 ```
 
+### 镜像导入导出
+```sh
+# 根据已有的这个容器来提交一个新的镜像，提交时需要用到容器ID。
+docker commit –m “rocketmq” –a “zmc” d8990fec2141 rocketmq
+#-o：指定保存的镜像的名字；rocketmq.tar：保存到本地的镜像名称；rocketmq：镜像名字，通过"docker images"查看
+docker save -o rocketmq.tar rocketmq
+# 载入镜像
+docker load --input rocketmq.tar 或 docker load < rocketmq.tar
+# Docker导入本地镜像
+docker import - rocketmq:3.2.6(镜像名自己定义)
+```
+
 ## 容器数据卷
 卷就是目录或文件，存在于一个或多个容器中，由docker挂载到容器，但不属于联合文件系统，因此能够绕过Union File System提供一些用于持续存储或共享数据的特性：
 
@@ -173,12 +187,54 @@ docker run -it --name dc04 --volumes-from dc03 zzyy/centos
 [利用 Docker 备份、迁移数据库](https://www.cnblogs.com/JacZhu/p/7835237.html)
 
 ## 网络
+- `ping`可以是使用容器名称、容器id、服务名称、ip等；
 ```sh
 # 显示docker中已经存在的网络
 docker network ls
 # 创建网络 somenetwork
+# -d：参数指定 Docker 网络类型，有 bridge、overlay。
+## 其中 overlay 网络类型用于 Swarm mode。
 docker network create somenetwork
+cker network create -d bridge test-net
+
+# 运行一个容器并连接到新建的 test-net 网络:
+docker run -itd --name test1 --network test-net ubuntu /bin/bash
+## 在容器内执行以下命令安装 ping（即学即用：可以在一个容器里安装好，提交容器到镜像，在以新的镜像重新运行以上俩个容器）。
+apt-get update
+apt install iputils-ping
+# 进入其他容器去ping容器test1
+ping test1
 ```
+
+### 配置 DNS
+我们可以在宿主机的`/etc/docker/daemon.json`文件中增加以下内容来设置全部容器的 DNS：
+```json
+{
+  "dns" : [
+    "114.114.114.114",
+    "8.8.8.8"
+  ]
+}
+```
+设置后，启动容器的 DNS 会自动配置为 114.114.114.114 和 8.8.8.8。
+配置完，需要重启 docker 才能生效。
+查看容器的 DNS 是否生效可以使用以下命令，它会输出容器的 DNS 信息：
+```sh
+docker run -it --rm  ubuntu  cat etc/resolv.conf
+```
+#### 手动指定容器的配置
+
+如果只想在指定的容器设置 DNS，则可以使用以下命令：
+```sh
+$ docker run -it --rm -h host_ubuntu  --dns=114.114.114.114 --dns-search=test.com ubuntu
+```
+参数说明：
+--rm：容器退出时自动清理容器内部的文件系统。
+-h HOSTNAME 或者 --hostname=HOSTNAME： 设定容器的主机名，它会被写到容器内的 /etc/hostname 和 /etc/hosts。
+--dns=IP_ADDRESS： 添加 DNS 服务器到容器的 /etc/resolv.conf 中，让容器用这个服务器来解析所有不在 /etc/hosts 中的主机名。
+--dns-search=DOMAIN： 设定容器的搜索域，当设定搜索域为 .example.com 时，在搜索一个名为 host 的主机时，DNS 不仅搜索 host，还会搜索 host.example.com。
+如果在容器启动时没有指定 --dns 和 --dns-search，Docker 会默认用宿主主机上的 /etc/resolv.conf 来配置容器的 DNS。
+
 ## 时区不一致
 
 1、【镜像未生产前】基础镜像 在 Dockerfile 中设置时区:
@@ -225,6 +281,16 @@ RUN ["/usr/lib/jvm/java-9-openjdk-amd64/bin/javac","Hello.java"]
 # 运行
 ENTRYPOINT ["/usr/lib/jvm/java-9-openjdk-amd64/bin/java", "Hello"]
 ```
+### 环境变量
+由EVN指令声明的环境变量也可以用在Dockerfile的一些指令中作为变量使用。转义符也将类似变量的语法转义为语句。
+在Dockerfile引用环境变量可以使用`$variable_name`或`${variable_name}`。它们是等同的，其中大括号的变量是用在没有空格的变量名中的，如${foo}_bar。
+${variable_name}变量也支持一些标准的bash修饰符，如：
+
+`${variable:-word}`表示如果variable设置了，那么结果就是设置的值。否则设置值为word
+`${variable:+word}`表示如果variable设置了，那么结果是word值，否则为空值。
+word可以是任意的字符，包括额外的环境变量。
+转义符可以添加在变量前面：$foo or ${foo}，例如，会分别转换为$foor和${foo}。
+
 
 ## Notary
 Docker对安全模块进行了重构，剥离出了名为Notary的独立项目。Notary的目标是保证server和client之间的交互使用可信任的连接，用于解决互联网的内容发布的安全性。该项目并未局限于容器应用，在容器场景下可以对镜像源认证、镜像完整性等安全需求提供更好的支持。
@@ -243,7 +309,7 @@ Docker对安全模块进行了重构，剥离出了名为Notary的独立项目�
 `busybox`已经集成了多个常见的UNIX工具，非常小巧且适配广泛，但问题在于不能方便地动态添加新的功能或者工具；
 ```sh
 docker run -it --rm --net=container:<container_id> --pid=container:<container_id> --ipc=container:<container_id> --name=t_busybox busybox
-# 以下是例子 b9c8ab7ed577是容器id
+# 以下是例子 b9c8ab7ed577是容器id --ipc选项可以去除，使用该项需要额外配置
 docker run -it --rm --net=container:b9c8ab7ed577 --pid=container:b9c8ab7ed577 --ipc=container:b9c8ab7ed577 --name=t_busybox busybox
 ```
 
@@ -255,7 +321,7 @@ docker run -it --rm --net=container:b9c8ab7ed577 --pid=container:b9c8ab7ed577 --
 - 解决方案：配置文件将zookeeper的端口改为高位端口，即可解决。
 
 ## 基于WSL2 的 Docker Desktop 启动时 Failed to set version to docker-desktop: exit code: -1的解决方法
-[基于WSL2 的 Docker Desktop 启动时 Failed to set version to docker-desktop: exit code: -1的解决方法](https://blog.csdn.net/mysticboy/article/details/106632922)
+[基于WSL2 的 Docker Desktop 启动时 Failed to set version to docker-desktop: exit code: -1的解决方法](https://blog.csdn.net/Fitz1318/article/details/108291006)
 
 ## Docker 镜像仓库为什么要分库分权限？[^3]
 
@@ -275,7 +341,6 @@ docker run -it --rm --net=container:b9c8ab7ed577 --pid=container:b9c8ab7ed577 --
 [^1]: [Get Docker Engine - Community for CentOS](https://docs.docker.com/install/linux/docker-ce/centos/)
 [^2]: [如何从单独的容器调试运行中的Docker容器](https://segmentfault.com/a/1190000020740899)
 [^3]: [Docker 镜像仓库为什么要分库分权限？](https://www.jianshu.com/p/6cb357eaf556)
-
 
 
 ## 样例
