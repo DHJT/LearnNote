@@ -1,6 +1,32 @@
 # Swagger
 <!-- @author DHJT 2018-09-28 -->
 
+## 使用
+### 2.10.0之后的版本
+`@EnableSwagger2`改为了`@EnableSwagger2WebMvc/@EnableSwagger2WebFlux`
+```xml
+<!-- 整合swagger2 -->
+<dependency>
+    <groupId>io.springfox</groupId>
+    <artifactId>springfox-swagger2</artifactId>
+    <version>${swagger.version}</version>
+</dependency>
+<dependency>
+    <groupId>io.springfox</groupId>
+    <artifactId>springfox-swagger-ui</artifactId>
+    <version>${swagger.version}</version>
+</dependency>
+<dependency>
+    <groupId>io.springfox</groupId>
+    <artifactId>springfox-spring-webflux</artifactId>
+    <version>${swagger.version}</version>
+</dependency>
+<dependency>
+    <groupId>io.springfox</groupId>
+    <artifactId>springfox-spring-webmvc</artifactId>
+    <version>${swagger.version}</version>
+</dependency>
+```
 ## swagger2访问url
 swagger ： http://localhost:8080/swagger/index.html
 springboot中的swagger：http://localhost:8080/swagger-ui.html

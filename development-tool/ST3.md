@@ -5,6 +5,31 @@
 <kbd>Ctrl+KU</kbd> 转换文字为大写
 <kbd>Ctrl+KL</kbd> 转换文字为小写
 
+sublime 需要屏蔽掉某些不用的文件类型。
+1、只需要Preferences （中文首选zhi项）里面找到setting-default（设置默认）
+2、在设置面板里面找到
+"folder_exclude_patterns": [".svn", ".git", ".hg", "CVS"], ---文件夹
+"file_exclude_patterns": ["*.pyc", "*.pyo", "*.exe", "*.dll", "*.obj","*.o", "*.a", "*.l], --文件
+3、在[....]中添加你需要屏蔽的文件类型即可。
+
+## 项目
+编辑项目
+```json
+{
+    "folders":
+    [
+        {
+            "path": "D:\\Documents\\Note-DH\\DH-Backup\\learn note"
+        }, {
+            "name": "WORK_HOME",
+            "path": "D:\\Documents\\Note-DH\\DH-Backup\\work_home",
+            "file_exclude_patterns": [ "*.bak.*" ],
+            "folder_exclude_patterns": [ "data", "css" ]
+        }
+    ]
+}
+```
+
 ## NodeJS开发
 ## 配置Git以及Git同步代码
 

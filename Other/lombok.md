@@ -1,6 +1,8 @@
 # lombok
 <!-- @author DHJT 2019-02-19 -->
-主要的作用提高代码的简洁、去除一些重复的get,set方法，
+主要的作用提高代码的简洁、去除一些重复的get,set方法。
+
+[为什么要放弃 Lombok？](https://zhuanlan.zhihu.com/p/146659383)
 
 ### 安装
 在eclipse中安装完成之后，可以在工具栏`Help`->`About Eclipse IDE`中最后看到`Lombok v1.18.6 "Envious Ferret" is installed. https://projectlombok.org/`，这代表着安装成功。

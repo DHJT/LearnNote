@@ -118,6 +118,12 @@ class MyResourceClass {
 }
 ```
 
+### @NotEmpty、@NotBlank、@NotNull三种注解的区别
+- @NotEmpty 用在集合类上面加了@NotEmpty的String类、Collection、Map、数组，是不能为null或者长度为0的(String Collection Map的isEmpty()方法)
+- @NotBlank只用于String,不能为null且trim()之后size>0
+- @NotNull:不能为null，但可以为empty,没有Size的约束
+
+
 ### 附上常用标签及含义
 
 |            标签           |    说明             |
