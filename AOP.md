@@ -14,5 +14,12 @@
 | 比AspectJ慢多了                               | 更好的性能                           |
 | 易于学习和应用                                | 相对于`Spring AOP`来说更复杂             |
 
+## 问题
+
+### 注解切面失效的情况
+- AOP无法切入private
+另外记录一个坑点，切面不能切入private方法，原因可以简单理解为就像反射不能获取私有成员一样，详细原理可以看这里。
+- AOP无法切入方法内部调用
+今天刚发现的，比方说service中有个方法A，controller中调用的是service.A()，而方法A()中内部调用了方法B和方法C。此时注解打在A()上面是没有问题的，打在B()或C()上是没有效果的，原因和上面类似，都是由于代理类的问题，
 
 [^1]: [Aspectj与Spring AOP比较](https://www.jianshu.com/p/872d3dbdc2ca)

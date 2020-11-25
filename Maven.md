@@ -250,6 +250,21 @@ dependencyManagement适用于父pom文件中管理依赖
 
 3、中央仓库：1）、地址为https://mvnrepository.com/；2）、如果本地没有jar包并且没有配置私服，要去中央仓库下载，需要联外网
 
+### maven命令上传-上传到远程仓库
+```sh
+# 上传到远程仓库
+mvn deploy:deploy-file -DgroupId=%s -DartifactId=%s -Dversion=%s -Dpackaging=jar -Dfile=%s -Durl=http://{username}:{password}@ip:port/nexus/content/repositories/3rd/ -DrepositoryId=3rd
+# 样例
+mvn deploy:deploy-file -DgroupId=net.minidev -DartifactId=accessors-smart -Dversion=1.2 -Dpackaging=jar -Dfile=accessors-smart-1.2.jar -Durl=http://{username}:{password}@ip:port/nexus/content/repositories/3rd/ -DrepositoryId=3rd
+```
+
+#### Maven安装报错No plugin found for prefix 'help' in the current project and in the plugin
+[Maven安装报错No plugin found for prefix 'help' in the current project and in the plugin](https://blog.csdn.net/chenpw8612/article/details/80849246)
+[安装maven所见错误No plugin found for prefix 'help' in the current project and in the plugin](https://blog.csdn.net/u010649669/article/details/52078614)
+
+#### could not create local repository at（用户下没有.m2文件夹）
+[could not create local repository at（用户下没有.m2文件夹）](https://blog.csdn.net/Yolanda_NuoNuo/article/details/73845233)
+
 ### Maven编译打包时如何忽略测试用例[^1]
 ```xml
 <!-- 跳过测试用例 -->

@@ -49,6 +49,7 @@ spring的核心接口及核类配置文件是什么?
         FactoryBean:工厂bean主要实现ioc/di
         ApplicationContext ac = new FileXmlApplicationContext("applicationContext.xml");
         Object obj = ac.getBean("id值");
+
 ## 版本控制
 5.0： the framework is based on Java 8+ now
 
