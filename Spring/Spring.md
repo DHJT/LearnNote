@@ -22,6 +22,9 @@ Spring目的：就是让对象与对象（模块与模块）之间的关系没�
 针对一个方面编写一个InvocationHandler，然后借用JDK反射包中的Proxy类为各种接口动态生成相应的代理类
 AOP的主要原理：动态代理
 
+- 避免 Spring 的 AOP 的自调用问题
+    + 在 Spring 的 AOP 代理下，只有目标方法由外部调用，目标方法才由 Spring 生成的代理对象来管理，这会造成自调用问题。
+
 ### 框架结构
 Spring 框架是一个分层架构，由 7 个定义良好的模块组成。Spring 模块构建在核心容器之上，核心容器定义了创建、配置和管理 bean 的方式，组成 Spring 框架的每个模块（或组件）都可以单独存在，或者与其他一个或多个模块联合实现。每个模块的功能如下：
 
@@ -49,12 +52,16 @@ spring的核心接口及核类配置文件是什么?
         FactoryBean:工厂bean主要实现ioc/di
         ApplicationContext ac = new FileXmlApplicationContext("applicationContext.xml");
         Object obj = ac.getBean("id值");
+
 ## 版本控制
 5.0： the framework is based on Java 8+ now
 
-## 事物
+## 事务
 - [Spring基于注解配置事务的属性] [1]
 - [spring scope prototype与singleton区别] [2]
+- Spring可以支持编程式事务和声明式事务。
+- Spring提供的最原始的事务管理方式是基于`TransactionDefinition`、`PlatformTransactionManager`、`TransactionStatus`编程式事务。
+- 而`TransactionTemplate`的编程式事务管理是使用模板方法设计模式对原始事务管理方式的封装。
 
 - `Spring`读取参数配置文件
 ``` xml
@@ -167,6 +174,70 @@ public class PropertiesWithJavaConfig {
     + Spring默认提供了接口的抽象实现类`RequestBodyAdviceAdapter`, 我们可以继承这个类按需实现 , 让代码更简洁一点
     + 针对所有以@RequestBody的参数，在读取请求body之前或者在body转换成对象之前可以做相应的增强。我们处理了有参数和没有参数的情况，打印出请求类、方法、请求参数。注意：这里要加上@ControllerAdvice请求才能增强。
 - ResponseBodyAdvice是spring4.1的新特性，其作用是在响应体写出之前做一些处理；比如，修改返回值、加密等。
+
+### Spring 获取 实现某接口的所有实例bean
+首先，获取 applicationContext，通过ApplicationAware自动注入
+```java
+import java.io.IOException;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.Properties;
+
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
+import org.springframework.beans.BeansException;
+import org.springframework.context.ApplicationContext;
+import org.springframework.context.ApplicationContextAware;
+import org.springframework.core.io.Resource;
+import org.springframework.stereotype.Component;
+
+/**
+ * @description: (spring功能类，用于获取bean)
+ */
+@Component("springBeanUtil")
+public class SpringBeanUtil implements ApplicationContextAware {
+    protected final static Log logger = LogFactory.getLog(SpringBeanUtil.class);
+    private static ApplicationContext ctx = null;
+    private static Map<String, Properties> propMap = new HashMap<String, Properties>(0);
+
+    @Override
+    public void setApplicationContext(ApplicationContext ctx) throws BeansException {
+        SpringBeanUtil.ctx = ctx;
+    }
+
+    public static ApplicationContext getApplicationContext() {
+        return ctx;
+    }
+
+    public static <T> T getBean(String prop) {
+        Object obj = ctx.getBean(prop);
+        if (logger.isDebugEnabled()) {
+            logger.debug("property=[" + prop + "],object=[" + obj + "]");
+        }
+        return (T) obj;
+    }
+
+    public static Properties getProperties(String filepath) {
+        if (propMap.containsKey(filepath))
+            return propMap.get(filepath);
+        Resource resource = ctx.getResource(filepath);
+        Properties prop = new Properties();
+        try {
+            prop.load(resource.getInputStream());
+            propMap.put(filepath, prop);
+            return prop;
+        } catch (IOException e) {
+            logger.error("can not find the resource file:[" + filepath + "]", e);
+            return null;
+        }
+    }
+}
+
+// key位 bean name，value为实例
+Map<String, Interface> result = SpringBeanUtil.getApplicationContext().getBeansOfType(Interface.class);
+// 返回 bean name 的String 数组
+String[] result = SpringBeanUtil.getApplicationContext().getBeanNamesForType(IPrizeInvoke.class);
+```
 
 [1]: https://blog.csdn.net/qingpengshan/article/details/80598366 'Spring基于注解配置事务的属性'
 [2]: http://www.cnblogs.com/lizhonghua34/p/4953500.html 'spring scope prototype与singleton区别'

@@ -102,6 +102,11 @@ docker stop name
 # 重启之前停掉的 docker 容器或者正在运行的容器 name/CONTAINER ID
 docker restart name/`CONTAINER ID`
 systemctl daemon-reload
+# 导出镜像为tar、tar.gz包
+docker save unbunt:12.04
+docker save <镜像id>
+# 导入外部的镜像
+docker load --input esHead.tar
 ```
 
 ### 配置镜像加速器
