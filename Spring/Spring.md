@@ -155,6 +155,19 @@ public class PropertiesWithJavaConfig {
 
 [Spring加载Properties配置文件的四种方式] [3]
 
+### @RequestBodyAdvice&@ResponseBodyAdvice
+- 作用
+    + 需要对项目中的所有输入进行前后空格的过滤;
+    + 替换一些特殊字符的输入;
+    + 解密一些关键性字段;
+    + 注入一些参数在请求方法的时候;
+    + 返回参数统一处理，如果后台返回空，统一返回成功信息;
+    + 身份证等特殊字符统一做 * 号处理等
+- RequestBodyAdvice：在 sping 4.2 新加入的一个接口，它可以使用在 @RequestBody 或 HttpEntity 修改的参数之前进行参数的处理，比如进行参数的解密。
+    + Spring默认提供了接口的抽象实现类`RequestBodyAdviceAdapter`, 我们可以继承这个类按需实现 , 让代码更简洁一点
+    + 针对所有以@RequestBody的参数，在读取请求body之前或者在body转换成对象之前可以做相应的增强。我们处理了有参数和没有参数的情况，打印出请求类、方法、请求参数。注意：这里要加上@ControllerAdvice请求才能增强。
+- ResponseBodyAdvice是spring4.1的新特性，其作用是在响应体写出之前做一些处理；比如，修改返回值、加密等。
+
 [1]: https://blog.csdn.net/qingpengshan/article/details/80598366 'Spring基于注解配置事务的属性'
 [2]: http://www.cnblogs.com/lizhonghua34/p/4953500.html 'spring scope prototype与singleton区别'
 [3]: https://blog.csdn.net/haha_sir/article/details/79105951 'Spring加载Properties配置文件的四种方式'

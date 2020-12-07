@@ -360,16 +360,20 @@ docker run -d -e SA_PASSWORD='dalong!@123' -e SQLSERVER_DATABASE=demo -e SQLSERV
 ```sh
 docker run -p 3306:3306 --name d_dh_mysql5 -v $PWD/conf5:/etc/mysql/conf.d -v $PWD/logs5:/logs -v $PWD/data5:/var/lib/mysql -e MYSQL_ROOT_PASSWORD=123456 -d mysql:5.7.26
 ```
+
 ### elasticsearch
 ```sh
 docker network create somenetwork
 docker run -d --name elasticsearch --net somenetwork -p 9200:9200 -p 9300:9300 -e "discovery.type=single-node" elasticsearch:tag
 ```
+
 ### rabbitmq
+
 ### PostgreSQL
 ```sh
 docker run --name some-postgres -p 5432:5432 -e POSTGRES_PASSWORD=123456 -d postgres
 ```
+
 ### nodejs
 ```sh
 
