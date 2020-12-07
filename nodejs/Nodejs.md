@@ -1,5 +1,6 @@
 # NodeJS
 <!-- @author DHJT 2019-01-23 -->
+Node有两个版本线: LTS是长期维护的稳定版本Current是新特性版本
 
 ## 安装以及使用
 安装版以及压缩包版
@@ -38,3 +39,5 @@ npm install -g cnpm --registry=https://registry.npm.taobao.org
 cnpm install
 cnpm install node-sass
 ```
+
+[nodeJS环境搭建](https://blog.csdn.net/qq_45174759/article/details/100059802)

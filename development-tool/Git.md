@@ -41,11 +41,7 @@ git clone 指定分支,拉代码
 `git clone -b dev_jk http://10.1.1.11/service/tmall-service.git`
 命令中：多了一个  -b dev-jk,这个dev_jk就是分支，http://10.1.1.11/service/tmall
 -service.git为源码的仓库地址
---------------------- 
-作者：lightClouds917 
-来源：CSDN 
-原文：https://blog.csdn.net/weixin_39800144/article/details/78205617 
-版权声明：本文为博主原创文章，转载请附上博文链接！
+
 
 ## 同一代码库提交到不同remote库
 ``` sh
@@ -158,7 +154,9 @@ $ git log --graph --pretty=oneline --abbrev-commit
 
 合并分支时，加上`--no-ff`参数就可以用普通模式合并，合并后的历史有分支，能看出来曾经做过合并，而fast forward合并就看不出来曾经做过合并。
 `git merge --no-ff -m "merge with no-ff" dev`
+
 4.BUG分支
+
 5.Feature分支
 开发一个新feature，最好新建一个分支；
 如果要丢弃一个没有被合并过的分支，可以通过`git branch -D <name>`强行删除。
@@ -276,5 +274,14 @@ git remote add origin git@192.168.1.45:decision_engine/engine-web.git
 git push -u origin --all
 git push -u origin --tags
 ```
+
+### 给分支增加备注信息
+```sh
+# 给分支添加备注
+git config branch.feature_20150713_hd-123.description 海南放款
+# 查看分支备注
+git br
+```
+要通过`git br`看到提示内容需要安装全局插件`npm i -g git-br`，否则只能通过`git config branch.feature_20150713_hd-123.description`查看。
 
 [1]: https://blog.csdn.net/lincyang/article/details/21519333 'Git冲突：commit your changes or stash them before you can merge.'
