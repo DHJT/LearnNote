@@ -52,6 +52,31 @@ kafka将topic中的消息存在不同的partition中。如果存在键值（key�
 
 *kafka 执行数据清除工作，时间和大小不论那个满足条件，都会清空数据。*
 
+```ini
+##保留时间
+log.retention.hours=72
+
+##日志滚动的周期时间，到达指定周期时间时，强制生成一个新的segment
+log.roll.hours=72
+
+##Kafka的日志实际上是开始是在缓存中的，然后根据策略定期一批一批写入到日志文件中去，以提高吞吐率。
+##消息达到多少条时将数据写入到日志文件    默认10000
+log.flush.interval.messages=5000
+
+
+##日志清理保存的策略只有delete和compact两种，默认delete
+log.cleanup.polict=delete
+
+##日志文件被真正删除前的保留时间，默认60000
+log.segment.delete.delay.ms=60000
+
+##每隔一段时间多久调用一次清理的步骤，默认10
+log.cleanup.interval.mins=10
+
+# topic删除要保证此属性为true
+delete.topic.enable=true
+```
+
 ### 使用 kafka 集群需要注意什么？
 - 集群的数量不是越多越好，最好不要超过 7 个，因为节点越多，消息复制需要的时间就越长，整个群组的吞吐量就越低。
 - 集群数量最好是单数，因为超过一半故障集群就不能用了，设置为单数容错率更高。

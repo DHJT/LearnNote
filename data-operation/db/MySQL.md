@@ -131,6 +131,9 @@ SELECT * from mysql.general_log ORDER BY event_time DESC;
 3.执行：`FLUSH PRIVILEGES;`
 4.此时可以使用myuser用户，mypassword密码远程登陆mysql服务器了
 
+#### ERROR 2059 (HY000): Authentication plugin 'caching_sha2_password' cannot be loaded; 的解决办法
+[ERROR 2059 (HY000): Authentication plugin 'caching_sha2_password' cannot be loaded; 的解决办法](https://blog.csdn.net/ltstud/article/details/81188872)
+[mysql安装以及2059 - Authentication plugin 'caching_sha2_password' cannot be loaded:报错的解决办法](https://blog.csdn.net/weixin_39702323/article/details/94568380)
 
 [为什么MariaDB更优于MySQL](https://cloud.tencent.com/developer/article/1140522)
 
