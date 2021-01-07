@@ -35,24 +35,7 @@ public class Student {
     private String name;
     private String sex;
     private Integer age;
-    public String getName() {
-        return name;
-    }
-    public String getSex() {
-        return sex;
-    }
-    public Integer getAge() {
-        return age;
-    }
-    public void setName(String name) {
-        this.name = name;
-    }
-    public void setSex(String sex) {
-        this.sex = sex;
-    }
-    public void setAge(Integer age) {
-        this.age = age;
-    }
+    // 省略getter、setter方法
     @Override
     public String toString() {
         return "Student [name=" + name + ", sex=" + sex + ", age=" + age + "]";
@@ -84,6 +67,43 @@ public testJackson(String[] args) {
             e.printStackTrace();
         }
     }
+```
+
+#### SpringBoot使用Jackson，全局反序列化去除字符串前后空格
+方法一: 继承SimpleModule
+```java
+@Component
+public class StringTrimModule extends SimpleModule {
+    private static final long serialVersionUID = 1L;
+    public StringTrimModule() {
+        addDeserializer(String.class, new StdScalarDeserializer<String>(String.class) {
+            private static final long serialVersionUID = 1L;
+            @Override
+            public String deserialize(JsonParser p, DeserializationContext ctxt) throws IOException, JsonProcessingException {
+                String value = p.getValueAsString();
+                return value.trim();
+            }
+        });
+    }
+}
+```
+方法二
+```java
+@Bean
+public Jackson2ObjectMapperBuilderCustomizer jackson2ObjectMapperBuilderCustomizer() {
+    return new Jackson2ObjectMapperBuilderCustomizer() {
+        @Override
+        public void customize(Jackson2ObjectMapperBuilder jacksonObjectMapperBuilder) {
+            jacksonObjectMapperBuilder.deserializerByType(String.class, new StdScalarDeserializer<String>(String.class) {
+                        private static final long serialVersionUID = 1L;
+                        @Override
+                        public String deserialize(JsonParser jsonParser, DeserializationContext ctx) throws IOException {
+                            return StringUtils.trimWhitespace(jsonParser.getValueAsString());
+                        }
+                    });
+        }
+    };
+}
 ```
 
 ## 问题
