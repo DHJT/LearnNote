@@ -72,7 +72,7 @@ HEAD is now at 3628164 append GPL
 6.工作区与暂存区
 
 7. 撤销修改
-令git checkout -- readme.txt意思就是，把readme.txt文件在工作区的修改全部撤销，这里有两种情况：
+`git checkout -- readme.txt`意思就是，把readme.txt文件在工作区的修改全部撤销，这里有两种情况：
 一种是readme.txt自修改后还没有被放到暂存区，现在，撤销修改就回到和版本库一模一样的状态；
 一种是readme.txt已经添加到暂存区后，又作了修改，现在，撤销修改就回到添加到暂存区后的状态。
 总之，就是让这个文件回到最近一次git commit或git add时的状态。
@@ -136,6 +136,7 @@ $ git push [remote] --all
 创建+切换分支：git checkout -b <name>
 合并某分支到当前分支：git merge <name>
 删除分支：git branch -d <name>
+丢弃一个没有被合并过的分支，可以通过`git branch -D <name>`强行删除。
 显示分支：git branch -a
 - 绿色的表示本地当前分支
 - 红色的表示远程的分支。
@@ -146,20 +147,16 @@ $ git log --graph --pretty=oneline --abbrev-commit
 用git log --graph命令可以看到分支合并图。
 3.分支管理策略
 在实际开发中，我们应该按照几个基本原则进行分支管理：
-首先，master分支应该是非常稳定的，也就是仅用来发布新版本，平时不能在上面干活；
-那在哪干活呢？干活都在dev分支上，也就是说，dev分支是不稳定的，到某个时候，比如1.0版本发布时，再把dev分支合并到master上，在master分支发布1.0版本；
+- 首先，master分支应该是非常稳定的，也就是仅用来发布新版本，平时不能在上面干活；
+- 那在哪干活呢？干活都在dev分支上，也就是说，dev分支是不稳定的，到某个时候，比如1.0版本发布时，再把dev分支合并到master上，在master分支发布1.0版本；
 你和你的小伙伴们每个人都在dev分支上干活，每个人都有自己的分支，时不时地往dev分支上合并就可以了。
 所以，团队合作的分支看起来就像这样：
-
 
 合并分支时，加上`--no-ff`参数就可以用普通模式合并，合并后的历史有分支，能看出来曾经做过合并，而fast forward合并就看不出来曾经做过合并。
 `git merge --no-ff -m "merge with no-ff" dev`
 
-4.BUG分支
-
-5.Feature分支
+4.Feature分支
 开发一个新feature，最好新建一个分支；
-如果要丢弃一个没有被合并过的分支，可以通过`git branch -D <name>`强行删除。
 - 多人协作
     + 查看远程库信息，使用`git remote -v`；
     + 本地新建的分支如果不推送到远程，对其他人就是不可见的；
@@ -168,7 +165,16 @@ $ git log --graph --pretty=oneline --abbrev-commit
     + 建立本地分支和远程分支的关联，使用`git branch --set-upstream branch-name origin/branch-name`；
     + 从远程抓取分支，使用`git pull`，如果有冲突，要先处理冲突。
 
-## 四.自定义Git
+### 给分支增加备注信息
+```sh
+# 给分支添加备注
+git config branch.feature_20150713_hd-123.description 海南放款
+# 查看分支备注
+git br
+```
+要通过`git br`看到提示内容需要安装全局插件`npm i -g git-br`，否则只能通过`git config branch.feature_20150713_hd-123.description`查看。
+
+## 自定义Git
 
 - 忽略特殊文件
     + 忽略某些文件时，需要编写`.gitignore`；
@@ -181,6 +187,14 @@ $ git log --graph --pretty=oneline --abbrev-commit
 git config --global alias.st status
 git config --global alias.lg "log --color --graph --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset' --abbrev-commit"
 ```
+
+### git hook
+在特定的重要动作发生时触发自定义脚本：客户端侧的脚本和服务器端侧的脚本。 客户端钩子由诸如提交和合并这样的操作所调用，而服务器端钩子作用于诸如接收被推送的提交这样的联网操作。
+
+钩子都被存储在Git目录下的`hooks`子目录中。 也即绝大部分项目中的 `.git/hooks`，默认存在的都是示例，其名字都是以`.sample`结尾，启用它们，得先移除这个后缀。把一个正确命名且可执行的文件放入`Git`目录下的`hooks`子目录中，即可激活该钩子脚本。
+
+`.git`目录又不受版本控制
+由于钩子本身不跟随克隆的项目副本分发，所以你必须通过其他途径把这些钩子分发到用户的`.git/hooks`目录并设为可执行文件。 虽然你可以在相同或单独的项目里加入并分发这些钩子，但是 Git 不会自动替你设置它。
 
 ## 搭建Git服务器
 
@@ -197,10 +211,14 @@ git show <tagname>可以看到PGP签名信息：
 ```
 - 操作标签
 ``` sh
-git push origin <tagname>可以推送一个本地标签；
-git push origin --tags可以推送全部未推送过的本地标签；
-git tag -d <tagname>可以删除一个本地标签；
-git push origin :refs/tags/<tagname>可以删除一个远程标签。
+# 可以推送一个本地标签；
+git push origin <tagname>
+# 可以推送全部未推送过的本地标签；
+git push origin --tags
+# 可以删除一个本地标签；
+git tag -d <tagname>
+# 可以删除一个远程标签。
+git push origin :refs/tags/<tagname>
 ```
 
 ## GitHub使用
@@ -228,12 +246,12 @@ git push -u origin master
 # or push an existing repository from the command line
 git remote add origin git@github.com:DHJT/sxy.git
 git push -u origin master
-```
-给现有的代码项目打上标签
-git tag -a v1.4 -m 'my version 1.4'
-分享标签 ， 默认情况下，git push 并不会把标签传送到远端服务器上，只有通过显式命令才能分享标签到远端仓库。其命令格式如同推送分支，运行
-`git push origin [tagname]` 即可
 
+# 给现有的代码项目打上标签
+git tag -a v1.4 -m 'my version 1.4'
+# 分享标签 ， 默认情况下，git push 并不会把标签传送到远端服务器上，只有通过显式命令才能分享标签到远端仓库。其命令格式如同推送分支，运行
+git push origin [tagname]
+```
 
 ### 不要用git pull，用git fetch和git merge代替它。
 git pull的问题是它把过程的细节都隐藏了起来，以至于你不用去了解git中各种类型分支的区别和使用方法。当然，多数时候这是没问题的，但一旦代码有问题，你很难找到出错的地方。看起来git pull的用法会使你吃惊，简单看一下git的使用文档应该就能说服你。
@@ -246,19 +264,6 @@ git pull的问题是它把过程的细节都隐藏了起来，以至于你不用
 
 ### Gitlab中的操作建议
 ```sh
-# Command line instructions
-# Git global setup
-git config --global user.name "sun_lianhai"
-git config --global user.email "sun_lianhai@hoperun.com"
-
-# Create a new repository
-git clone git@192.168.1.45:decision_engine/engine-web.git
-cd engine-web
-touch README.md
-git add README.md
-git commit -m "add README"
-git push -u origin master
-
 # Existing folder
 # cd existing_folder
 git init
@@ -274,14 +279,5 @@ git remote add origin git@192.168.1.45:decision_engine/engine-web.git
 git push -u origin --all
 git push -u origin --tags
 ```
-
-### 给分支增加备注信息
-```sh
-# 给分支添加备注
-git config branch.feature_20150713_hd-123.description 海南放款
-# 查看分支备注
-git br
-```
-要通过`git br`看到提示内容需要安装全局插件`npm i -g git-br`，否则只能通过`git config branch.feature_20150713_hd-123.description`查看。
 
 [1]: https://blog.csdn.net/lincyang/article/details/21519333 'Git冲突：commit your changes or stash them before you can merge.'

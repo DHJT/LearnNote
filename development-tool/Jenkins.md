@@ -10,8 +10,7 @@ java -jar jenkins.war
 # docker 方式
 docker run -d -p 8000:8080 -p 50000:50000 -v /home/jenkins:/var/jenkins_home --name jenkins --restart always --privileged=true  -u root jenkins
 # 初始密码
-cd /var/jenkins_home/secrets
-cat initialAdminPassword
+cat /var/jenkins_home/secrets/initialAdminPassword
 ```
 jenkins启动成功，命令面板上有一串密码，浏览器输入http://localhost:8080（建议使用chrome，其他浏览器样式兼容不太好），登录时候复制进去。开启jenkins之旅。
 

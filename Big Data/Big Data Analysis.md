@@ -27,4 +27,17 @@ ETL是将业务系统的数据经过抽取、清洗转换之后加载到数据�
 
 向无环图（DAG）
 
+度量Measure
+维度Dimension
+
+事实表
+维度表（码表）
+
+索引：聚合索引、明细索引
+
+宽表、窄表；
+
+可计算列 Calculated Column
+max dimensiion combination(MDC)最大维度组合数
+
 [数据流处理](https://blog.csdn.net/zlging309/article/details/9830307?utm_source=blogxgwz7)
