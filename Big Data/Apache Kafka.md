@@ -167,6 +167,11 @@ kafka 0.9.x以后的版本不要使用 advertised.host.name 和 advertised.host.
 
 #### Error while fetching metadata with correlation id 34 : {other=LEADER_NOT_AVAILABLE}
 
+## 问题
+
+### Kafka Topic partition leader 为-1 问题处理
+[Kafka Topic partition leader 为-1 问题处理](https://blog.csdn.net/sduboma/article/details/83831539)
+
 [kafka实战]: https://www.cnblogs.com/hei12138/p/7805475.html 'kafka实战'
 [kafka-0.10-demo]: https://gitee.com/wsmd/kafka-0.10-demo '王思密达/kafka-0.10-demo'
 [命令行查看Kafka版本，快速docker安装Kafka版本命令](https://www.it610.com/article/1296353427802103808.htm)
