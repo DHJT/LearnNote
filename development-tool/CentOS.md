@@ -25,7 +25,7 @@ ps 6832
 kill -9 6832
 ```
 
-## 安装
+## 安装软件
 ```sh
 # 查找软件
 rpm -qa|grep vim
@@ -84,6 +84,33 @@ systemctl restart systemd-logind
 ### 连接无线
 ```sh
 wpa_supplicant -B -i wlp9s0 -c <(wpa_passphrase "Xiaomi_1402" "xm13939761503")
+```
+
+### 系统时间校正
+```sh
+# 安装ntp服务器
+yum install ntp
+# 校对时间
+ntpdate asia.pool.ntp.org
+# 设置硬件时间和系统时间一致
+/sbin/hwclock --systohc
+# 采用定时任务定时矫正时间
+crontab -e # 新建我们的定时任务
+00 12 * * * /usr/sbin/ntpdate cn.pool.ntp.org # // 每天的12点矫正时间
+# 启动了NTP的服务,但是系统时间到底和服务器同步了没有呢? 为此NTP提供了一个很好的查看工具: ntpq (NTP query)
+watch ntpq -p
+```
+
+#### EDT 和 CST区别和设置
+要检查各个服务器时间格式，EDT或者是CST,在中国我们将服务器的时间格式调为CST
+EDT：指美国东部夏令时间，波士顿、纽约市、华盛顿哥伦比亚特区，都在这个时区内，跟北京时间有12小时的时差，晚12小时。
+CST：可以指下面两种：
+1). 美国中部标准时间(西六区，-6:00)，中国是东八区(+8:00)，北京时间比美国中部标准时间早14个小时。3:45 PMCST是北京时间凌晨1：45。
+2). 中澳大利亚标准时间(+10:30)，中国是东八区(+8:00)，北京时间比中澳大利亚标准时间晚2个半小时。3:45 PMCST是北京时间下午上午5:45。
+将系统的时间格式调整为CST的命令如下两条：
+```sh
+mv /etc/localtime /etc/localtime.bak
+ln -s /usr/share/zoneinfo/Asia/Shanghai /etc/localtime
 ```
 
 ### 安装 java

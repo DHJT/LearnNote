@@ -3,15 +3,19 @@
 > 俄罗斯程序设计师`Igor Sysoev`
 > 轻量级的Web服务器/反向代理服务器及电子邮件、TCP/UDP代理服务器，在BSD-like协议下发行。
 > 特点：占用内存少，并发能力强。
-> 百度、新浪、网易、腾讯等。
 > http://ngix.org/
 
-## 启动关闭nginx
-- `nginx`,启动Nginx,默认监听80端口
-    + `windows`下可以使用`start .\nginx.exe`启动
-- `ngix -s stop`,快速停止服务器
-- `nginx -s quit`,停止服务器，但要等到请求处理完毕后关闭
-- 'nginx -s reload',重新加载配置文件。
+## 安装及使用
+```sh
+# 配置安装目录及编译安装
+./configure --prefix=/{指定目录}/
+make && make install
+# 启动Nginx，默认监听80端口，`windows`下可以使用`start .\nginx.exe`启动
+./sbin/nginx
+nginx -s stop # 快速停止服务器
+nginx -s quit # 停止服务器，但要等到请求处理完毕后关闭
+nginx -s reload # 重新加载配置文件。
+```
 
 ### 正向代理
 
@@ -28,9 +32,11 @@
 - quancha.conf文件如下：
 ``` sh
 ## Basic reverse proxy server ##
-## Apache backend for www.quancha.cn ##
+# 可以配置多个server，然后配置负载均衡策略以及权重
 upstream apachephp  {
-    server ip:8080; #Apache
+    server ip:8080;
+    # weight=2 为权重
+    # server ip:8080 weight=2;
 }
 
 ## Start www.quancha.cn ##
@@ -38,6 +44,7 @@ server {
     listen 80;
     server_name  www.quancha.cn;
 
+    # 日志格式参考 main，这一项需要配置，nginx默认配置中有配置，但被注释掉了，需要删除注释；
     access_log  logs/quancha.access.log  main;
     error_log  logs/quancha.error.log;
     root   html;
@@ -148,6 +155,80 @@ syntax: rewrite regex replacement [flag]
 Default: —
 Context: server, location, if
 ```
+
+## 日志配置
+1. access_log指令
+语法: access_log path [format [buffer=size [flush=time]]];
+access_log path format gzip[=level] [buffer=size] [flush=time];
+access_log syslog:server=address[,parameter=value] [format];
+access_log off;
+默认值: access_log logs/access.log combined;
+配置段: http, server, location, if in location, limit_except
+gzip压缩等级。
+buffer设置内存缓存区大小。
+flush保存在缓存区中的最长时间。
+不记录日志：access_log off;
+使用默认combined格式记录日志：access_log logs/access.log 或 access_log logs/access.log combined;
+
+2. log_format指令
+语法: log_format name string …;
+默认值: log_format combined “…”;
+配置段: http
+
+name表示格式名称，string表示等义的格式。log_format有一个默认的无需设置的combined日志格式，相当于apache的combined日志格式，
+3. open_log_file_cache指令
+语法: open_log_file_cache max=N [inactive=time] [min_uses=N] [valid=time];
+open_log_file_cache off;
+默认值: open_log_file_cache off;
+配置段: http, server, location
+
+对于每一条日志记录，都将是先打开文件，再写入日志，然后关闭。可以使用open_log_file_cache来设置日志文件缓存(默认是off)，格式如下：
+参数注释如下：
+max:设置缓存中的最大文件描述符数量，如果缓存被占满，采用LRU算法将描述符关闭。
+inactive:设置存活时间，默认是10s
+min_uses:设置在inactive时间段内，日志文件最少使用多少次后，该日志文件描述符记入缓存中，默认是1次
+valid:设置检查频率，默认60s
+off：禁用缓存
+实例如下：
+
+open_log_file_cache max=1000 inactive=20s valid=1m min_uses=2;
+1
+open_log_file_cache max=1000 inactive=20s valid=1m min_uses=2;
+4. log_not_found指令
+语法: log_not_found on | off;
+默认值: log_not_found on;
+配置段: http, server, location
+是否在error_log中记录不存在的错误。默认是。
+
+5. log_subrequest指令
+语法: log_subrequest on | off;
+默认值: log_subrequest off;
+配置段: http, server, location
+是否在access_log中记录子请求的访问日志。默认不记录。
+
+6. rewrite_log指令
+由ngx_http_rewrite_module模块提供的。用来记录重写日志的。对于调试重写规则建议开启。 Nginx重写规则指南
+语法: rewrite_log on | off;
+默认值: rewrite_log off;
+配置段: http, server, location, if
+启用时将在error log中记录notice级别的重写日志。
+
+7. error_log指令
+语法: error_log file | stderr | syslog:server=address[,parameter=value] [debug | info | notice | warn | error | crit | alert | emerg];
+默认值: error_log logs/error.log error;
+配置段: main, http, server, location
+配置错误日志。
+
+## 问题
+- [Nginx出现403 forbidden](https://blog.csdn.net/qq_35843543/article/details/81561240)
+    + 由于启动用户和nginx工作用户不一致所致: 查看nginx的启动用户，发现是nobody，而为是用root启动的
+- [Nginx访问日志（access_log）配置](https://www.cnblogs.com/xuyuQAQ/p/8728773.html)
+    + Nginx访问日志主要有两个参数控制
+    + log_format #用来定义记录日志的格式（可以定义多种日志格式，取不同名字即可）
+    + access_log #用来指定日至文件的路径及使用的何种日志格式记录日志
+- [编译安装nginx却requires the PCRE library](https://www.cnblogs.com/crxis/p/6973232.html)
+    + 需要安装pcre的devel包，pcre-devel。使用yum安装即可：（以下命令还带有ssl、zlib等依赖的安装）
+    + `yum -y install zlib zlib-devel openssl openssl--devel pcre pcre-devel`
 
 [1]: https://blog.csdn.net/xuanjiewu/article/details/79458266 '使用Nginx实现反向代理'
 [2]: https://blog.csdn.net/zhaoxiaohua125/article/details/78751953 '关于nginx+tomcat搭建反向代理时加载静态资源找不到的问题'
