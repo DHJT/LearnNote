@@ -164,6 +164,12 @@ advertised.listeners=PLAINTEXT://主机的域名:9092
 kafka 0.9.x以后的版本新增了advertised.listeners配置
 kafka 0.9.x以后的版本不要使用 advertised.host.name 和 advertised.host.port 已经deprecated
 
+### kafka全部数据清空的步骤为：[^3]
+- 停止每台机器上的kafka；
+- 删除kafka存储目录（server.properties文件log.dirs配置，默认为“/tmp/kafka-logs”）全部topic的数据目录；
+- 删除zookeeper上与kafka相关的znode节点；
+- 重启kafka、如果删除topic还在则需要重启zookeeper；
+
 
 #### Error while fetching metadata with correlation id 34 : {other=LEADER_NOT_AVAILABLE}
 
@@ -182,3 +188,4 @@ kafka 0.9.x以后的版本不要使用 advertised.host.name 和 advertised.host.
 
 [^1]: [Kafka跨网络访问设置](https://www.cnblogs.com/cf532088799/p/7425021.html)
 [^2]: [kafka listeners 和 advertised.listeners 的应用](https://segmentfault.com/a/1190000020715650?utm_source=tag-newest)
+[^3]: [kafka全部数据清空的步骤](https://www.cnblogs.com/jinggs/p/12573779.html)

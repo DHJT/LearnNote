@@ -102,7 +102,7 @@ $ ssh-keygen -t rsa -C "youremail@example.com"
 git config --global user.name "your name"
 git config --global user.email "your_email@youremail.com"
 git clone url
-git add file 
+git add file
 git commit -m '~'
 git push
 ```
@@ -126,6 +126,8 @@ $ git push [remote] [branch]
 $ git push [remote] --force
 # 推送所有分支到远程仓库
 $ git push [remote] --all
+# 该指令只clone最近的一次commit。项目里面的文件会被完整地被下载下来，但是历史不能完全保留。（不关系项目的历史，那就完全可以使用浅拷贝来完成clone）
+git clone --depth=1 https://github.com/<*>.git
 ```
 
 ## 分支管理

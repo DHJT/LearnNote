@@ -8,6 +8,17 @@
 日志是 mysql 数据库的重要组成部分，记录着数据库运行期间各种状态信息。
 mysql日志主要包括错误日志、查询日志、慢查询日志、事务日志、二进制日志几大类。作为开发，重点需要关注的是二进制日志(`binlog`)和事务日志(包括`redo log`和`undo log`);
 
+### 字段
+TIMESTAMP(3)与 DATETIME(3)意思是保留3为毫秒数
+
+TIMESTAMP(6)与 DATETIME(6)意思是保留6为毫秒数
+修改已存在的表字段示例：ALTER TABLE tb_financial MODIFY CREATE_TIME DATETIME(3) DEFAULT NULL COMMENT '录入时间';
+插入日期可以用NOW(3)来控制精确的毫秒数，SELECT CURRENT_TIMESTAMP(3);也是可以的
+
+TEXT类型是可变长度的字符串，最多65535个字符；
+TEXT 65,535 bytes ~64kb
+MEDIUMTEXT 16,777,215 bytes ~16MB
+LONGTEXT 4,294,967,295 bytes ~4GB
 
 ### 注意
 MySQL 8.0后版本驱动类名称为："com.mysql.cj.jdbc.Driver"

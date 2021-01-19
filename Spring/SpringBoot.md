@@ -21,9 +21,21 @@ SpringBoot的主要优点：
 //若maxAge是负数,则代表为临时Cookie,不会被持久化,Cookie信息保存在浏览器内存中,浏览器关闭Cookie就消失
 @CrossOrigin(origins = "*", maxAge = 3600)
 // 使用定义的properties或者自定义的属性配置，@Autowired自动导入bean使用配置；
+// 支持JSR303数据校验（@Validated @Email）
+// 支持松散绑定，lastName last-name last_name PERSON_LAST_NAME)
 @ConfigurationProperties(prefix = "wisely2")
 @ConfigurationProperties(prefix = "wisely", locations = "classpath:config/wisely.properties")
 @EnableConfigurationProperties({ WiselySettings.class, Wisely2Settings.class })
+@Value 
+```
+## 配置
+
+### @PropertySource&@ImportResource
+```java
+// 加载指定的配置文件
+@PropertySource(value = { "classpath:person.properties" })
+// 导入Spring的配置文件让其生效：组件，类似@Configuration中的@Bean
+@ImportResource(locations = "classpath:beans.xml")
 ```
 
 ## 功能列表

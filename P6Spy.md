@@ -24,7 +24,12 @@ P6Spy通过劫持JDBC驱动，在调用实际JDBC驱动前拦截调用的目标�
     <artifactId>p6spy</artifactId>
     <version>${p6spy.version}</version>
 </dependency>
-
+<!-- 或者使用starter -->
+<dependency>
+    <groupId>com.github.gavlyukovskiy</groupId>
+    <artifactId>p6spy-spring-boot-starter</artifactId>
+    <version>${version}</version>
+</dependency>
 ```
 
 ### 配置spy.properties
