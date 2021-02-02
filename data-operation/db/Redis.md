@@ -81,8 +81,7 @@ Redis从4.0版本开始对布隆过滤器的支持，需要额外安装此模块
 由于BloomFiter牺牲了一定的准确率换取空间效率。所以带来了False positive的问题。
 False positive: BloomFilter在判断一个元素在集合中的时候，会出现一定的错误率，这个错误率称为False positive的。通常缩写为fpp。
 False negatives: BloomFilter判断一个元素不在集合中的时候的错误率。
-BloomFilter判断该元素不在集合中，则该元素一定不再集合中。故False negatives概率为0。
-
+`BloomFilter`判断该元素不在集合中，则该元素一定不再集合中。故`False negatives`概率为0。
 
 ### 最佳实践
 常见的适用常见有，利用布隆过滤器减少磁盘 IO 或者网络请求，因为一旦一个值必定不存在的话，我们可以不用进行后续昂贵的查询请求。
@@ -90,7 +89,7 @@ BloomFilter判断该元素不在集合中，则该元素一定不再集合中。
 另外，既然你使用布隆过滤器来加速查找和判断是否存在，那么性能很低的哈希函数不是个好选择，推荐 MurmurHash、Fnv 这些。
 
 ### 大Value拆分
-Redis 因其支持 setbit 和 getbit 操作，且纯内存性能高等特点，因此天然就可以作为布隆过滤器来使用。但是布隆过滤器的不当使用极易产生大 Value，增加 Redis 阻塞风险，因此生成环境中建议对体积庞大的布隆过滤器进行拆分。
+Redis 因其支持`setbit` 和`getbit`操作，且纯内存性能高等特点，因此天然就可以作为布隆过滤器来使用。但是布隆过滤器的不当使用极易产生大 Value，增加 Redis 阻塞风险，因此生成环境中建议对体积庞大的布隆过滤器进行拆分。
 
 拆分的形式方法多种多样，但是本质是不要将 Hash(Key) 之后的请求分散在多个节点的多个小 bitmap 上，而是应该拆分成多个小 bitmap 之后，对一个 Key 的所有哈希函数都落在这一个小 bitmap 上。
 
@@ -112,6 +111,14 @@ auth xxxxx # 结果 OK
 config set notify-keyspace-events xE # 结果 OK
 ```
 [SpringBoot+Redis布隆过滤器防恶意流量击穿缓存的正确姿势](https://blog.csdn.net/lifetragedy/article/details/103945885)
+
+### 慢查询
+```sh
+# 获取第一个
+slowlog get 1
+# 获取慢查询数量
+slowlog len
+```
 
 [1]: http://redisdoc.com/index.html 'Redis 命令参考'
 

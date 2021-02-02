@@ -72,6 +72,39 @@ vi /usr/src/app/elasticsearch-head-master/_site/app.js
  this.base_uri = this.config.base_uri || this.prefs.get("app-base_uri") || "http://master:9200";
 ```
 
+
+```sh
+curl -H "Content-Type: application/json" -XGET http://19.18.89.23:9200/tbl_node/_search?pretty -d '{"query":{"range":{"scoreTime.keyword":{"gt":"2020-01-23 22:44:10","lt":"2020-01-23 23:44:10"}}}}'
+# 索引重命名
+# POST localhost:9200/_reindex
+{
+  "source": {
+    "index": "indexName"
+  },
+  "dest": {
+    "index": "newIndexName"
+  }
+}
+# 查询复制索引到新的索引名称
+POST localhost:9200/_reindex
+{
+  "source": {
+    "index": "indexName",
+    "type": "typeName",
+    "query": {
+      "term": {
+        "name": "shao"
+      }
+    }
+  },
+  "dest": {
+    "index": "newIndexName"
+  }
+}
+# 查询ES版本信息
+curl -XGET localhost:9200
+```
+
 ## 问题
 
 ### SQL 错误: current license is non-compliant for [jdbc] current license is non

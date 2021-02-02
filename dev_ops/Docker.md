@@ -51,7 +51,6 @@ sudo sh get-docker.sh
 ### 卸载
 ```sh
 # 删除 Docker CE
-# 执行以下命令来删除 Docker CE：
 sudo yum remove docker-ce
 sudo rm -rf /var/lib/docker
 ```
@@ -83,6 +82,17 @@ docker logs -tf --tail 10 `CONTAINER ID`
 # docker cp 要拷贝的文件路径 容器名：要拷贝到容器里面对应的路径
 docker cp /root/hadoop-mapreduce-examples-2.6.0.jar b7d7f88574fb:/usr/local/hadoop-2.6.0
 docker cp mysolr:/opt/solr/ /usr/local/ # 容器拷贝宿主机
+
+# docker容器设置开机自启动：
+
+# --restart具体参数值详细信息
+#     no - 容器退出时，不重启容器
+#     on-failure - 只有在非0状态退出时才从新启动容器
+#     always - 无论退出状态是如何，都重启容器
+## 还可以在使用 on-failure 策略时，指定 Docker 将尝试重新启动容器的最大次数；默认情况下，Docker 将尝试永远重新启动容器；
+docker run --restart=on-failure:10 redis
+## 如果创建时未指定 --restart=always ,可通过 update 命令更改；
+docker update --restart=always <容器ID>
 ```
 
 ## 常用命令
@@ -107,6 +117,10 @@ docker save unbunt:12.04
 docker save <镜像id>
 # 导入外部的镜像
 docker load --input esHead.tar
+# 启动时限制cpu 和内存，--cpus 设置使用cpu数量 -m 设置使用内存
+docker run -i -d --cpus 4 -m 12GB imageID jupyter notebook --allow-root  --ip 0.0.0.0
+# 查看 启动的container占用cpu 和内存
+docker stats contrainerId
 ```
 
 ### 配置镜像加速器
@@ -373,6 +387,12 @@ docker run -d --name elasticsearch --net somenetwork -p 9200:9200 -p 9300:9300 -
 ```
 
 ### rabbitmq
+
+### Redis
+```sh
+docker run -p 26380:6379 -v D:/Workspaces/TestTemp/docker_temp/redis/data:/data  -d --name decision-redis-1 redis --appendonly yes --requirepass "123456"
+docker run -p 26380:6379 -d --name decision-redis-1 redis --appendonly yes --requirepass "123456"
+```
 
 ### PostgreSQL
 ```sh
